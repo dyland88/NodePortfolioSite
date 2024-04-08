@@ -9,7 +9,6 @@ export default function Home() {
   const scene = useRef(null);
   const isPressed = useRef(false);
   const engine = useRef(Engine.create());
-  const [constraints, setContraints] = useState();
   const [ballPos, setBallPos] = useState(Vector.create(0, 0));
 
   useEffect(() => {
@@ -48,8 +47,11 @@ export default function Home() {
     Render.run(render);
 
     Matter.Events.on(engine.current, "afterUpdate", function () {
-      setBallPos(engine.current.world.bodies[0].position);
-      console.log(ballPos);
+      window.requestAnimationFrame(update);
+
+      //setBallPos(engine.current.world.bodies[0].position);
+
+      //console.log(engine.current.world.bodies[0].position);
     });
 
     // Clean up
@@ -62,6 +64,11 @@ export default function Home() {
     };
   }, []);
 
+  function update(): void {
+    setBallPos(engine.current.world.bodies[0].position);
+  }
+
+  const mousePosition = useMousePosition();
   return (
     <main className="flex min-h-screen flex-col items-start justify-start p-24 bg-slate-950">
       <div
@@ -94,8 +101,26 @@ export default function Home() {
         style={{ position: "absolute", top: ballPos.y, left: ballPos.x }}
       ></div>
       <p>
-        {ballPos.x}, {ballPos.y}
+        {mousePosition.x}, {mousePosition.y}
       </p>
     </main>
   );
 }
+
+const useMousePosition = () => {
+  const [mousePosition, setMousePosition] = useState({ x: null, y: null });
+
+  useEffect(() => {
+    const updateMousePosition = (ev) => {
+      setMousePosition({ x: ev.clientX, y: ev.clientY });
+    };
+
+    window.addEventListener("mousemove", updateMousePosition);
+
+    return () => {
+      window.removeEventListener("mousemove", updateMousePosition);
+    };
+  }, []);
+
+  return mousePosition;
+};
