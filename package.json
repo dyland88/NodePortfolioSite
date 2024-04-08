@@ -5,6 +5,7 @@
     "popmotion": "^11.0.5"
   },
   "devDependencies": {
+    "@types/matter-js": "^0.19.6",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.1"
   }
