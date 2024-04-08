@@ -9,14 +9,16 @@ export default function Home() {
   const scene = useRef(null);
   const isPressed = useRef(false);
   const engine = useRef(Engine.create());
+  const [constraints, setContraints] = useState();
 
   useEffect(() => {
-    const cw = document.body.clientWidth;
-    const ch = document.body.clientHeight;
+    const cw = scene.current.offsetWidth;
+    const ch = scene.current.offsetHeight;
 
     const render = Render.create({
       element: scene.current!,
       engine: engine.current,
+
       options: {
         width: cw,
         height: ch,
@@ -24,12 +26,14 @@ export default function Home() {
         background: "transparent",
       },
     });
+    engine.current.gravity.scale = 0.00001;
 
+    // Add bodies
     World.add(engine.current.world, [
-      Bodies.rectangle(cw / 2, -10, cw, 20, { isStatic: true }),
-      Bodies.rectangle(-10, ch / 2, 20, ch, { isStatic: true }),
-      Bodies.rectangle(cw / 2, ch + 10, cw, 20, { isStatic: true }),
-      Bodies.rectangle(cw + 10, ch / 2, 20, ch, { isStatic: true }),
+      // Bodies.rectangle(cw / 2, -10, cw, 20, { isStatic: true }),
+      // Bodies.rectangle(-10, ch / 2, 20, ch, { isStatic: true }),
+      // Bodies.rectangle(cw / 2, ch + 10, cw, 20, { isStatic: true }),
+      // Bodies.rectangle(cw + 10, ch / 2, 20, ch, { isStatic: true }),
       Bodies.circle(150, 0, 10, {
         restitution: 0.9,
         render: {
@@ -38,9 +42,11 @@ export default function Home() {
       }),
     ]);
 
+    // Run simulation and render
     Matter.Runner.run(engine.current);
     Render.run(render);
 
+    // Clean up
     return () => {
       Render.stop(render);
       World.clear(engine.current.world, false);
@@ -51,7 +57,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-slate-950">
+    <main className="flex min-h-screen flex-col items-start justify-start p-24 bg-slate-950">
       {/* <motion.div
             className="bg-white w-20 h-20 rounded-full"
             whileHover={{ scale: 1.2 }}
@@ -62,7 +68,16 @@ export default function Home() {
             dragTransition={{ bounceStiffness: 100, bounceDamping: 10 }}
             dragSnapToOrigin={true}
         /> */}
-      <div ref={scene} style={{ width: "100%", height: "100%" }} />
+      <div
+        ref={scene}
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          top: 0,
+          left: 0,
+        }}
+      />
     </main>
   );
 }
