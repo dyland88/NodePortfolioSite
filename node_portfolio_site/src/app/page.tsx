@@ -1,6 +1,12 @@
 "use client";
 import Image from "next/image";
-import { motion, useForceUpdate, useMotionValue } from "framer-motion";
+import {
+  motion,
+  useForceUpdate,
+  useMotionValue,
+  DragControls,
+  useDragControls,
+} from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import {
   Engine,
@@ -24,6 +30,7 @@ export default function Home() {
   const scene = useRef(null);
   const engine = useRef(Engine.create());
   const [ballPos, setBallPos] = useState({ x: 0, y: 0 });
+  const [dragState, setDragState] = useState({ dragging: false, x: 0, y: 0 });
 
   useEffect(() => {
     const cw = scene.current.offsetWidth;
@@ -121,6 +128,7 @@ export default function Home() {
         x: engine.current.world.bodies[0].position.x,
         y: engine.current.world.bodies[0].position.y,
       });
+
       window.requestAnimationFrame(update);
     }
     window.requestAnimationFrame(update);
@@ -135,6 +143,15 @@ export default function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    if (dragState.dragging) {
+      Matter.Body.setPosition(engine.current.world.bodies[0], {
+        x: dragState.x,
+        y: dragState.y,
+      });
+    }
+  }, [dragState]);
+
   return (
     <main className="flex min-h-screen flex-col items-start justify-start p-24 bg-slate-950">
       <div
@@ -148,22 +165,35 @@ export default function Home() {
         }}
       />
       <div
-        style={{
-          position: "absolute",
-          left: ballPos.x - 20,
-          top: ballPos.y - 20,
-          // backgroundColor: "white",
-          // borderRadius: "100%",
-        }}
+        style={
+          {
+            // backgroundColor: "white",
+            // borderRadius: "100%",
+          }
+        }
       >
         <motion.div
+          drag={true}
+          whileDrag={{ scale: 0.9 }}
+          whileHover={{ scale: 1.2 }}
+          onDrag={(event, info) => {
+            setDragState({ dragging: true, x: info.point.x, y: info.point.y });
+            console.log(dragState);
+          }}
+          onDragEnd={(event, info) => {
+            setDragState({ dragging: false, x: info.point.x, y: info.point.y });
+          }}
+          dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+          dragElastic={0.0}
           style={{
+            position: "absolute",
+            left: ballPos.x - 20,
+            top: ballPos.y - 20,
             width: 40,
             height: 40,
             backgroundColor: "white",
             borderRadius: "100%",
           }}
-          whileHover={{ scale: 1.2 }}
         ></motion.div>
       </div>
     </main>
