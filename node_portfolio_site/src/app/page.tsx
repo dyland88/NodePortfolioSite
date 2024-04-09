@@ -40,12 +40,25 @@ export default function Home() {
         background: "transparent",
       },
     });
+    Matter.use("matter-attractors");
     engine.current.gravity.scale = 0.0;
 
     const body1 = Bodies.circle(300, 300, 10, {
       restitution: 1,
       render: {
         fillStyle: "yellow",
+      },
+      plugin: {
+        plugin: {
+          attractors: [
+            function (bodyA, bodyB) {
+              return {
+                x: (bodyA.position.x - bodyB.position.x) * 1e-2,
+                y: (bodyA.position.y - bodyB.position.y) * 1e-2,
+              };
+            },
+          ],
+        },
       },
     });
     const body2 = Bodies.circle(600, 600, 10, {
@@ -72,13 +85,13 @@ export default function Home() {
       length: 100,
       stiffness: 0.00004,
     });
-    // Composite.add(engine.current.world, [body1, body2, body3, constraint]);
+
     World.add(engine.current.world, [
       body1,
       body2,
       body3,
-      constraint1,
-      constraint2,
+      // constraint1,
+      // constraint2,
     ]);
 
     var mouse = Mouse.create(render.canvas);
