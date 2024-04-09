@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useForceUpdate, useMotionValue } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { Engine, Render, Bodies, World, Vector } from "matter-js";
 import Matter from "matter-js";
@@ -9,7 +9,9 @@ export default function Home() {
   const scene = useRef(null);
   const isPressed = useRef(false);
   const engine = useRef(Engine.create());
-  const [ballPos, setBallPos] = useState(Vector.create(0, 0));
+  const [ballPos, setBallPos] = useState({ x: 0, y: 0 });
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
   useEffect(() => {
     const cw = scene.current.offsetWidth;
@@ -46,13 +48,17 @@ export default function Home() {
     Matter.Runner.run(engine.current);
     Render.run(render);
 
-    Matter.Events.on(engine.current, "afterUpdate", function () {
+    window.requestAnimationFrame(update);
+
+    function update(): void {
+      setBallPos({
+        x: engine.current.world.bodies[0].position.x,
+        y: engine.current.world.bodies[0].position.y,
+      });
+      //x.set(engine.current.world.bodies[0].position.x);
+      //y.set(engine.current.world.bodies[0].position.y);
       window.requestAnimationFrame(update);
-
-      //setBallPos(engine.current.world.bodies[0].position);
-
-      //console.log(engine.current.world.bodies[0].position);
-    });
+    }
 
     // Clean up
     return () => {
@@ -63,10 +69,6 @@ export default function Home() {
       render.textures = {};
     };
   }, []);
-
-  function update(): void {
-    setBallPos(engine.current.world.bodies[0].position);
-  }
 
   const mousePosition = useMousePosition();
   return (
@@ -96,10 +98,20 @@ export default function Home() {
           left: ballPos.x,
         }}
       /> */}
-      <div
+      {/* <div
         className="bg-white w-20 h-20 rounded-full"
         style={{ position: "absolute", top: ballPos.y, left: ballPos.x }}
-      ></div>
+      ></div> */}
+      <motion.div
+        style={{
+          position: "absolute",
+          left: ballPos.x,
+          top: ballPos.y,
+          width: 20,
+          height: 20,
+          backgroundColor: "white",
+        }}
+      />
       <p>
         {mousePosition.x}, {mousePosition.y}
       </p>
