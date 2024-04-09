@@ -29,6 +29,7 @@ export default function Home() {
     const cw = scene.current.offsetWidth;
     const ch = scene.current.offsetHeight;
 
+    // Create render scene
     const render = Render.create({
       element: scene.current!,
       engine: engine.current,
@@ -40,8 +41,11 @@ export default function Home() {
         background: "transparent",
       },
     });
+
+    // Disable gravity
     engine.current.gravity.scale = 0.0;
 
+    // Create bodies
     const body1 = Bodies.circle(300, 300, 10, {
       restitution: 1,
       render: {
@@ -72,7 +76,7 @@ export default function Home() {
       length: 100,
       stiffness: 0.00004,
     });
-
+    // Add bodies
     World.add(engine.current.world, [
       body1,
       body2,
@@ -81,6 +85,7 @@ export default function Home() {
       constraint2,
     ]);
 
+    // Create mouse constraint
     var mouse = Mouse.create(render.canvas);
     var mouseConstraint = MouseConstraint.create(engine.current, {
       mouse: mouse,
@@ -92,14 +97,8 @@ export default function Home() {
     });
     Composite.add(engine.current.world, mouseConstraint);
 
-    // Add bodies
+    // Add rectangle bounding boxes
     World.add(engine.current.world, [
-      // Bodies.circle(300, 0, 10, {
-      //   restitution: 1,
-      //   render: {
-      //     fillStyle: "yellow",
-      //   },
-      // }),
       Bodies.rectangle(cw / 2, -10, cw, 20, { isStatic: true, restitution: 1 }),
       Bodies.rectangle(-10, ch / 2, 20, ch, { isStatic: true, restitution: 1 }),
       Bodies.rectangle(cw / 2, ch + 10, cw, 20, {
@@ -112,6 +111,7 @@ export default function Home() {
       }),
     ]);
 
+    // Run the renderer for debugging
     Render.run(render);
 
     // run the engine loop
