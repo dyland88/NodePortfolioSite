@@ -2,16 +2,28 @@
 import Image from "next/image";
 import { motion, useForceUpdate, useMotionValue } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { Engine, Render, Bodies, World, Vector } from "matter-js";
+import {
+  Engine,
+  Render,
+  Bodies,
+  World,
+  Vector,
+  Constraint,
+  Composite,
+  Mouse,
+  MouseConstraint,
+} from "matter-js";
 import Matter from "matter-js";
 
 export default function Home() {
+  const nodes = [
+    { id: 0, name: "hello" },
+    { id: 1, name: "world" },
+  ];
+  const links = [{ source: 0, target: 1 }];
   const scene = useRef(null);
-  const isPressed = useRef(false);
   const engine = useRef(Engine.create());
   const [ballPos, setBallPos] = useState({ x: 0, y: 0 });
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
 
   useEffect(() => {
     const cw = scene.current.offsetWidth;
@@ -28,37 +40,90 @@ export default function Home() {
         background: "transparent",
       },
     });
-    engine.current.gravity.scale = 0.00001;
+    engine.current.gravity.scale = 0.0;
+
+    const body1 = Bodies.circle(300, 300, 10, {
+      restitution: 1,
+      render: {
+        fillStyle: "yellow",
+      },
+    });
+    const body2 = Bodies.circle(600, 600, 10, {
+      restitution: 1,
+      render: {
+        fillStyle: "yellow",
+      },
+    });
+    const body3 = Bodies.circle(400, 300, 10, {
+      restitution: 1,
+      render: {
+        fillStyle: "yellow",
+      },
+    });
+    var constraint1 = Constraint.create({
+      bodyA: body1,
+      bodyB: body2,
+      length: 100,
+      stiffness: 0.00004,
+    });
+    var constraint2 = Constraint.create({
+      bodyA: body1,
+      bodyB: body3,
+      length: 100,
+      stiffness: 0.00004,
+    });
+    // Composite.add(engine.current.world, [body1, body2, body3, constraint]);
+    World.add(engine.current.world, [
+      body1,
+      body2,
+      body3,
+      constraint1,
+      constraint2,
+    ]);
+
+    var mouse = Mouse.create(render.canvas);
+    var mouseConstraint = MouseConstraint.create(engine.current, {
+      mouse: mouse,
+      constraint: {
+        render: {
+          visible: false,
+        },
+      },
+    });
+    Composite.add(engine.current.world, mouseConstraint);
 
     // Add bodies
     World.add(engine.current.world, [
-      // Bodies.rectangle(cw / 2, -10, cw, 20, { isStatic: true }),
-      // Bodies.rectangle(-10, ch / 2, 20, ch, { isStatic: true }),
-      // Bodies.rectangle(cw / 2, ch + 10, cw, 20, { isStatic: true }),
-      // Bodies.rectangle(cw + 10, ch / 2, 20, ch, { isStatic: true }),
-      Bodies.circle(300, 0, 10, {
-        restitution: 0.9,
-        render: {
-          fillStyle: "yellow",
-        },
+      // Bodies.circle(300, 0, 10, {
+      //   restitution: 1,
+      //   render: {
+      //     fillStyle: "yellow",
+      //   },
+      // }),
+      Bodies.rectangle(cw / 2, -10, cw, 20, { isStatic: true, restitution: 1 }),
+      Bodies.rectangle(-10, ch / 2, 20, ch, { isStatic: true, restitution: 1 }),
+      Bodies.rectangle(cw / 2, ch + 10, cw, 20, {
+        isStatic: true,
+        restitution: 1,
+      }),
+      Bodies.rectangle(cw + 10, ch / 2, 20, ch, {
+        isStatic: true,
+        restitution: 1,
       }),
     ]);
 
-    // Run simulation and render
-    Matter.Runner.run(engine.current);
     Render.run(render);
 
-    window.requestAnimationFrame(update);
-
+    // run the engine loop
     function update(): void {
+      Matter.Engine.update(engine.current, 1000 / 60);
       setBallPos({
         x: engine.current.world.bodies[0].position.x,
         y: engine.current.world.bodies[0].position.y,
       });
-      //x.set(engine.current.world.bodies[0].position.x);
-      //y.set(engine.current.world.bodies[0].position.y);
       window.requestAnimationFrame(update);
     }
+    window.requestAnimationFrame(update);
 
     // Clean up
     return () => {
@@ -70,7 +135,6 @@ export default function Home() {
     };
   }, []);
 
-  const mousePosition = useMousePosition();
   return (
     <main className="flex min-h-screen flex-col items-start justify-start p-24 bg-slate-950">
       <div
@@ -83,56 +147,18 @@ export default function Home() {
           left: 0,
         }}
       />
-      {/* <motion.div
-        className="bg-white w-20 h-20 rounded-full"
-        whileHover={{ scale: 1.2 }}
-        whileTap={{ scale: 0.8, borderRadius: "100%" }}
-        drag={true}
-        dragConstraints={{ left: -0, right: 0, top: -0, bottom: 0 }}
-        dragElastic={0.5}
-        dragTransition={{ bounceStiffness: 100, bounceDamping: 10 }}
-        dragSnapToOrigin={true}
-        style={{
-          position: "absolute",
-          top: ballPos.y,
-          left: ballPos.x,
-        }}
-      /> */}
-      {/* <div
-        className="bg-white w-20 h-20 rounded-full"
-        style={{ position: "absolute", top: ballPos.y, left: ballPos.x }}
-      ></div> */}
       <motion.div
         style={{
           position: "absolute",
           left: ballPos.x,
           top: ballPos.y,
-          width: 20,
-          height: 20,
-          backgroundColor: "white",
+          //backgroundColor: "white",
+          borderRadius: "100%",
         }}
-      />
-      <p>
-        {mousePosition.x}, {mousePosition.y}
-      </p>
+        whileHover={{ scale: 1.2 }}
+      >
+        <p>hello</p>
+      </motion.div>
     </main>
   );
 }
-
-const useMousePosition = () => {
-  const [mousePosition, setMousePosition] = useState({ x: null, y: null });
-
-  useEffect(() => {
-    const updateMousePosition = (ev) => {
-      setMousePosition({ x: ev.clientX, y: ev.clientY });
-    };
-
-    window.addEventListener("mousemove", updateMousePosition);
-
-    return () => {
-      window.removeEventListener("mousemove", updateMousePosition);
-    };
-  }, []);
-
-  return mousePosition;
-};
