@@ -40,25 +40,12 @@ export default function Home() {
         background: "transparent",
       },
     });
-    Matter.use("matter-attractors");
     engine.current.gravity.scale = 0.0;
 
     const body1 = Bodies.circle(300, 300, 10, {
       restitution: 1,
       render: {
         fillStyle: "yellow",
-      },
-      plugin: {
-        plugin: {
-          attractors: [
-            function (bodyA, bodyB) {
-              return {
-                x: (bodyA.position.x - bodyB.position.x) * 1e-2,
-                y: (bodyA.position.y - bodyB.position.y) * 1e-2,
-              };
-            },
-          ],
-        },
       },
     });
     const body2 = Bodies.circle(600, 600, 10, {
@@ -90,8 +77,8 @@ export default function Home() {
       body1,
       body2,
       body3,
-      // constraint1,
-      // constraint2,
+      constraint1,
+      constraint2,
     ]);
 
     var mouse = Mouse.create(render.canvas);
@@ -160,18 +147,25 @@ export default function Home() {
           left: 0,
         }}
       />
-      <motion.div
+      <div
         style={{
           position: "absolute",
-          left: ballPos.x,
-          top: ballPos.y,
-          //backgroundColor: "white",
-          borderRadius: "100%",
+          left: ballPos.x - 20,
+          top: ballPos.y - 20,
+          // backgroundColor: "white",
+          // borderRadius: "100%",
         }}
-        whileHover={{ scale: 1.2 }}
       >
-        <p>hello</p>
-      </motion.div>
+        <motion.div
+          style={{
+            width: 40,
+            height: 40,
+            backgroundColor: "white",
+            borderRadius: "100%",
+          }}
+          whileHover={{ scale: 1.2 }}
+        ></motion.div>
+      </div>
     </main>
   );
 }
