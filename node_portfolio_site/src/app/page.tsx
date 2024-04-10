@@ -28,26 +28,54 @@ export default function Home() {
 
   const [dragState, setDragState] = useState({ dragItem: -1, x: 0, y: 0 });
 
-  const ComponentOne = () => <p>Hello</p>;
-  const ComponentTwo = () => <p>World</p>;
-  const nodeList = [<ComponentOne />, <ComponentTwo />];
+  const ComponentOne = () => (
+    <div
+      style={{
+        width: 40,
+        height: 40,
+        backgroundColor: "red",
+        borderRadius: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex",
+      }}
+    >
+      <p>Hello</p>
+    </div>
+  );
+  const ComponentTwo = () => (
+    <div
+      style={{
+        width: 40,
+        height: 40,
+        backgroundColor: "blue",
+        borderRadius: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex",
+      }}
+    >
+      <p>World</p>
+    </div>
+  );
+  // const nodeList = [<ComponentOne />, <ComponentTwo />, <ComponentOne />];
 
-  const [nodePos, setNodePos] = useState<
-    { id: number; x: number; y: number }[]
-  >([
-    { id: 0, x: 0, y: 0 },
-    { id: 1, x: 0, y: 0 },
+  const [nodePos, setNodePos] = useState([
+    { id: "hello", content: <ComponentOne />, x: 0, y: 0 },
+    { id: "world", content: <ComponentTwo />, x: 0, y: 0 },
   ]);
-  // for (let i = 0; i < nodeList.length; i++) {
-  //   setNodePos((prevState) => [...prevState, { id: i, x: 0, y: 0 }]);
-  // }
-  // setNodePos([
-  //   { id: 0, x: 0, y: 0 },
-  //   { id: 1, x: 0, y: 0 },
-  // ]);
+
   // console.log(nodePos);
 
   useEffect(() => {
+    // for (let i = 0; i < nodeList.length; i++) {
+    //   setNodePos((prevState) => [...prevState, { id: i, x: 0, y: 0 }]);
+    // }
+    // setNodePos([
+    //   { id: 0, x: 0, y: 0 },
+    //   { id: 1, x: 0, y: 0 },
+    // ]);
+
     const cw = scene.current.offsetWidth;
     const ch = scene.current.offsetHeight;
 
@@ -68,6 +96,7 @@ export default function Home() {
     engine.current.gravity.scale = 0.0;
 
     // Create bodies
+
     const body1 = Bodies.circle(300, 300, 20, {
       restitution: 1,
       render: {
@@ -139,11 +168,12 @@ export default function Home() {
     // run the engine loop
     function update(): void {
       Matter.Engine.update(engine.current, 1000 / 60);
-      for (let i = 0; i < nodeList.length; i++) {
+      for (let i = 0; i < nodePos.length; i++) {
         setNodePos((prevState) => {
           let newPos = [...prevState];
           newPos[i] = {
-            id: i,
+            id: prevState[i].id,
+            content: prevState[i].content,
             x: engine.current.world.bodies[i].position.x,
             y: engine.current.world.bodies[i].position.y,
           };
@@ -191,7 +221,7 @@ export default function Home() {
           left: 0,
         }}
       />
-      {nodeList.map((component, index) => (
+      {nodePos.map((component, index) => (
         <motion.div
           key={index}
           drag={true}
@@ -215,7 +245,7 @@ export default function Home() {
             // borderRadius: "100%",
           }}
         >
-          {component}
+          {component.content}
         </motion.div>
       ))}
     </main>
