@@ -22,15 +22,30 @@ import {
 import Matter from "matter-js";
 
 export default function Home() {
-  const nodes = [
-    { id: 0, name: "hello" },
-    { id: 1, name: "world" },
-  ];
   const links = [{ source: 0, target: 1 }];
   const scene = useRef(null);
   const engine = useRef(Engine.create());
-  const [ballPos, setBallPos] = useState({ x: 0, y: 0 });
-  const [dragState, setDragState] = useState({ dragging: false, x: 0, y: 0 });
+
+  const [dragState, setDragState] = useState({ dragItem: -1, x: 0, y: 0 });
+
+  const ComponentOne = () => <p>Hello</p>;
+  const ComponentTwo = () => <p>World</p>;
+  const nodeList = [<ComponentOne />, <ComponentTwo />];
+
+  const [nodePos, setNodePos] = useState<
+    { id: number; x: number; y: number }[]
+  >([
+    { id: 0, x: 0, y: 0 },
+    { id: 1, x: 0, y: 0 },
+  ]);
+  // for (let i = 0; i < nodeList.length; i++) {
+  //   setNodePos((prevState) => [...prevState, { id: i, x: 0, y: 0 }]);
+  // }
+  // setNodePos([
+  //   { id: 0, x: 0, y: 0 },
+  //   { id: 1, x: 0, y: 0 },
+  // ]);
+  // console.log(nodePos);
 
   useEffect(() => {
     const cw = scene.current.offsetWidth;
@@ -53,7 +68,7 @@ export default function Home() {
     engine.current.gravity.scale = 0.0;
 
     // Create bodies
-    const body1 = Bodies.circle(300, 300, 10, {
+    const body1 = Bodies.circle(300, 300, 20, {
       restitution: 1,
       render: {
         fillStyle: "yellow",
@@ -124,10 +139,21 @@ export default function Home() {
     // run the engine loop
     function update(): void {
       Matter.Engine.update(engine.current, 1000 / 60);
-      setBallPos({
-        x: engine.current.world.bodies[0].position.x,
-        y: engine.current.world.bodies[0].position.y,
-      });
+      for (let i = 0; i < nodeList.length; i++) {
+        setNodePos((prevState) => {
+          let newPos = [...prevState];
+          newPos[i] = {
+            id: i,
+            x: engine.current.world.bodies[i].position.x,
+            y: engine.current.world.bodies[i].position.y,
+          };
+          return newPos;
+        });
+      }
+      // setBallPos({
+      //   x: engine.current.world.bodies[0].position.x,
+      //   y: engine.current.world.bodies[0].position.y,
+      // });
 
       window.requestAnimationFrame(update);
     }
@@ -143,9 +169,10 @@ export default function Home() {
     };
   }, []);
 
+  // Update drag item position
   useEffect(() => {
-    if (dragState.dragging) {
-      Matter.Body.setPosition(engine.current.world.bodies[0], {
+    if (dragState.dragItem != -1) {
+      Matter.Body.setPosition(engine.current.world.bodies[dragState.dragItem], {
         x: dragState.x,
         y: dragState.y,
       });
@@ -164,38 +191,33 @@ export default function Home() {
           left: 0,
         }}
       />
-      <div
-        style={
-          {
-            // backgroundColor: "white",
-            // borderRadius: "100%",
-          }
-        }
-      >
+      {nodeList.map((component, index) => (
         <motion.div
+          key={index}
           drag={true}
           whileDrag={{ scale: 0.9 }}
           whileHover={{ scale: 1.2 }}
           onDrag={(event, info) => {
-            setDragState({ dragging: true, x: info.point.x, y: info.point.y });
-            console.log(dragState);
+            setDragState({ dragItem: index, x: info.point.x, y: info.point.y });
           }}
           onDragEnd={(event, info) => {
-            setDragState({ dragging: false, x: info.point.x, y: info.point.y });
+            setDragState({ dragItem: -1, x: info.point.x, y: info.point.y });
           }}
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
           dragElastic={0.0}
           style={{
             position: "absolute",
-            left: ballPos.x - 20,
-            top: ballPos.y - 20,
-            width: 40,
-            height: 40,
-            backgroundColor: "white",
-            borderRadius: "100%",
+            left: nodePos[index].x - 20,
+            top: nodePos[index].y - 20,
+            // width: 40,
+            // height: 40,
+            // backgroundColor: "white",
+            // borderRadius: "100%",
           }}
-        ></motion.div>
-      </div>
+        >
+          {component}
+        </motion.div>
+      ))}
     </main>
   );
 }
