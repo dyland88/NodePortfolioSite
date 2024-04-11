@@ -1,12 +1,5 @@
 "use client";
-import Image from "next/image";
-import {
-  motion,
-  useForceUpdate,
-  useMotionValue,
-  DragControls,
-  useDragControls,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import {
   Engine,
@@ -23,7 +16,6 @@ import Matter from "matter-js";
 
 export default function Home() {
   const DEBUG = true;
-  const links = [{ source: 0, target: 1 }];
   const scene = useRef(null);
   const engine = useRef(Engine.create());
 
@@ -234,6 +226,9 @@ export default function Home() {
             // height: 40,
             // backgroundColor: "white",
             // borderRadius: "100%",
+            // transform: `translate(${nodeList[index].x - 20}px, ${
+            //   nodeList[index].y - 20
+            // }px)`,
           }}
         >
           {component.content}
