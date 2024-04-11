@@ -163,16 +163,6 @@ function usePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
       });
     }
   }
-
-  // Update drag item position
-  useEffect(() => {
-    if (dragState.dragItem != -1) {
-      Matter.Body.setPosition(engine.current.world.bodies[dragState.dragItem], {
-        x: dragState.x,
-        y: dragState.y,
-      });
-    }
-  }, [dragState]);
 }
 
 export default usePhysics;
