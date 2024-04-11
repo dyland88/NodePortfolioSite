@@ -15,12 +15,6 @@ import {
 import Matter from "matter-js";
 
 export default function Home() {
-  const DEBUG = true;
-  const scene = useRef(null);
-  const engine = useRef(Engine.create());
-
-  const [dragState, setDragState] = useState({ dragItem: -1, x: 0, y: 0 });
-
   const ComponentOne = () => (
     <div
       style={{
@@ -34,11 +28,6 @@ export default function Home() {
       }}
     >
       <p>Hello</p>
-      <img
-        src={"/assets/Profile Pic.jpeg"}
-        style={{ width: 100, height: 100 }}
-        alt="image"
-      />
     </div>
   );
   const ComponentTwo = () => (
@@ -57,140 +46,16 @@ export default function Home() {
     </div>
   );
 
-  const [nodeList, setNodeList] = useState([
+  const initialNodes = [
     { id: "hello", content: <ComponentOne />, x: 100, y: 100 },
     { id: "world", content: <ComponentTwo />, x: 50, y: 50 },
     { id: "three", content: <ComponentTwo />, x: 150, y: 400 },
-  ]);
+  ];
   const linkList = [
     { source: "hello", target: "world" },
     { source: "world", target: "three" },
     { source: "three", target: "hello" },
   ];
-
-  useEffect(() => {
-    const cw = scene.current.offsetWidth;
-    const ch = scene.current.offsetHeight;
-
-    // Create render scene
-    const render = Render.create({
-      element: scene.current!,
-      engine: engine.current,
-
-      options: {
-        width: cw,
-        height: ch,
-        wireframes: false,
-        background: "transparent",
-      },
-    });
-
-    // Disable gravity
-    engine.current.gravity.scale = 0.0;
-
-    // Create simulation bodies
-    nodeList.forEach((node) => {
-      const body = Bodies.circle(node.x, node.y, 20, {
-        restitution: 1,
-        render: {
-          fillStyle: "yellow",
-        },
-      });
-      World.add(engine.current.world, body);
-      console.log(body.position.x, body.position.y);
-    });
-
-    // Create links between nodes
-    linkList.forEach((link) => {
-      const sourceNode = nodeList.find((node) => node.id === link.source);
-      const targetNode = nodeList.find((node) => node.id === link.target);
-
-      if (sourceNode && targetNode) {
-        const constraint = Constraint.create({
-          bodyA: engine.current.world.bodies[nodeList.indexOf(sourceNode)],
-          bodyB: engine.current.world.bodies[nodeList.indexOf(targetNode)],
-          length: 100,
-          stiffness: 0.00004,
-        });
-
-        World.add(engine.current.world, constraint);
-      }
-    });
-
-    // Add rectangle bounding boxes
-    World.add(engine.current.world, [
-      Bodies.rectangle(cw / 2, -10, cw, 20, { isStatic: true, restitution: 1 }),
-      Bodies.rectangle(-10, ch / 2, 20, ch, { isStatic: true, restitution: 1 }),
-      Bodies.rectangle(cw / 2, ch + 10, cw, 20, {
-        isStatic: true,
-        restitution: 1,
-      }),
-      Bodies.rectangle(cw + 10, ch / 2, 20, ch, {
-        isStatic: true,
-        restitution: 1,
-      }),
-    ]);
-
-    // Debug renderer and mouse control
-    if (DEBUG) {
-      Render.run(render);
-      // Create mouse constraint
-      var mouse = Mouse.create(render.canvas);
-      var mouseConstraint = MouseConstraint.create(engine.current, {
-        mouse: mouse,
-        constraint: {
-          render: {
-            visible: false,
-          },
-        },
-      });
-      Composite.add(engine.current.world, mouseConstraint);
-    }
-
-    // run the engine loop
-    function update(): void {
-      Matter.Engine.update(engine.current, 1000 / 60);
-      updateNodePositions();
-      window.requestAnimationFrame(update);
-    }
-
-    window.requestAnimationFrame(update);
-
-    // Clean up
-    return () => {
-      Render.stop(render);
-      World.clear(engine.current.world, false);
-      Engine.clear(engine.current);
-      render.canvas.remove();
-      render.textures = {};
-    };
-  }, []);
-
-  // Update all node positions
-  function updateNodePositions() {
-    for (let i = 0; i < nodeList.length; i++) {
-      setNodeList((prevState) => {
-        let newPos = [...prevState];
-        newPos[i] = {
-          id: prevState[i].id,
-          content: prevState[i].content,
-          x: engine.current.world.bodies[i].position.x,
-          y: engine.current.world.bodies[i].position.y,
-        };
-        return newPos;
-      });
-    }
-  }
-
-  // Update drag item position
-  useEffect(() => {
-    if (dragState.dragItem != -1) {
-      Matter.Body.setPosition(engine.current.world.bodies[dragState.dragItem], {
-        x: dragState.x,
-        y: dragState.y,
-      });
-    }
-  }, [dragState]);
 
   return (
     <main className="flex min-h-screen flex-col items-start justify-start p-24 bg-slate-950">
