@@ -22,7 +22,7 @@ import {
 import Matter from "matter-js";
 
 export default function Home() {
-  const DEBUG = false;
+  const DEBUG = true;
   const links = [{ source: 0, target: 1 }];
   const scene = useRef(null);
   const engine = useRef(Engine.create());
@@ -61,9 +61,15 @@ export default function Home() {
   );
 
   const [nodeList, setNodeList] = useState([
-    { id: "hello", content: <ComponentOne />, x: 0, y: 0 },
-    { id: "world", content: <ComponentTwo />, x: 0, y: 0 },
+    { id: "hello", content: <ComponentOne />, x: 100, y: 100 },
+    { id: "world", content: <ComponentTwo />, x: 50, y: 50 },
+    { id: "three", content: <ComponentTwo />, x: 150, y: 400 },
   ]);
+  const linkList = [
+    { source: "hello", target: "world" },
+    { source: "world", target: "three" },
+    { source: "three", target: "hello" },
+  ];
 
   useEffect(() => {
     const cw = scene.current.offsetWidth;
@@ -85,58 +91,34 @@ export default function Home() {
     // Disable gravity
     engine.current.gravity.scale = 0.0;
 
-    // Create bodies
-
-    const body1 = Bodies.circle(300, 300, 20, {
-      restitution: 1,
-      render: {
-        fillStyle: "yellow",
-      },
-    });
-    const body2 = Bodies.circle(600, 600, 10, {
-      restitution: 1,
-      render: {
-        fillStyle: "yellow",
-      },
-    });
-    const body3 = Bodies.circle(400, 300, 10, {
-      restitution: 1,
-      render: {
-        fillStyle: "yellow",
-      },
-    });
-    var constraint1 = Constraint.create({
-      bodyA: body1,
-      bodyB: body2,
-      length: 100,
-      stiffness: 0.00004,
-    });
-    var constraint2 = Constraint.create({
-      bodyA: body1,
-      bodyB: body3,
-      length: 100,
-      stiffness: 0.00004,
-    });
-    // Add bodies
-    World.add(engine.current.world, [
-      body1,
-      body2,
-      body3,
-      constraint1,
-      constraint2,
-    ]);
-
-    // Create mouse constraint
-    var mouse = Mouse.create(render.canvas);
-    var mouseConstraint = MouseConstraint.create(engine.current, {
-      mouse: mouse,
-      constraint: {
+    // Create simulation bodies
+    nodeList.forEach((node) => {
+      const body = Bodies.circle(node.x, node.y, 20, {
+        restitution: 1,
         render: {
-          visible: false,
+          fillStyle: "yellow",
         },
-      },
+      });
+      World.add(engine.current.world, body);
+      console.log(body.position.x, body.position.y);
     });
-    Composite.add(engine.current.world, mouseConstraint);
+
+    // Create links between nodes
+    linkList.forEach((link) => {
+      const sourceNode = nodeList.find((node) => node.id === link.source);
+      const targetNode = nodeList.find((node) => node.id === link.target);
+
+      if (sourceNode && targetNode) {
+        const constraint = Constraint.create({
+          bodyA: engine.current.world.bodies[nodeList.indexOf(sourceNode)],
+          bodyB: engine.current.world.bodies[nodeList.indexOf(targetNode)],
+          length: 100,
+          stiffness: 0.00004,
+        });
+
+        World.add(engine.current.world, constraint);
+      }
+    });
 
     // Add rectangle bounding boxes
     World.add(engine.current.world, [
@@ -152,9 +134,20 @@ export default function Home() {
       }),
     ]);
 
-    // Run the renderer for debugging
+    // Debug renderer and mouse control
     if (DEBUG) {
       Render.run(render);
+      // Create mouse constraint
+      var mouse = Mouse.create(render.canvas);
+      var mouseConstraint = MouseConstraint.create(engine.current, {
+        mouse: mouse,
+        constraint: {
+          render: {
+            visible: false,
+          },
+        },
+      });
+      Composite.add(engine.current.world, mouseConstraint);
     }
 
     // run the engine loop
