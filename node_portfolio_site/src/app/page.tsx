@@ -32,8 +32,8 @@ export default function Home() {
   const ComponentOne = () => (
     <div
       style={{
-        width: 40,
-        height: 40,
+        minWidth: 40,
+        minHeight: 40,
         backgroundColor: "red",
         borderRadius: "100%",
         justifyContent: "center",
@@ -42,6 +42,11 @@ export default function Home() {
       }}
     >
       <p>Hello</p>
+      <img
+        src={"/assets/Profile Pic.jpeg"}
+        style={{ width: 100, height: 100 }}
+        alt="image"
+      />
     </div>
   );
   const ComponentTwo = () => (
