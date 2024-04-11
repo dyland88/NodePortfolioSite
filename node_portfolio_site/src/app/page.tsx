@@ -22,6 +22,7 @@ import {
 import Matter from "matter-js";
 
 export default function Home() {
+  const DEBUG = false;
   const links = [{ source: 0, target: 1 }];
   const scene = useRef(null);
   const engine = useRef(Engine.create());
@@ -152,25 +153,17 @@ export default function Home() {
     ]);
 
     // Run the renderer for debugging
-    Render.run(render);
+    if (DEBUG) {
+      Render.run(render);
+    }
 
     // run the engine loop
     function update(): void {
       Matter.Engine.update(engine.current, 1000 / 60);
-      for (let i = 0; i < nodeList.length; i++) {
-        setNodeList((prevState) => {
-          let newPos = [...prevState];
-          newPos[i] = {
-            id: prevState[i].id,
-            content: prevState[i].content,
-            x: engine.current.world.bodies[i].position.x,
-            y: engine.current.world.bodies[i].position.y,
-          };
-          return newPos;
-        });
-      }
+      updateNodePositions();
       window.requestAnimationFrame(update);
     }
+
     window.requestAnimationFrame(update);
 
     // Clean up
@@ -182,6 +175,22 @@ export default function Home() {
       render.textures = {};
     };
   }, []);
+
+  // Update all node positions
+  function updateNodePositions() {
+    for (let i = 0; i < nodeList.length; i++) {
+      setNodeList((prevState) => {
+        let newPos = [...prevState];
+        newPos[i] = {
+          id: prevState[i].id,
+          content: prevState[i].content,
+          x: engine.current.world.bodies[i].position.x,
+          y: engine.current.world.bodies[i].position.y,
+        };
+        return newPos;
+      });
+    }
+  }
 
   // Update drag item position
   useEffect(() => {
