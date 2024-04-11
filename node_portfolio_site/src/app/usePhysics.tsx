@@ -55,6 +55,7 @@ function usePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
         }
       }
     }
+    return newLinkList;
   }, [initialLinkList]);
 
   useEffect(() => {
@@ -89,19 +90,13 @@ function usePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
 
     // Create links between nodes
     linkList.forEach((link) => {
-      const sourceNode = nodeList.find((node) => node.id === link.source);
-      const targetNode = nodeList.find((node) => node.id === link.target);
-
-      if (sourceNode && targetNode) {
-        const constraint = Constraint.create({
-          bodyA: engine.current.world.bodies[nodeList.indexOf(sourceNode)],
-          bodyB: engine.current.world.bodies[nodeList.indexOf(targetNode)],
-          length: 100,
-          stiffness: 0.00004,
-        });
-
-        World.add(engine.current.world, constraint);
-      }
+      const constraint = Constraint.create({
+        bodyA: engine.current.world.bodies[link.source],
+        bodyB: engine.current.world.bodies[link.target],
+        length: 100,
+        stiffness: 0.00004,
+      });
+      World.add(engine.current.world, constraint);
     });
 
     // Add rectangle bounding boxes
