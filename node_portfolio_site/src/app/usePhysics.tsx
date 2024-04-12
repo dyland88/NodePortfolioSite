@@ -148,6 +148,21 @@ function usePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
     };
   }, []);
 
+  const setNodePosition = useCallback(
+    (index: number, newX: number, newY: number) => {
+      setNodeList((prevState) => {
+        let newPos = [...prevState];
+        newPos[index] = {
+          id: prevState[index].id,
+          content: prevState[index].content,
+          x: newX,
+          y: newY,
+        };
+        return newPos;
+      });
+    },
+    []
+  );
   // Update all node positions
   function updateNodePositions() {
     for (let i = 0; i < nodeList.length; i++) {
@@ -163,6 +178,8 @@ function usePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
       });
     }
   }
+
+  return { scene, nodeList, linkList, setNodePosition };
 }
 
 export default usePhysics;

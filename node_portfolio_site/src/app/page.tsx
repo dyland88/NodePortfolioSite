@@ -13,6 +13,7 @@ import {
   MouseConstraint,
 } from "matter-js";
 import Matter from "matter-js";
+import usePhysics from "./usePhysics";
 
 export default function Home() {
   const ComponentOne = () => (
@@ -51,11 +52,16 @@ export default function Home() {
     { id: "world", content: <ComponentTwo />, x: 50, y: 50 },
     { id: "three", content: <ComponentTwo />, x: 150, y: 400 },
   ];
-  const linkList = [
+  const initialLinkList = [
     { source: "hello", target: "world" },
     { source: "world", target: "three" },
     { source: "three", target: "hello" },
   ];
+
+  const { scene, nodeList, linkList, setNodePosition } = usePhysics(
+    initialNodes,
+    initialLinkList
+  );
 
   return (
     <main className="flex min-h-screen flex-col items-start justify-start p-24 bg-slate-950">
@@ -71,15 +77,12 @@ export default function Home() {
       />
       {nodeList.map((component, index) => (
         <motion.div
-          key={index}
+          id={index}
           drag={true}
           whileDrag={{ scale: 0.9 }}
           whileHover={{ scale: 1.2 }}
           onDrag={(event, info) => {
-            setDragState({ dragItem: index, x: info.point.x, y: info.point.y });
-          }}
-          onDragEnd={(event, info) => {
-            setDragState({ dragItem: -1, x: info.point.x, y: info.point.y });
+            setNodePosition(index, info.point.x, info.point.y);
           }}
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
           dragElastic={0.0}
