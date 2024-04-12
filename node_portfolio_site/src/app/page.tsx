@@ -13,7 +13,7 @@ import {
   MouseConstraint,
 } from "matter-js";
 import Matter from "matter-js";
-import usePhysics from "./usePhysics";
+import useNodePhysics from "./useNodePhysics";
 
 export default function Home() {
   const ComponentOne = () => (
@@ -58,7 +58,7 @@ export default function Home() {
     { source: "three", target: "hello" },
   ];
 
-  const { scene, nodeList, linkList, setNodePosition } = usePhysics(
+  const { scene, nodeList, linkList, setNodePosition } = useNodePhysics(
     initialNodes,
     initialLinkList
   );

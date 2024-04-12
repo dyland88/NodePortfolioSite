@@ -29,7 +29,7 @@ type link = {
   target: number;
 };
 
-function usePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
+function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
   const DEBUG = true;
   const scene = useRef(null);
   const engine = useRef(Engine.create());
@@ -173,4 +173,4 @@ function usePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
   return { scene, nodeList, linkList, setNodePosition };
 }
 
-export default usePhysics;
+export default useNodePhysics;
