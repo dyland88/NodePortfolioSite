@@ -148,21 +148,12 @@ function usePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
     };
   }, []);
 
-  const setNodePosition = useCallback(
-    (index: number, newX: number, newY: number) => {
-      setNodeList((prevState) => {
-        let newPos = [...prevState];
-        newPos[index] = {
-          id: prevState[index].id,
-          content: prevState[index].content,
-          x: newX,
-          y: newY,
-        };
-        return newPos;
-      });
-    },
-    []
-  );
+  function setNodePosition(index: number, newX: number, newY: number) {
+    Matter.Body.setPosition(engine.current.world.bodies[index], {
+      x: newX,
+      y: newY,
+    });
+  }
   // Update all node positions
   function updateNodePositions() {
     for (let i = 0; i < nodeList.length; i++) {
