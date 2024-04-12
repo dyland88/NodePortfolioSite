@@ -77,7 +77,7 @@ export default function Home() {
       />
       {nodeList.map((component, index) => (
         <motion.div
-          id={index}
+          key={index}
           drag={true}
           whileDrag={{ scale: 0.9 }}
           whileHover={{ scale: 1.2 }}

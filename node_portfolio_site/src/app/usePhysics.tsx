@@ -35,28 +35,28 @@ function usePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
   const engine = useRef(Engine.create());
 
   const [nodeList, setNodeList] = useState<Node[]>(initialNodeList);
-
-  // Create link list based on indexes of nodes instead of their names
-  const linkList = useMemo(() => {
+  const [linkList, setLinkList] = useState<link[]>(() => {
+    // Create link list based on indexes of nodes instead of their names
     let newLinkList = [];
     for (let i = 0; i < initialLinkList.length; i++) {
+      let sourceIndex = -1;
+      let targetIndex = -1;
       for (let j = 0; j < nodeList.length; j++) {
-        let sourceIndex = -1;
-        let targetIndex = -1;
         if (nodeList[j].id === initialLinkList[i].source) {
           sourceIndex = j;
         } else if (nodeList[j].id === initialLinkList[i].target) {
           targetIndex = j;
         }
-        if (sourceIndex !== -1 && targetIndex !== -1) {
-          newLinkList.push({ source: sourceIndex, target: targetIndex });
-        } else {
-          console.log("Error: Node not found in nodeList for link");
-        }
+      }
+      // Add link if both source and target nodes are found
+      if (sourceIndex !== -1 && targetIndex !== -1) {
+        newLinkList.push({ source: sourceIndex, target: targetIndex });
+      } else {
+        console.log("Error: Node not found in nodeList for link");
       }
     }
     return newLinkList;
-  }, [initialLinkList]);
+  });
 
   useEffect(() => {
     const cw = scene.current.offsetWidth;
