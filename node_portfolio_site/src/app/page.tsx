@@ -19,8 +19,8 @@ export default function Home() {
   const ComponentOne = () => (
     <div
       style={{
-        minWidth: 40,
-        minHeight: 40,
+        minWidth: 80,
+        minHeight: 80,
         backgroundColor: "red",
         borderRadius: "100%",
         justifyContent: "center",
@@ -34,8 +34,8 @@ export default function Home() {
   const ComponentTwo = () => (
     <div
       style={{
-        width: 40,
-        height: 40,
+        width: 80,
+        height: 80,
         backgroundColor: "blue",
         borderRadius: "100%",
         justifyContent: "center",
@@ -47,15 +47,29 @@ export default function Home() {
     </div>
   );
 
-  const initialNodes = [
-    { id: "hello", content: <ComponentOne />, x: 100, y: 100 },
-    { id: "world", content: <ComponentTwo />, x: 50, y: 50 },
-    { id: "three", content: <ComponentTwo />, x: 150, y: 400 },
+  const initialNodes = window && [
+    {
+      id: "hello",
+      content: <ComponentOne />,
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
+    },
+    {
+      id: "world",
+      content: <ComponentTwo />,
+      x: window.innerWidth / 4,
+      y: window.innerHeight / 2,
+    },
+    {
+      id: "three",
+      content: <ComponentTwo />,
+      x: window.innerWidth * (3 / 4),
+      y: window.innerHeight / 2,
+    },
   ];
   const initialLinkList = [
     { source: "hello", target: "world" },
-    { source: "world", target: "three" },
-    { source: "three", target: "hello" },
+    { source: "hello", target: "three" },
   ];
 
   const { scene, nodeList, linkList, setNodePosition } = useNodePhysics(
@@ -79,7 +93,7 @@ export default function Home() {
         <motion.div
           key={index}
           drag={true}
-          whileDrag={{ scale: 0.9 }}
+          whileDrag={{ scale: 1.1 }}
           whileHover={{ scale: 1.2 }}
           onDrag={(event, info) => {
             setNodePosition(index, info.point.x, info.point.y);
@@ -88,8 +102,8 @@ export default function Home() {
           dragElastic={0.0}
           style={{
             position: "absolute",
-            left: nodeList[index].x - 20,
-            top: nodeList[index].y - 20,
+            left: nodeList[index].x - 40,
+            top: nodeList[index].y - 40,
             // width: 40,
             // height: 40,
             // backgroundColor: "white",

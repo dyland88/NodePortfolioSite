@@ -59,16 +59,16 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
   });
 
   useEffect(() => {
-    const cw = scene.current.offsetWidth;
-    const ch = scene.current.offsetHeight;
+    const clientWidth = window && window.innerWidth;
+    const clientHeight = window && window.innerHeight;
     // Create render scene
     const render = Render.create({
       element: scene.current!,
       engine: engine.current,
 
       options: {
-        width: cw,
-        height: ch,
+        width: clientWidth,
+        height: clientHeight,
         wireframes: false,
         background: "transparent",
       },
@@ -79,7 +79,7 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
 
     // Create simulation bodies
     nodeList.forEach((node) => {
-      const body = Bodies.circle(node.x, node.y, 20, {
+      const body = Bodies.circle(node.x, node.y, 40, {
         restitution: 1,
         render: {
           fillStyle: "yellow",
@@ -101,13 +101,19 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
 
     // Add rectangle bounding boxes
     World.add(engine.current.world, [
-      Bodies.rectangle(cw / 2, -10, cw, 20, { isStatic: true, restitution: 1 }),
-      Bodies.rectangle(-10, ch / 2, 20, ch, { isStatic: true, restitution: 1 }),
-      Bodies.rectangle(cw / 2, ch + 10, cw, 20, {
+      Bodies.rectangle(clientWidth / 2, -10, clientWidth, 20, {
         isStatic: true,
         restitution: 1,
       }),
-      Bodies.rectangle(cw + 10, ch / 2, 20, ch, {
+      Bodies.rectangle(-10, clientHeight / 2, 20, clientHeight, {
+        isStatic: true,
+        restitution: 1,
+      }),
+      Bodies.rectangle(clientWidth / 2, clientHeight + 10, clientWidth, 20, {
+        isStatic: true,
+        restitution: 1,
+      }),
+      Bodies.rectangle(clientWidth + 10, clientHeight / 2, 20, clientHeight, {
         isStatic: true,
         restitution: 1,
       }),
