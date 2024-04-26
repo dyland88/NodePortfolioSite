@@ -49,13 +49,13 @@ export default function Home() {
 
   const initialNodes = window && [
     {
-      id: "hello",
+      id: "main",
       content: <ComponentOne />,
       x: window.innerWidth / 2,
       y: window.innerHeight / 2,
     },
     {
-      id: "world",
+      id: "two",
       content: <ComponentTwo />,
       x: window.innerWidth / 4,
       y: window.innerHeight / 2,
@@ -66,10 +66,38 @@ export default function Home() {
       x: window.innerWidth * (3 / 4),
       y: window.innerHeight / 2,
     },
+    {
+      id: "3.1",
+      content: <ComponentTwo />,
+      x: window.innerWidth * (3 / 4),
+      y: window.innerHeight * (3 / 4),
+    },
+    {
+      id: "3.2",
+      content: <ComponentTwo />,
+      x: window.innerWidth * (3 / 4),
+      y: window.innerHeight * (1 / 4),
+    },
+    {
+      id: "2.1",
+      content: <ComponentTwo />,
+      x: window.innerWidth / 4,
+      y: window.innerHeight * (3 / 4),
+    },
+    {
+      id: "2.2",
+      content: <ComponentTwo />,
+      x: window.innerWidth / 4,
+      y: window.innerHeight * (1 / 4),
+    },
   ];
   const initialLinkList = [
-    { source: "hello", target: "world" },
-    { source: "hello", target: "three" },
+    { source: "main", target: "two" },
+    { source: "main", target: "three" },
+    { source: "three", target: "3.1" },
+    { source: "three", target: "3.2" },
+    { source: "two", target: "2.1" },
+    { source: "two", target: "2.2" },
   ];
 
   const { scene, nodeList, linkList, setNodePosition } = useNodePhysics(

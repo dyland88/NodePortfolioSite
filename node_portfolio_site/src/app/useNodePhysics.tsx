@@ -59,8 +59,8 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
   });
 
   useEffect(() => {
-    const clientWidth = window && window.innerWidth;
-    const clientHeight = window && window.innerHeight;
+    const clientWidth = window.innerWidth;
+    const clientHeight = window.innerHeight;
     // Create render scene
     const render = Render.create({
       element: scene.current!,
@@ -80,6 +80,7 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
     // Create simulation bodies
     nodeList.forEach((node) => {
       const body = Bodies.circle(node.x, node.y, 40, {
+        //TODO: make size dynamic
         restitution: 1,
         render: {
           fillStyle: "yellow",
@@ -93,7 +94,7 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
       const constraint = Constraint.create({
         bodyA: engine.current.world.bodies[link.source],
         bodyB: engine.current.world.bodies[link.target],
-        length: 100,
+        length: (clientWidth + clientHeight) / 10,
         stiffness: 0.00004,
       });
       World.add(engine.current.world, constraint);
@@ -139,6 +140,7 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
     function update(): void {
       Matter.Engine.update(engine.current, 1000 / 60);
       updateNodePositions();
+      repelNodes();
       window.requestAnimationFrame(update);
     }
 
@@ -174,6 +176,36 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
         return newPos;
       });
     }
+  }
+
+  function repelNodes() {
+    for (let i = 0; i < nodeList.length; i++) {
+      for (let j = 0; j < nodeList.length; j++) {
+        if (i != j) {
+          let force = Vector.sub(
+            engine.current.world.bodies[i].position,
+            engine.current.world.bodies[j].position
+          );
+          let distance = Vector.magnitude(force);
+          force = Vector.normalise(force);
+          force = Vector.mult(force, 0.1 / (distance * distance));
+          applyForce(i, force);
+          applyForce(j, Vector.neg(force));
+        }
+        //TODO: make repel force only act on neighbors
+      }
+    }
+  }
+
+  function applyForce(index: number, force: Vector) {
+    Matter.Body.applyForce(
+      engine.current.world.bodies[index],
+      {
+        x: 0,
+        y: 0,
+      },
+      force
+    );
   }
 
   return { scene, nodeList, linkList, setNodePosition };
