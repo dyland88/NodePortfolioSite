@@ -2,8 +2,10 @@
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import useNodePhysics from "./useNodePhysics";
+import { debug } from "console";
 
 export default function Home() {
+  const DEBUG = false;
   const ComponentOne = () => (
     <div
       style={{
@@ -97,12 +99,15 @@ export default function Home() {
 
   const { scene, nodeList, linkList, setNodePosition } = useNodePhysics(
     initialNodes,
-    initialLinkList
+    initialLinkList,
+    DEBUG
   );
 
   return (
     <main className="flex min-h-screen flex-col items-start justify-start overflow-clip p-24 bg-slate-950">
-      <div ref={scene} className="h-screen w-screen absolute top-0 left-0" />
+      {DEBUG && (
+        <div ref={scene} className="h-screen w-screen absolute top-0 left-0" />
+      )}
       <svg className="h-screen w-screen absolute top-0 left-0">
         {linkList.map((link, index) => (
           <line

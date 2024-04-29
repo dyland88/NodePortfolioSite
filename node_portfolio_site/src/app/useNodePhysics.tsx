@@ -12,6 +12,7 @@ import {
   MouseConstraint,
 } from "matter-js";
 import Matter from "matter-js";
+import { throttle } from "throttle-debounce";
 
 type Node = {
   id: string;
@@ -29,8 +30,11 @@ type link = {
   target: number;
 };
 
-function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
-  const DEBUG = false;
+function useNodePhysics(
+  initialNodeList: Node[],
+  initialLinkList: nameLink[],
+  debug: boolean
+) {
   const NODERADIUS = 40;
   const scene = useRef(null);
   const engine = useRef(Engine.create());
@@ -62,6 +66,8 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
   useEffect(() => {
     const clientWidth = window.innerWidth;
     const clientHeight = window.innerHeight;
+    window.addEventListener("resize", resizeHandler);
+
     // Create render scene
     const render = Render.create({
       element: scene.current!,
@@ -85,7 +91,7 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
         restitution: 1,
         render: {
           fillStyle: "yellow",
-          opacity: 0,
+          visible: false,
         },
       });
       World.add(engine.current.world, body);
@@ -104,26 +110,26 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
 
     // Add rectangle bounding boxes
     World.add(engine.current.world, [
-      Bodies.rectangle(clientWidth / 2, -10, clientWidth, 20, {
+      Bodies.rectangle(clientWidth / 2, 0, clientWidth, 20, {
         isStatic: true,
         restitution: 1,
       }),
-      Bodies.rectangle(-10, clientHeight / 2, 20, clientHeight, {
+      Bodies.rectangle(0, clientHeight / 2, 10, clientHeight, {
         isStatic: true,
         restitution: 1,
       }),
-      Bodies.rectangle(clientWidth / 2, clientHeight + 10, clientWidth, 20, {
+      Bodies.rectangle(clientWidth / 2, clientHeight, clientWidth, 20, {
         isStatic: true,
         restitution: 1,
       }),
-      Bodies.rectangle(clientWidth + 10, clientHeight / 2, 20, clientHeight, {
+      Bodies.rectangle(clientWidth, clientHeight / 2, 20, clientHeight, {
         isStatic: true,
         restitution: 1,
       }),
     ]);
 
     // Debug renderer and mouse control
-    if (DEBUG) {
+    if (debug) {
       Render.run(render);
       // Create mouse constraint
       // var mouse = Mouse.create(render.canvas);
@@ -155,6 +161,7 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
       Engine.clear(engine.current);
       render.canvas.remove();
       render.textures = {};
+      window.removeEventListener("resize", resizeHandler);
     };
   }, []);
 
@@ -173,6 +180,51 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
       y: newY,
     });
   }
+  // Reposition boundary rectangles
+  const resizeHandler = throttle(100, () => {
+    // Update boundary box positions
+    Matter.Body.setPosition(
+      engine.current.world.bodies[engine.current.world.bodies.length - 4],
+      {
+        x: window.innerWidth / 2,
+        y: 0,
+      }
+    );
+    Matter.Body.setPosition(
+      engine.current.world.bodies[engine.current.world.bodies.length - 3],
+      {
+        x: 0,
+        y: window.innerHeight / 2,
+      }
+    );
+    Matter.Body.setPosition(
+      engine.current.world.bodies[engine.current.world.bodies.length - 2],
+      {
+        x: window.innerWidth / 2,
+        y: window.innerHeight,
+      }
+    );
+    Matter.Body.setPosition(
+      engine.current.world.bodies[engine.current.world.bodies.length - 1],
+      {
+        x: window.innerWidth,
+        y: window.innerHeight / 2,
+      }
+    );
+
+    //TODO: fix this
+    nodeList.forEach((node, index) => {
+      if (node.x > window.innerWidth + 10) {
+        Matter.Body.setPosition(engine.current.world.bodies[index], {
+          x: 1,
+          y: 1,
+        });
+      }
+      if (node.y > window.innerHeight + 10) {
+        node.y = window.innerHeight - NODERADIUS;
+      }
+    });
+  });
 
   // Update all node positions
   function updateNodePositions() {
@@ -200,7 +252,7 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
           );
           let distance = Vector.magnitude(force);
           force = Vector.normalise(force);
-          force = Vector.mult(force, 0.1 / (distance * distance));
+          force = Vector.mult(force, 0.3 / (distance * distance));
           applyForce(i, force);
           applyForce(j, Vector.neg(force));
         }
