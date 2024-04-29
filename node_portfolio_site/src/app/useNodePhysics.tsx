@@ -160,10 +160,13 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
 
   // Sets the position of a specific node
   function setNodePosition(index: number, newX: number, newY: number) {
-    newX = Math.max(NODERADIUS, Math.min(newX, window.innerWidth - NODERADIUS));
+    newX = Math.max(
+      NODERADIUS + 5,
+      Math.min(newX, window.innerWidth - NODERADIUS - 5)
+    );
     newY = Math.max(
-      NODERADIUS,
-      Math.min(newY, window.innerHeight - NODERADIUS)
+      NODERADIUS + 5,
+      Math.min(newY, window.innerHeight - NODERADIUS - 5)
     );
     Matter.Body.setPosition(engine.current.world.bodies[index], {
       x: newX,

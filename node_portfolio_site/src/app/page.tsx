@@ -1,18 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import {
-  Engine,
-  Render,
-  Bodies,
-  World,
-  Vector,
-  Constraint,
-  Composite,
-  Mouse,
-  MouseConstraint,
-} from "matter-js";
-import Matter from "matter-js";
 import useNodePhysics from "./useNodePhysics";
 
 export default function Home() {
@@ -51,48 +39,51 @@ export default function Home() {
     </div>
   );
 
-  const initialNodes = window && [
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+
+  const initialNodes = [
     {
       id: "main",
       content: <ComponentOne />,
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
+      x: windowWidth / 2,
+      y: windowHeight / 2,
     },
     {
       id: "two",
       content: <ComponentTwo />,
-      x: window.innerWidth / 4,
-      y: window.innerHeight / 2,
+      x: windowWidth / 4,
+      y: windowHeight / 2,
     },
     {
       id: "three",
       content: <ComponentTwo />,
-      x: window.innerWidth * (3 / 4),
-      y: window.innerHeight / 2,
+      x: windowWidth * (3 / 4),
+      y: windowHeight / 2,
     },
     {
       id: "3.1",
       content: <ComponentTwo />,
-      x: window.innerWidth * (3 / 4),
-      y: window.innerHeight * (3 / 4),
+      x: windowWidth * (3 / 4),
+      y: windowHeight * (3 / 4),
     },
     {
       id: "3.2",
       content: <ComponentTwo />,
-      x: window.innerWidth * (3 / 4),
-      y: window.innerHeight * (1 / 4),
+      x: windowWidth * (3 / 4),
+      y: windowHeight * (1 / 4),
     },
     {
       id: "2.1",
       content: <ComponentTwo />,
-      x: window.innerWidth / 4,
-      y: window.innerHeight * (3 / 4),
+      x: windowWidth / 4,
+      y: windowHeight * (3 / 4),
     },
     {
       id: "2.2",
       content: <ComponentTwo />,
-      x: window.innerWidth / 4,
-      y: window.innerHeight * (1 / 4),
+      x: windowWidth / 4,
+      y: windowHeight * (1 / 4),
     },
   ];
   const initialLinkList = [
@@ -110,7 +101,7 @@ export default function Home() {
   );
 
   return (
-    <main className="flex min-h-screen flex-col items-start justify-start overflow-hidden p-24 bg-slate-950">
+    <main className="flex min-h-screen flex-col items-start justify-start overflow-clip p-24 bg-slate-950">
       <div ref={scene} className="h-screen w-screen absolute top-0 left-0" />
       <svg className="h-screen w-screen absolute top-0 left-0">
         {linkList.map((link, index) => (
