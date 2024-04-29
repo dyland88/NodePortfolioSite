@@ -30,7 +30,8 @@ type link = {
 };
 
 function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
-  const DEBUG = true;
+  const DEBUG = false;
+  const NODERADIUS = 40;
   const scene = useRef(null);
   const engine = useRef(Engine.create());
 
@@ -79,7 +80,7 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
 
     // Create simulation bodies
     nodeList.forEach((node) => {
-      const body = Bodies.circle(node.x, node.y, 40, {
+      const body = Bodies.circle(node.x, node.y, NODERADIUS, {
         //TODO: make size dynamic
         restitution: 1,
         render: {
@@ -157,12 +158,19 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
     };
   }, []);
 
+  // Sets the position of a specific node
   function setNodePosition(index: number, newX: number, newY: number) {
+    newX = Math.max(NODERADIUS, Math.min(newX, window.innerWidth - NODERADIUS));
+    newY = Math.max(
+      NODERADIUS,
+      Math.min(newY, window.innerHeight - NODERADIUS)
+    );
     Matter.Body.setPosition(engine.current.world.bodies[index], {
       x: newX,
       y: newY,
     });
   }
+
   // Update all node positions
   function updateNodePositions() {
     for (let i = 0; i < nodeList.length; i++) {

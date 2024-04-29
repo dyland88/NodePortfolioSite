@@ -26,6 +26,8 @@ export default function Home() {
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
+        borderWidth: 2,
+        borderColor: "white",
       }}
     >
       <p>Hello</p>
@@ -41,6 +43,8 @@ export default function Home() {
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
+        borderWidth: 2,
+        borderColor: "white",
       }}
     >
       <p>World</p>
@@ -106,17 +110,21 @@ export default function Home() {
   );
 
   return (
-    <main className="flex min-h-screen flex-col items-start justify-start p-24 bg-slate-950">
-      <div
-        ref={scene}
-        style={{
-          width: "100%",
-          height: "100%",
-          position: "absolute",
-          top: 0,
-          left: 0,
-        }}
-      />
+    <main className="flex min-h-screen flex-col items-start justify-start overflow-hidden p-24 bg-slate-950">
+      <div ref={scene} className="h-screen w-screen absolute top-0 left-0" />
+      <svg className="h-screen w-screen absolute top-0 left-0">
+        {linkList.map((link, index) => (
+          <line
+            key={index}
+            x1={nodeList[linkList[index].source].x}
+            y1={nodeList[linkList[index].source].y}
+            x2={nodeList[linkList[index].target].x}
+            y2={nodeList[linkList[index].target].y}
+            stroke="gray"
+            strokeWidth={2.5}
+          />
+        ))}
+      </svg>
       {nodeList.map((component, index) => (
         <motion.div
           key={index}
