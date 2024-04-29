@@ -261,10 +261,7 @@ function useNodePhysics(
   function applyForce(index: number, force: Vector) {
     Matter.Body.applyForce(
       engine.current.world.bodies[index],
-      {
-        x: 0,
-        y: 0,
-      },
+      engine.current.world.bodies[index].position,
       force
     );
   }
