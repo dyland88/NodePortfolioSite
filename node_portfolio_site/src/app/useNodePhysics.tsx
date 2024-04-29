@@ -244,19 +244,16 @@ function useNodePhysics(
 
   function repelNodes() {
     for (let i = 0; i < nodeList.length; i++) {
-      for (let j = 0; j < nodeList.length; j++) {
-        if (i != j) {
-          let force = Vector.sub(
-            engine.current.world.bodies[i].position,
-            engine.current.world.bodies[j].position
-          );
-          let distance = Vector.magnitude(force);
-          force = Vector.normalise(force);
-          force = Vector.mult(force, 0.3 / (distance * distance));
-          applyForce(i, force);
-          applyForce(j, Vector.neg(force));
-        }
-        //TODO: make repel force only act on neighbors
+      for (let j = i + 1; j < nodeList.length; j++) {
+        let force = Vector.sub(
+          engine.current.world.bodies[i].position,
+          engine.current.world.bodies[j].position
+        );
+        let distance = Vector.magnitude(force);
+        force = Vector.normalise(force);
+        force = Vector.mult(force, 0.6 / (distance * distance));
+        applyForce(i, force);
+        applyForce(j, Vector.neg(force));
       }
     }
   }
