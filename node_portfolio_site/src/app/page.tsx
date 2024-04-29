@@ -127,7 +127,7 @@ export default function Home() {
           drag={true}
           whileDrag={{ scale: 1.1 }}
           whileHover={{ scale: 1.2 }}
-          onDrag={(event, info) => {
+          onDrag={(event: any, info: { point: { x: number; y: number } }) => {
             setNodePosition(index, info.point.x, info.point.y);
           }}
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
