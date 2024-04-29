@@ -84,6 +84,7 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
         restitution: 1,
         render: {
           fillStyle: "yellow",
+          opacity: 0,
         },
       });
       World.add(engine.current.world, body);
@@ -124,16 +125,16 @@ function useNodePhysics(initialNodeList: Node[], initialLinkList: nameLink[]) {
     if (DEBUG) {
       Render.run(render);
       // Create mouse constraint
-      var mouse = Mouse.create(render.canvas);
-      var mouseConstraint = MouseConstraint.create(engine.current, {
-        mouse: mouse,
-        constraint: {
-          render: {
-            visible: false,
-          },
-        },
-      });
-      Composite.add(engine.current.world, mouseConstraint);
+      // var mouse = Mouse.create(render.canvas);
+      // var mouseConstraint = MouseConstraint.create(engine.current, {
+      //   mouse: mouse,
+      //   constraint: {
+      //     render: {
+      //       visible: false,
+      //     },
+      //   },
+      // });
+      // Composite.add(engine.current.world, mouseConstraint);
     }
 
     // run the engine loop
