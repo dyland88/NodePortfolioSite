@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import useNodePhysics from "./useNodePhysics";
 import React, { useState } from "react";
 
@@ -64,7 +64,7 @@ export default function Home() {
       x: windowWidth / 4,
       y: windowHeight / 2,
       visible: true,
-      childrenVisible: true,
+      childrenVisible: false,
     },
     {
       id: "three",
@@ -72,39 +72,39 @@ export default function Home() {
       x: windowWidth * (3 / 4),
       y: windowHeight / 2,
       visible: true,
-      childrenVisible: true,
+      childrenVisible: false,
     },
     {
       id: "3.1",
       content: <ComponentTwo />,
       x: windowWidth * (3 / 4),
       y: windowHeight * (3 / 4),
-      visible: true,
-      childrenVisible: true,
+      visible: false,
+      childrenVisible: false,
     },
     {
       id: "3.2",
       content: <ComponentTwo />,
       x: windowWidth * (3 / 4),
       y: windowHeight * (1 / 4),
-      visible: true,
-      childrenVisible: true,
+      visible: false,
+      childrenVisible: false,
     },
     {
       id: "2.1",
       content: <ComponentTwo />,
       x: windowWidth / 4,
       y: windowHeight * (3 / 4),
-      visible: true,
-      childrenVisible: true,
+      visible: false,
+      childrenVisible: false,
     },
     {
       id: "2.2",
       content: <ComponentTwo />,
       x: windowWidth / 4,
       y: windowHeight * (1 / 4),
-      visible: true,
-      childrenVisible: true,
+      visible: false,
+      childrenVisible: false,
     },
   ];
   const initialLinkList = [
@@ -145,34 +145,43 @@ export default function Home() {
       </svg>
 
       {nodeList.map((component, index) => (
-        <motion.div
-          key={index}
-          drag={true}
-          whileDrag={{ scale: 1.1 }}
-          whileHover={{ scale: 1.2 }}
-          onDrag={(event: any, info: { point: { x: number; y: number } }) => {
-            setIsDragging(true);
-            setNodePosition(index, info.point.x, info.point.y);
-          }}
-          onDragEnd={(event) => {
-            setTimeout(() => {
-              setIsDragging(false);
-            }, 100);
-          }}
-          dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-          dragElastic={0.0}
-          onTap={(event) => {
-            if (!isDragging) toggleChildNodeVisibility(index);
-          }}
-          animate={{ opacity: component.visible ? 1 : 0 }}
-          style={{
-            position: "absolute",
-            left: nodeList[index].x - 40,
-            top: nodeList[index].y - 40,
-          }}
-        >
-          {component.content}
-        </motion.div>
+        <AnimatePresence>
+          {nodeList[index].visible && (
+            <motion.div
+              key={index}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0 }}
+              drag={true}
+              whileDrag={{ scale: 1.1 }}
+              whileHover={{ scale: 1.2 }}
+              onDrag={(
+                event: any,
+                info: { point: { x: number; y: number } }
+              ) => {
+                setIsDragging(true);
+                setNodePosition(index, info.point.x, info.point.y);
+              }}
+              onDragEnd={(event) => {
+                setTimeout(() => {
+                  setIsDragging(false);
+                }, 10);
+              }}
+              dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+              dragElastic={0.0}
+              onTap={(event) => {
+                if (!isDragging) toggleChildNodeVisibility(index);
+              }}
+              style={{
+                position: "absolute",
+                left: nodeList[index].x - 40,
+                top: nodeList[index].y - 40,
+              }}
+            >
+              {component.content}
+            </motion.div>
+          )}
+        </AnimatePresence>
       ))}
     </main>
   );

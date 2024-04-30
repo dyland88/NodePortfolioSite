@@ -33,7 +33,7 @@ function useNodePhysics(
 
   const [nodeList, setNodeList] = useState<Node[]>(initialNodeList);
   const linkList = useMemo<link[]>(() => {
-    // Create link list based on indexes of nodes instead of their names
+    // Create array link list based on indexes of nodes instead of their names
     let newLinkList = [];
     for (let i = 0; i < initialLinkList.length; i++) {
       let sourceIndex = -1;
@@ -253,23 +253,32 @@ function useNodePhysics(
   }
 
   function toggleChildNodeVisibility(index: number) {
+    // Change childrenVisible variable
     let newState = !nodeList[index].childrenVisible;
     nodeList[index].childrenVisible = newState;
+
+    // Set visibility of children, doing so recursively if setting to hidden
     for (let i = 0; i < linkList.length; i++) {
       if (linkList[i].source == index) {
         nodeList[linkList[i].target].visible = newState;
+
+        // Set the mass of the child to 0 if hidden
+        Matter.Body.setDensity(
+          engine.current.world.bodies[linkList[i].target],
+          newState ? 0.001 : 0.00001
+        );
+        // Recursively hide children if newState == false
         if (
           newState == false &&
           nodeList[linkList[i].target].childrenVisible == true
         ) {
-          console.log("setting node " + index + " to " + newState);
           toggleChildNodeVisibility(linkList[i].target);
         }
       }
     }
   }
 
-  //Apply a repellent force between all nodes
+  // Apply a repellent force between all nodes
   function repelNodes(multiplier: number = 1.0) {
     for (let i = 0; i < nodeList.length; i++) {
       for (let j = i + 1; j < nodeList.length; j++) {
