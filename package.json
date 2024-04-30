@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "framer-motion": "^11.0.24",
+    "framer-motion": "^11.1.7",
     "matter-js": "^0.19.0",
     "popmotion": "^11.0.5",
     "throttle-debounce": "^5.0.0"

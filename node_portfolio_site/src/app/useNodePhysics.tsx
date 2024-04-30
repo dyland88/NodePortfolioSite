@@ -181,7 +181,7 @@ function useNodePhysics(
     });
   }
   // Reposition boundary rectangles
-  const resizeHandler = throttle(100, () => {
+  const resizeHandler = throttle(50, () => {
     // Update boundary box positions
     Matter.Body.setPosition(
       engine.current.world.bodies[engine.current.world.bodies.length - 4],
@@ -212,16 +212,25 @@ function useNodePhysics(
       }
     );
 
-    //TODO: fix this
+    // reset out-of-bounds nodes
     nodeList.forEach((node, index) => {
-      if (node.x > window.innerWidth + 10) {
+      if (
+        engine.current.world.bodies[index].position.x >
+        window.innerWidth + 20
+      ) {
         Matter.Body.setPosition(engine.current.world.bodies[index], {
-          x: 1,
-          y: 1,
+          x: window.innerWidth - NODERADIUS,
+          y: engine.current.world.bodies[index].position.y,
         });
       }
-      if (node.y > window.innerHeight + 10) {
-        node.y = window.innerHeight - NODERADIUS;
+      if (
+        engine.current.world.bodies[index].position.y >
+        window.innerHeight + 20
+      ) {
+        Matter.Body.setPosition(engine.current.world.bodies[index], {
+          x: engine.current.world.bodies[index].position.x,
+          y: window.innerHeight - NODERADIUS,
+        });
       }
     });
   });
