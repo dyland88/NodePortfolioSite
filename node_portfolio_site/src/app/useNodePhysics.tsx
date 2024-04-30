@@ -130,6 +130,7 @@ function useNodePhysics(
       Matter.Engine.update(engine.current, deltaTime);
       updateNodePositions();
       repelNodes();
+      centerNodes();
       lastTimeUpdated.current = Date.now();
       window.requestAnimationFrame(update);
     }
@@ -162,6 +163,16 @@ function useNodePhysics(
       y: newY,
     });
   }
+
+  // Applies force to node at index
+  function applyForce(index: number, force: Vector) {
+    Matter.Body.applyForce(
+      engine.current.world.bodies[index],
+      engine.current.world.bodies[index].position,
+      force
+    );
+  }
+
   // Reposition boundary rectangles
   const resizeHandler = throttle(50, () => {
     // Update boundary box positions
@@ -258,12 +269,16 @@ function useNodePhysics(
     }
   }
 
-  function applyForce(index: number, force: Vector) {
-    Matter.Body.applyForce(
-      engine.current.world.bodies[index],
-      engine.current.world.bodies[index].position,
-      force
-    );
+  function centerNodes() {
+    let center = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    // Apply force to center nodes
+    for (let i = 0; i < 3; i++) {
+      let force = Vector.sub(center, engine.current.world.bodies[i].position);
+      let distance = Vector.magnitude(force);
+      force = Vector.normalise(force);
+      force = Vector.mult(force, 0.000006 * distance);
+      applyForce(i, force);
+    }
   }
 
   return { scene, nodeList, linkList, setNodePosition };
