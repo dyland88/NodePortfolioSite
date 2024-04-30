@@ -161,14 +161,14 @@ export default function Home() {
                 setIsDragging(true);
                 setNodePosition(index, info.point.x, info.point.y);
               }}
-              onDragEnd={(event) => {
+              onDragEnd={() => {
                 setTimeout(() => {
                   setIsDragging(false);
                 }, 10);
               }}
               dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
               dragElastic={0.0}
-              onTap={(event) => {
+              onTap={() => {
                 if (!isDragging) toggleChildNodeVisibility(index);
               }}
               style={{
