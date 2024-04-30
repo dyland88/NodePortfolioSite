@@ -36,10 +36,10 @@ function useNodePhysics(
     for (let i = 0; i < initialLinkList.length; i++) {
       let sourceIndex = -1;
       let targetIndex = -1;
-      for (let j = 0; j < nodeList.length; j++) {
-        if (nodeList[j].id === initialLinkList[i].source) {
+      for (let j = 0; j < initialNodeList.length; j++) {
+        if (initialNodeList[j].id === initialLinkList[i].source) {
           sourceIndex = j;
-        } else if (nodeList[j].id === initialLinkList[i].target) {
+        } else if (initialNodeList[j].id === initialLinkList[i].target) {
           targetIndex = j;
         }
       }
@@ -51,7 +51,7 @@ function useNodePhysics(
       }
     }
     return newLinkList;
-  }, [initialLinkList, nodeList]);
+  }, [initialLinkList, initialNodeList]);
 
   useEffect(() => {
     const clientWidth = window.innerWidth;
@@ -119,17 +119,19 @@ function useNodePhysics(
       }),
     ]);
 
-    // Debug renderer and mouse control
+    // Debug renderer
     if (debug) {
       Render.run(render);
     }
 
     // run the engine loop
     function update(): void {
+      // Prevent deltaTime from being to large if tab is inactive
       const deltaTime = Math.min(
         Date.now() - lastTimeUpdated.current,
         1000 / 15
       );
+
       repelNodes(1.0);
       centerNodes(1.0);
       Matter.Engine.update(engine.current, deltaTime);
