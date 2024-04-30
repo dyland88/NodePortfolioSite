@@ -27,6 +27,7 @@ function useNodePhysics(
   const NODERADIUS = 40;
   const scene = useRef(null);
   const engine = useRef(Engine.create());
+  const lastTimeUpdated = useRef(Date.now());
 
   const [nodeList, setNodeList] = useState<Node[]>(initialNodeList);
   const linkList = useMemo<link[]>(() => {
@@ -77,9 +78,9 @@ function useNodePhysics(
     nodeList.forEach((node) => {
       const body = Bodies.circle(node.x, node.y, NODERADIUS, {
         //TODO: make size dynamic
-        restitution: 1,
+        restitution: 0.2,
+        frictionAir: 0.04,
         render: {
-          fillStyle: "yellow",
           visible: false,
         },
       });
@@ -92,7 +93,8 @@ function useNodePhysics(
         bodyA: engine.current.world.bodies[link.source],
         bodyB: engine.current.world.bodies[link.target],
         length: (clientWidth + clientHeight) / 10,
-        stiffness: 0.00004,
+        stiffness: 0.004,
+        damping: 0.04,
       });
       World.add(engine.current.world, constraint);
     });
@@ -124,9 +126,11 @@ function useNodePhysics(
 
     // run the engine loop
     function update(): void {
-      Matter.Engine.update(engine.current, 1000 / 60);
+      const deltaTime = Date.now() - lastTimeUpdated.current;
+      Matter.Engine.update(engine.current, deltaTime);
       updateNodePositions();
       repelNodes();
+      lastTimeUpdated.current = Date.now();
       window.requestAnimationFrame(update);
     }
 
@@ -232,13 +236,22 @@ function useNodePhysics(
   function repelNodes() {
     for (let i = 0; i < nodeList.length; i++) {
       for (let j = i + 1; j < nodeList.length; j++) {
+        if (
+          linkList.find(
+            (link) =>
+              (link.source === i && link.target === j) ||
+              (link.source === j && link.target === i)
+          ) !== undefined
+        ) {
+          continue;
+        }
         let force = Vector.sub(
           engine.current.world.bodies[i].position,
           engine.current.world.bodies[j].position
         );
         let distance = Vector.magnitude(force);
         force = Vector.normalise(force);
-        force = Vector.mult(force, 0.6 / (distance * distance));
+        force = Vector.mult(force, 6 / (distance * distance));
         applyForce(i, force);
         applyForce(j, Vector.neg(force));
       }
