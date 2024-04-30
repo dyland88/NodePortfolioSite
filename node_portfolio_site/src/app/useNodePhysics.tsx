@@ -126,11 +126,14 @@ function useNodePhysics(
 
     // run the engine loop
     function update(): void {
-      const deltaTime = Date.now() - lastTimeUpdated.current;
+      const deltaTime = Math.min(
+        Date.now() - lastTimeUpdated.current,
+        1000 / 15
+      );
+      repelNodes(1.0);
+      centerNodes(1.0);
       Matter.Engine.update(engine.current, deltaTime);
       updateNodePositions();
-      repelNodes();
-      centerNodes();
       lastTimeUpdated.current = Date.now();
       window.requestAnimationFrame(update);
     }
@@ -244,7 +247,7 @@ function useNodePhysics(
     }
   }
 
-  function repelNodes() {
+  function repelNodes(multiplier: number = 1.0) {
     for (let i = 0; i < nodeList.length; i++) {
       for (let j = i + 1; j < nodeList.length; j++) {
         if (
@@ -262,21 +265,22 @@ function useNodePhysics(
         );
         let distance = Vector.magnitude(force);
         force = Vector.normalise(force);
-        force = Vector.mult(force, 6 / (distance * distance));
+        force = Vector.mult(force, (multiplier * 6) / (distance * distance));
         applyForce(i, force);
         applyForce(j, Vector.neg(force));
       }
     }
   }
 
-  function centerNodes() {
+  // Apply force to center nodes on screen
+  function centerNodes(multiplier: number = 0.000006) {
     let center = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     // Apply force to center nodes
     for (let i = 0; i < 3; i++) {
       let force = Vector.sub(center, engine.current.world.bodies[i].position);
       let distance = Vector.magnitude(force);
       force = Vector.normalise(force);
-      force = Vector.mult(force, 0.000006 * distance);
+      force = Vector.mult(force, multiplier * 0.000006 * distance);
       applyForce(i, force);
     }
   }
