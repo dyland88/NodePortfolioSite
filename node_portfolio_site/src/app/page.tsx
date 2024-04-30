@@ -53,42 +53,56 @@ export default function Home() {
       content: <ComponentOne />,
       x: windowWidth / 2,
       y: windowHeight / 2,
+      visible: true,
+      childrenVisible: true,
     },
     {
       id: "two",
       content: <ComponentTwo />,
       x: windowWidth / 4,
       y: windowHeight / 2,
+      visible: true,
+      childrenVisible: true,
     },
     {
       id: "three",
       content: <ComponentTwo />,
       x: windowWidth * (3 / 4),
       y: windowHeight / 2,
+      visible: true,
+      childrenVisible: true,
     },
     {
       id: "3.1",
       content: <ComponentTwo />,
       x: windowWidth * (3 / 4),
       y: windowHeight * (3 / 4),
+      visible: true,
+      childrenVisible: true,
     },
     {
       id: "3.2",
       content: <ComponentTwo />,
       x: windowWidth * (3 / 4),
       y: windowHeight * (1 / 4),
+      visible: true,
+      childrenVisible: true,
     },
     {
       id: "2.1",
       content: <ComponentTwo />,
       x: windowWidth / 4,
       y: windowHeight * (3 / 4),
+      visible: true,
+      childrenVisible: true,
     },
     {
       id: "2.2",
       content: <ComponentTwo />,
       x: windowWidth / 4,
       y: windowHeight * (1 / 4),
+      visible: true,
+      childrenVisible: true,
     },
   ];
   const initialLinkList = [
@@ -100,11 +114,13 @@ export default function Home() {
     { source: "two", target: "2.2" },
   ];
 
-  const { scene, nodeList, linkList, setNodePosition } = useNodePhysics(
-    initialNodes,
-    initialLinkList,
-    DEBUG
-  );
+  const {
+    scene,
+    nodeList,
+    linkList,
+    setNodePosition,
+    setNodeVisibility: toggleChildNodeVisibility,
+  } = useNodePhysics(initialNodes, initialLinkList, DEBUG);
 
   return (
     <main className="flex min-h-screen flex-col items-start justify-start overflow-clip p-24 bg-slate-950">
@@ -135,17 +151,12 @@ export default function Home() {
           }}
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
           dragElastic={0.0}
+          onClick={(event) => toggleChildNodeVisibility(index)}
+          animate={{ opacity: component.visible ? 1 : 0 }}
           style={{
             position: "absolute",
             left: nodeList[index].x - 40,
             top: nodeList[index].y - 40,
-            // width: 40,
-            // height: 40,
-            // backgroundColor: "white",
-            // borderRadius: "100%",
-            // transform: `translate(${nodeList[index].x - 20}px, ${
-            //   nodeList[index].y - 20
-            // }px)`,
           }}
         >
           {component.content}

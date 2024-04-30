@@ -8,6 +8,8 @@ type Node = {
   content: JSX.Element;
   x: number;
   y: number;
+  visible: boolean;
+  childrenVisible: boolean;
 };
 
 type nameLink = {
@@ -243,20 +245,40 @@ function useNodePhysics(
           content: prevState[i].content,
           x: engine.current.world.bodies[i].position.x,
           y: engine.current.world.bodies[i].position.y,
+          visible: prevState[i].visible,
+          childrenVisible: prevState[i].childrenVisible,
         };
         return newPos;
       });
     }
   }
 
+  function toggleChildNodeVisibility(index: number) {
+    let newState = !nodeList[index].childrenVisible;
+    nodeList[index].childrenVisible = newState;
+    for (let i = 0; i < linkList.length; i++) {
+      if (linkList[i].source == index) {
+        nodeList[linkList[i].target].visible = newState;
+        if (
+          newState == false &&
+          nodeList[linkList[i].target].childrenVisible == true
+        ) {
+          console.log("setting node " + index + " to " + newState);
+          toggleChildNodeVisibility(linkList[i].target);
+        }
+      }
+    }
+  }
+
+  //Apply a repellent force between all nodes
   function repelNodes(multiplier: number = 1.0) {
     for (let i = 0; i < nodeList.length; i++) {
       for (let j = i + 1; j < nodeList.length; j++) {
         if (
           linkList.find(
             (link) =>
-              (link.source === i && link.target === j) ||
-              (link.source === j && link.target === i)
+              (link.source == i && link.target == j) ||
+              (link.source == j && link.target == i)
           ) !== undefined
         ) {
           continue;
@@ -275,7 +297,7 @@ function useNodePhysics(
   }
 
   // Apply force to center nodes on screen
-  function centerNodes(multiplier: number = 0.000006) {
+  function centerNodes(multiplier: number = 1.0) {
     let center = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     // Apply force to center nodes
     for (let i = 0; i < 3; i++) {
@@ -287,7 +309,13 @@ function useNodePhysics(
     }
   }
 
-  return { scene, nodeList, linkList, setNodePosition };
+  return {
+    scene,
+    nodeList,
+    linkList,
+    setNodePosition,
+    setNodeVisibility: toggleChildNodeVisibility,
+  };
 }
 
 export default useNodePhysics;
