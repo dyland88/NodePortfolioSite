@@ -148,7 +148,6 @@ export default function Home() {
         <AnimatePresence key={index}>
           {nodeList[index].visible && (
             <motion.div
-              key={index}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0 }}
