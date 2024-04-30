@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import useNodePhysics from "./useNodePhysics";
+import React from "react";
 
 export default function Home() {
   const DEBUG = false;

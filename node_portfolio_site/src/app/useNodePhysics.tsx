@@ -1,16 +1,5 @@
-import { motion } from "framer-motion";
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import {
-  Engine,
-  Render,
-  Bodies,
-  World,
-  Vector,
-  Constraint,
-  Composite,
-  Mouse,
-  MouseConstraint,
-} from "matter-js";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { Engine, Render, Bodies, World, Vector, Constraint } from "matter-js";
 import Matter from "matter-js";
 import { throttle } from "throttle-debounce";
 
@@ -40,7 +29,7 @@ function useNodePhysics(
   const engine = useRef(Engine.create());
 
   const [nodeList, setNodeList] = useState<Node[]>(initialNodeList);
-  const [linkList, setLinkList] = useState<link[]>(() => {
+  const linkList = useMemo<link[]>(() => {
     // Create link list based on indexes of nodes instead of their names
     let newLinkList = [];
     for (let i = 0; i < initialLinkList.length; i++) {
@@ -61,7 +50,7 @@ function useNodePhysics(
       }
     }
     return newLinkList;
-  });
+  }, [initialLinkList, nodeList]);
 
   useEffect(() => {
     const clientWidth = window.innerWidth;
@@ -131,17 +120,6 @@ function useNodePhysics(
     // Debug renderer and mouse control
     if (debug) {
       Render.run(render);
-      // Create mouse constraint
-      // var mouse = Mouse.create(render.canvas);
-      // var mouseConstraint = MouseConstraint.create(engine.current, {
-      //   mouse: mouse,
-      //   constraint: {
-      //     render: {
-      //       visible: false,
-      //     },
-      //   },
-      // });
-      // Composite.add(engine.current.world, mouseConstraint);
     }
 
     // run the engine loop

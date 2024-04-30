@@ -3,5 +3,13 @@
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:react/recommended"
+  ],
+  "overrides": [
+    {
+      "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
+      "rules": {
+        "no-undef": "off"
+      }
+    }
   ]
 }
