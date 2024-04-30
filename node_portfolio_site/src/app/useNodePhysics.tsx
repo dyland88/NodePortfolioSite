@@ -300,7 +300,7 @@ function useNodePhysics(
   function centerNodes(multiplier: number = 1.0) {
     let center = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     // Apply force to center nodes
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 1; i++) {
       let force = Vector.sub(center, engine.current.world.bodies[i].position);
       let distance = Vector.magnitude(force);
       force = Vector.normalise(force);

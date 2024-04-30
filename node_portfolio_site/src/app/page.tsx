@@ -137,6 +137,7 @@ export default function Home() {
             y2={nodeList[linkList[index].target].y}
             stroke="gray"
             strokeWidth={2.5}
+            opacity={nodeList[link.target].visible ? 1 : 0}
           />
         ))}
       </svg>
@@ -151,7 +152,7 @@ export default function Home() {
           }}
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
           dragElastic={0.0}
-          onClick={(event) => toggleChildNodeVisibility(index)}
+          onTap={(event) => toggleChildNodeVisibility(index)}
           animate={{ opacity: component.visible ? 1 : 0 }}
           style={{
             position: "absolute",
