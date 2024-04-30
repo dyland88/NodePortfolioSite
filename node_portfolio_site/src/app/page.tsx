@@ -145,7 +145,7 @@ export default function Home() {
       </svg>
 
       {nodeList.map((component, index) => (
-        <AnimatePresence>
+        <AnimatePresence key={index}>
           {nodeList[index].visible && (
             <motion.div
               key={index}
