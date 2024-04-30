@@ -40,8 +40,12 @@ export default function Home() {
     </div>
   );
 
-  const windowWidth = window.innerWidth;
-  const windowHeight = window.innerHeight;
+  let windowWidth = 0;
+  let windowHeight = 0;
+  if (typeof window !== "undefined") {
+    windowWidth = window.innerWidth;
+    windowHeight = window.innerHeight;
+  }
 
   const initialNodes = [
     {
