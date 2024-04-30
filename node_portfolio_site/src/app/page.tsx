@@ -1,10 +1,12 @@
 "use client";
 import { motion } from "framer-motion";
 import useNodePhysics from "./useNodePhysics";
-import React from "react";
+import React, { useState } from "react";
 
 export default function Home() {
   const DEBUG = false;
+  const [isDragging, setIsDragging] = useState(false);
+
   const ComponentOne = () => (
     <div
       style={{
@@ -141,6 +143,7 @@ export default function Home() {
           />
         ))}
       </svg>
+
       {nodeList.map((component, index) => (
         <motion.div
           key={index}
@@ -148,11 +151,19 @@ export default function Home() {
           whileDrag={{ scale: 1.1 }}
           whileHover={{ scale: 1.2 }}
           onDrag={(event: any, info: { point: { x: number; y: number } }) => {
+            setIsDragging(true);
             setNodePosition(index, info.point.x, info.point.y);
+          }}
+          onDragEnd={(event) => {
+            setTimeout(() => {
+              setIsDragging(false);
+            }, 100);
           }}
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
           dragElastic={0.0}
-          onTap={(event) => toggleChildNodeVisibility(index)}
+          onTap={(event) => {
+            if (!isDragging) toggleChildNodeVisibility(index);
+          }}
           animate={{ opacity: component.visible ? 1 : 0 }}
           style={{
             position: "absolute",
