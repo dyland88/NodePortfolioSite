@@ -15,30 +15,29 @@ export default function Modal({ title, children }: Props) {
   const modalPage = searchParams.get("page");
 
   useEffect(() => {
-    console.log(modalPage);
     if (modalPage === title) {
-      showModal();
+      showDialog();
     } else {
-      closeModal();
+      closeDialog();
     }
   }, [modalPage]);
 
-  const showModal = () => {
+  const showDialog = () => {
     console.log("showing modal");
     modalRef.current?.showModal();
   };
 
-  const closeModal = () => {
+  const closeDialog = () => {
     modalRef.current?.close();
   };
 
   const modal: JSX.Element | null =
-    modalPage === "title" ? (
+    modalPage === title ? (
       <dialog ref={modalRef}>
         <div>
           <div>
             <h1>{title}</h1>
-            <button onClick={closeModal}>x</button>
+            <button onClick={closeDialog}>x</button>
           </div>
           <div>{children}</div>
         </div>

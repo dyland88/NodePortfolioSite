@@ -87,6 +87,7 @@ export default function Home() {
     {
       id: "3.1",
       content: <ComponentTwo />,
+      hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth * (3 / 4),
       y: windowHeight * (3 / 4),
@@ -96,6 +97,7 @@ export default function Home() {
     {
       id: "3.2",
       content: <ComponentTwo />,
+      hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth * (3 / 4),
       y: windowHeight * (1 / 4),
@@ -105,6 +107,7 @@ export default function Home() {
     {
       id: "2.1",
       content: <ComponentTwo />,
+      hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth / 4,
       y: windowHeight * (3 / 4),
@@ -114,6 +117,7 @@ export default function Home() {
     {
       id: "2.2",
       content: <ComponentTwo />,
+      hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth / 4,
       y: windowHeight * (1 / 4),
@@ -191,7 +195,11 @@ export default function Home() {
                   dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
                   dragElastic={0.0}
                   onTap={() => {
-                    if (!isDragging) toggleChildNodeVisibility(index);
+                    if (!isDragging) {
+                      if (nodeList[index]?.hasModal)
+                        router.push("/?page=" + nodeList[index].id);
+                      toggleChildNodeVisibility(index);
+                    }
                   }}
                   style={{
                     position: "absolute",

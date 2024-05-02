@@ -6,6 +6,7 @@ import { throttle } from "throttle-debounce";
 type Node = {
   id: string;
   content: JSX.Element;
+  hasModal?: boolean;
   modalContent?: JSX.Element;
   x: number;
   y: number;
@@ -237,21 +238,13 @@ function useNodePhysics(
 
   // Update all node positions
   function updateNodePositions() {
-    for (let i = 0; i < nodeList.length; i++) {
-      setNodeList((prevState) => {
-        let newPos = [...prevState];
-        newPos[i] = {
-          id: prevState[i].id,
-          content: prevState[i].content,
-          modalContent: prevState[i].content,
-          x: engine.current.world.bodies[i].position.x,
-          y: engine.current.world.bodies[i].position.y,
-          visible: prevState[i].visible,
-          childrenVisible: prevState[i].childrenVisible,
-        };
-        return newPos;
-      });
-    }
+    setNodeList((prevState) =>
+      prevState.map((node, index) => ({
+        ...node,
+        x: engine.current.world.bodies[index].position.x,
+        y: engine.current.world.bodies[index].position.y,
+      }))
+    );
   }
 
   function toggleChildNodeVisibility(index: number) {
