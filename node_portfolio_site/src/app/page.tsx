@@ -63,6 +63,8 @@ export default function Home() {
     {
       id: "main",
       content: <ComponentOne />,
+      modalContent: <LoremIpsum />,
+      hasModal: true,
       x: windowWidth / 2,
       y: windowHeight / 2,
       visible: true,
@@ -198,7 +200,7 @@ export default function Home() {
                     if (!isDragging) {
                       if (nodeList[index]?.hasModal)
                         router.push("/?page=" + nodeList[index].id);
-                      toggleChildNodeVisibility(index);
+                      else toggleChildNodeVisibility(index);
                     }
                   }}
                   style={{
