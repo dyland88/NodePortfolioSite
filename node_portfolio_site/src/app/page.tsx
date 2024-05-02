@@ -2,6 +2,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import useNodePhysics from "./useNodePhysics";
 import React, { useState } from "react";
+import Dialog from "./components/Dialog";
 
 export default function Home() {
   const DEBUG = false;
@@ -124,64 +125,84 @@ export default function Home() {
     setNodeVisibility: toggleChildNodeVisibility,
   } = useNodePhysics(initialNodes, initialLinkList, DEBUG);
 
-  return (
-    <main className="flex min-h-screen flex-col items-start justify-start overflow-clip p-24 bg-slate-950">
-      {DEBUG && (
-        <div ref={scene} className="h-screen w-screen absolute top-0 left-0" />
-      )}
-      <svg className="h-screen w-screen absolute top-0 left-0">
-        {linkList.map((link, index) => (
-          <line
-            key={index}
-            x1={nodeList[linkList[index].source].x}
-            y1={nodeList[linkList[index].source].y}
-            x2={nodeList[linkList[index].target].x}
-            y2={nodeList[linkList[index].target].y}
-            stroke="gray"
-            strokeWidth={2.5}
-            opacity={nodeList[link.target].visible ? 1 : 0}
-          />
-        ))}
-      </svg>
+  async function onClose() {
+    console.log("modal has closed");
+  }
+  async function onOk() {
+    console.log("Ok was clicked");
+  }
 
-      {nodeList.map((component, index) => (
-        <AnimatePresence key={index}>
-          {nodeList[index].visible && (
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0 }}
-              drag={true}
-              whileDrag={{ scale: 1.1 }}
-              whileHover={{ scale: 1.2 }}
-              onDrag={(
-                event: any,
-                info: { point: { x: number; y: number } }
-              ) => {
-                setIsDragging(true);
-                setNodePosition(index, info.point.x, info.point.y);
-              }}
-              onDragEnd={() => {
-                setTimeout(() => {
-                  setIsDragging(false);
-                }, 10);
-              }}
-              dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-              dragElastic={0.0}
-              onTap={() => {
-                if (!isDragging) toggleChildNodeVisibility(index);
-              }}
-              style={{
-                position: "absolute",
-                left: nodeList[index].x - 40,
-                top: nodeList[index].y - 40,
-              }}
-            >
-              {component.content}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      ))}
-    </main>
+  return (
+    <>
+      <Dialog title="example modal" onClose={onClose} onOk={onOk}>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel error
+          doloremque, voluptatibus quasi reprehenderit officia sequi nam
+          expedita sed quo culpa libero vitae dolores, accusamus corporis alias
+          cum exercitationem? Provident?
+        </p>
+      </Dialog>
+      <main className="flex min-h-screen flex-col items-start justify-start overflow-clip p-24 bg-slate-950">
+        {DEBUG && (
+          <div
+            ref={scene}
+            className="h-screen w-screen absolute top-0 left-0"
+          />
+        )}
+        <svg className="h-screen w-screen absolute top-0 left-0">
+          {linkList.map((link, index) => (
+            <line
+              key={index}
+              x1={nodeList[linkList[index].source].x}
+              y1={nodeList[linkList[index].source].y}
+              x2={nodeList[linkList[index].target].x}
+              y2={nodeList[linkList[index].target].y}
+              stroke="gray"
+              strokeWidth={2.5}
+              opacity={nodeList[link.target].visible ? 1 : 0}
+            />
+          ))}
+        </svg>
+
+        {nodeList.map((component, index) => (
+          <AnimatePresence key={index}>
+            {nodeList[index].visible && (
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0 }}
+                drag={true}
+                whileDrag={{ scale: 1.1 }}
+                whileHover={{ scale: 1.2 }}
+                onDrag={(
+                  event: any,
+                  info: { point: { x: number; y: number } }
+                ) => {
+                  setIsDragging(true);
+                  setNodePosition(index, info.point.x, info.point.y);
+                }}
+                onDragEnd={() => {
+                  setTimeout(() => {
+                    setIsDragging(false);
+                  }, 10);
+                }}
+                dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+                dragElastic={0.0}
+                onTap={() => {
+                  if (!isDragging) toggleChildNodeVisibility(index);
+                }}
+                style={{
+                  position: "absolute",
+                  left: nodeList[index].x - 40,
+                  top: nodeList[index].y - 40,
+                }}
+              >
+                {component.content}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        ))}
+      </main>
+    </>
   );
 }
