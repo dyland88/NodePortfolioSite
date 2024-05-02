@@ -11,36 +11,36 @@ type Props = {
 
 import React from "react";
 
-export default function Dialog({ title, onClose, onOk, children }: Props) {
+export default function Modal({ title, onClose, onOk, children }: Props) {
   const searchParams = useSearchParams();
-  const dialogRef = useRef<null | HTMLDialogElement>(null);
-  const showDialog = searchParams.get("showDialog");
+  const modalRef = useRef<null | HTMLDialogElement>(null);
+  const showModal = searchParams.get("showDialog");
 
   useEffect(() => {
-    if (showDialog === "y") {
-      dialogRef.current?.showModal();
+    if (showModal === "y") {
+      modalRef.current?.showModal();
     } else {
-      dialogRef.current?.close();
+      modalRef.current?.close();
     }
-  }, [showDialog]);
+  }, [showModal]);
 
-  const closeDialog = () => {
-    dialogRef.current?.close();
+  const closeModal = () => {
+    modalRef.current?.close();
     onClose();
   };
 
   const clickOk = () => {
     onOk();
-    closeDialog();
+    closeModal();
   };
 
-  const dialog: JSX.Element | null =
-    showDialog === "y" ? (
-      <dialog ref={dialogRef}>
+  const modal: JSX.Element | null =
+    showModal === "y" ? (
+      <dialog ref={modalRef}>
         <div>
           <div>
             <h1>{title}</h1>
-            <button onClick={closeDialog}>x</button>
+            <button onClick={closeModal}>x</button>
           </div>
           <div>
             {children}
@@ -52,5 +52,5 @@ export default function Dialog({ title, onClose, onOk, children }: Props) {
       </dialog>
     ) : null;
 
-  return dialog;
+  return modal;
 }
