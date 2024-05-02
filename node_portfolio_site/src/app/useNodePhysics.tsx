@@ -6,6 +6,7 @@ import { throttle } from "throttle-debounce";
 type Node = {
   id: string;
   content: JSX.Element;
+  modalContent?: JSX.Element;
   x: number;
   y: number;
   visible: boolean;
@@ -242,6 +243,7 @@ function useNodePhysics(
         newPos[i] = {
           id: prevState[i].id,
           content: prevState[i].content,
+          modalContent: prevState[i].content,
           x: engine.current.world.bodies[i].position.x,
           y: engine.current.world.bodies[i].position.y,
           visible: prevState[i].visible,

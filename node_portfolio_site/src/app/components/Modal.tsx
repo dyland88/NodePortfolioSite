@@ -4,50 +4,42 @@ import { useRef, useEffect } from "react";
 
 type Props = {
   title: string;
-  onClose: () => void;
-  onOk: () => void;
   children: React.ReactNode;
 };
 
 import React from "react";
 
-export default function Modal({ title, onClose, onOk, children }: Props) {
+export default function Modal({ title, children }: Props) {
   const searchParams = useSearchParams();
   const modalRef = useRef<null | HTMLDialogElement>(null);
-  const showModal = searchParams.get("showDialog");
+  const modalPage = searchParams.get("page");
 
   useEffect(() => {
-    if (showModal === "y") {
-      modalRef.current?.showModal();
+    if (modalPage === title) {
+      showModal();
     } else {
-      modalRef.current?.close();
+      closeModal();
     }
-  }, [showModal]);
+  }, [modalPage]);
+
+  const showModal = () => {
+    console.log("showing modal");
+    modalRef.current?.showModal();
+  };
 
   const closeModal = () => {
     modalRef.current?.close();
-    onClose();
-  };
-
-  const clickOk = () => {
-    onOk();
-    closeModal();
   };
 
   const modal: JSX.Element | null =
-    showModal === "y" ? (
+    modalPage === "title" ? (
       <dialog ref={modalRef}>
         <div>
           <div>
             <h1>{title}</h1>
             <button onClick={closeModal}>x</button>
           </div>
-          <div>
-            {children}
-            <div>
-              <button onClick={clickOk}>OK</button>
-            </div>
-          </div>
+          <div>{children}</div>
         </div>
       </dialog>
     ) : null;

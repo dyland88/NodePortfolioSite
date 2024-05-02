@@ -2,11 +2,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 import useNodePhysics from "./useNodePhysics";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Modal from "./components/Modal";
 
 export default function Home() {
   const DEBUG = false;
   const [isDragging, setIsDragging] = useState(false);
+  const router = useRouter();
 
   const ComponentOne = () => (
     <div
@@ -41,6 +43,13 @@ export default function Home() {
     >
       <p>World</p>
     </div>
+  );
+  const LoremIpsum = () => (
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, magni eos
+      beatae officia corporis voluptatum accusamus nihil ab ullam nisi quisquam
+      perspiciatis, eum ad molestiae. Molestias sint at voluptate aut?
+    </p>
   );
 
   let windowWidth = 0;
@@ -78,6 +87,7 @@ export default function Home() {
     {
       id: "3.1",
       content: <ComponentTwo />,
+      modalContent: <LoremIpsum />,
       x: windowWidth * (3 / 4),
       y: windowHeight * (3 / 4),
       visible: false,
@@ -86,6 +96,7 @@ export default function Home() {
     {
       id: "3.2",
       content: <ComponentTwo />,
+      modalContent: <LoremIpsum />,
       x: windowWidth * (3 / 4),
       y: windowHeight * (1 / 4),
       visible: false,
@@ -94,6 +105,7 @@ export default function Home() {
     {
       id: "2.1",
       content: <ComponentTwo />,
+      modalContent: <LoremIpsum />,
       x: windowWidth / 4,
       y: windowHeight * (3 / 4),
       visible: false,
@@ -102,6 +114,7 @@ export default function Home() {
     {
       id: "2.2",
       content: <ComponentTwo />,
+      modalContent: <LoremIpsum />,
       x: windowWidth / 4,
       y: windowHeight * (1 / 4),
       visible: false,
@@ -125,23 +138,8 @@ export default function Home() {
     setNodeVisibility: toggleChildNodeVisibility,
   } = useNodePhysics(initialNodes, initialLinkList, DEBUG);
 
-  async function onClose() {
-    console.log("modal has closed");
-  }
-  async function onOk() {
-    console.log("Ok was clicked");
-  }
-
   return (
     <>
-      <Modal title="example modal" onClose={onClose} onOk={onOk}>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel error
-          doloremque, voluptatibus quasi reprehenderit officia sequi nam
-          expedita sed quo culpa libero vitae dolores, accusamus corporis alias
-          cum exercitationem? Provident?
-        </p>
-      </Modal>
       <main className="flex min-h-screen flex-col items-start justify-start overflow-clip p-24 bg-slate-950">
         {DEBUG && (
           <div
@@ -165,6 +163,8 @@ export default function Home() {
         </svg>
 
         {nodeList.map((component, index) => (
+          <div key={index}>
+            <Modal title={nodeList[index].id}>{nodeList[index].content}</Modal>
           <AnimatePresence key={index}>
             {nodeList[index].visible && (
               <motion.div
@@ -201,6 +201,7 @@ export default function Home() {
               </motion.div>
             )}
           </AnimatePresence>
+          </div>
         ))}
       </main>
     </>
