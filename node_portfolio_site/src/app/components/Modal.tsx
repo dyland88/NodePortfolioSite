@@ -1,6 +1,7 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import { useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 type Props = {
   title: string;
@@ -13,12 +14,11 @@ export default function Modal({ title, children }: Props) {
   const searchParams = useSearchParams();
   const modalRef = useRef<null | HTMLDialogElement>(null);
   const modalPage = searchParams.get("page");
+  const router = useRouter();
 
   useEffect(() => {
     if (modalPage === title) {
       showDialog();
-    } else {
-      closeDialog();
     }
   }, [modalPage]);
 
@@ -29,6 +29,7 @@ export default function Modal({ title, children }: Props) {
 
   const closeDialog = () => {
     modalRef.current?.close();
+    router.push("/");
   };
 
   const modal: JSX.Element | null =
