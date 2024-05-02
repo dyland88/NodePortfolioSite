@@ -2,7 +2,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import useNodePhysics from "./useNodePhysics";
 import React, { useState } from "react";
-import Dialog from "./components/Dialog";
+import Modal from "./components/Modal";
 
 export default function Home() {
   const DEBUG = false;
@@ -134,14 +134,14 @@ export default function Home() {
 
   return (
     <>
-      <Dialog title="example modal" onClose={onClose} onOk={onOk}>
+      <Modal title="example modal" onClose={onClose} onOk={onOk}>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel error
           doloremque, voluptatibus quasi reprehenderit officia sequi nam
           expedita sed quo culpa libero vitae dolores, accusamus corporis alias
           cum exercitationem? Provident?
         </p>
-      </Dialog>
+      </Modal>
       <main className="flex min-h-screen flex-col items-start justify-start overflow-clip p-24 bg-slate-950">
         {DEBUG && (
           <div
