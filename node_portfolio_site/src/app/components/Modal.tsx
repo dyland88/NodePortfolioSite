@@ -15,6 +15,7 @@ export default function Modal({ title, children }: Props) {
   const modalPage = searchParams.get("page");
 
   useEffect(() => {
+    console.log(modalPage);
     if (modalPage === title) {
       showModal();
     } else {

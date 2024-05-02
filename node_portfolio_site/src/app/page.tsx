@@ -164,43 +164,45 @@ export default function Home() {
 
         {nodeList.map((component, index) => (
           <div key={index}>
-            <Modal title={nodeList[index].id}>{nodeList[index].content}</Modal>
-          <AnimatePresence key={index}>
-            {nodeList[index].visible && (
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0 }}
-                drag={true}
-                whileDrag={{ scale: 1.1 }}
-                whileHover={{ scale: 1.2 }}
-                onDrag={(
-                  event: any,
-                  info: { point: { x: number; y: number } }
-                ) => {
-                  setIsDragging(true);
-                  setNodePosition(index, info.point.x, info.point.y);
-                }}
-                onDragEnd={() => {
-                  setTimeout(() => {
-                    setIsDragging(false);
-                  }, 10);
-                }}
-                dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-                dragElastic={0.0}
-                onTap={() => {
-                  if (!isDragging) toggleChildNodeVisibility(index);
-                }}
-                style={{
-                  position: "absolute",
-                  left: nodeList[index].x - 40,
-                  top: nodeList[index].y - 40,
-                }}
-              >
-                {component.content}
-              </motion.div>
-            )}
-          </AnimatePresence>
+            <Modal title={nodeList[index].id}>
+              {nodeList[index].modalContent}
+            </Modal>
+            <AnimatePresence>
+              {nodeList[index].visible && (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                  drag={true}
+                  whileDrag={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.2 }}
+                  onDrag={(
+                    event: any,
+                    info: { point: { x: number; y: number } }
+                  ) => {
+                    setIsDragging(true);
+                    setNodePosition(index, info.point.x, info.point.y);
+                  }}
+                  onDragEnd={() => {
+                    setTimeout(() => {
+                      setIsDragging(false);
+                    }, 10);
+                  }}
+                  dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+                  dragElastic={0.0}
+                  onTap={() => {
+                    if (!isDragging) toggleChildNodeVisibility(index);
+                  }}
+                  style={{
+                    position: "absolute",
+                    left: nodeList[index].x - 40,
+                    top: nodeList[index].y - 40,
+                  }}
+                >
+                  {component.content}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         ))}
       </main>
