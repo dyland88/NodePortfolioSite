@@ -45,7 +45,7 @@ export default function Home() {
     </div>
   );
   const LoremIpsum = () => (
-    <p>
+    <p className="text-white">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, magni eos
       beatae officia corporis voluptatum accusamus nihil ab ullam nisi quisquam
       perspiciatis, eum ad molestiae. Molestias sint at voluptate aut?
