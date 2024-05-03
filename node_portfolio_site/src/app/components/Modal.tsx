@@ -2,55 +2,47 @@
 import { useSearchParams } from "next/navigation";
 import { useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import React from "react";
 
 type Props = {
   title: string;
   children: React.ReactNode;
 };
 
-import React from "react";
-
 export default function Modal({ title, children }: Props) {
-  const searchParams = useSearchParams();
   const modalRef = useRef<null | HTMLDialogElement>(null);
-  const modalPage = searchParams.get("page");
   const router = useRouter();
 
-  useEffect(() => {
-    if (modalPage === title) {
-      showDialog();
-    }
-  }, [modalPage]);
-
-  const showDialog = () => {
-    console.log("showing modal");
-    modalRef.current?.showModal();
-  };
-
   const closeDialog = () => {
-    modalRef.current?.close();
     router.push("/");
   };
 
-  const modal: JSX.Element | null =
-    modalPage === title ? (
-      <dialog
+  const modal = (
+    <>
+      <motion.dialog
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         ref={modalRef}
-        className="absolute top-0 left-0 bg-transparent h-screen w-screen flex justify-center align-middle"
+        className="bg-transparent flex justify-center align-middle self-center justify-self-center"
       >
-        <div className="mx-auto p-5 w-11/12 h-full shadow-lg rounded-xl bg-slate-800">
-          <div className="flex justify-between items-center pb-3">
-            <h1 className="text-2xl font-bold text-white">{title}</h1>
-            <button
+        <motion.div className="mx-auto h-auto w-auto p-5 shadow-lg rounded-xl bg-slate-800">
+          <motion.div className="flex justify-between items-center pb-3">
+            <motion.h1 className="text-2xl font-bold text-white">
+              {title}
+            </motion.h1>
+            <motion.button
               onClick={closeDialog}
               className="cursor-pointer z-50 text-white"
             >
               x
-            </button>
-          </div>
-          <div>{children}</div>
-        </div>
-      </dialog>
-    ) : null;
+            </motion.button>
+          </motion.div>
+          <motion.div>{children}</motion.div>
+        </motion.div>
+      </motion.dialog>
+    </>
+  );
   return modal;
 }

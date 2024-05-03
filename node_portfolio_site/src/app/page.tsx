@@ -1,14 +1,28 @@
 "use client";
 import { AnimatePresence, motion } from "framer-motion";
 import useNodePhysics from "./useNodePhysics";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Modal from "./components/Modal";
 
 export default function Home() {
   const DEBUG = false;
   const [isDragging, setIsDragging] = useState(false);
+  const [selectedNode, setSelectedNode] = useState<number>(-1);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const modalPage = searchParams.get("page");
+
+  useEffect(() => {
+    for (let i = 0; i < nodeList.length; i++) {
+      if (nodeList[i].id === modalPage && nodeList[i].hasModal) {
+        setSelectedNode(i);
+        return;
+      }
+    }
+    setSelectedNode(-1);
+    if (modalPage !== null && modalPage !== "") router.push("/");
+  }, [modalPage]);
 
   const ComponentOne = () => (
     <div
@@ -170,9 +184,6 @@ export default function Home() {
 
         {nodeList.map((component, index) => (
           <div key={index}>
-            <Modal title={nodeList[index].id}>
-              {nodeList[index].modalContent}
-            </Modal>
             <AnimatePresence>
               {nodeList[index].visible && (
                 <motion.div
@@ -215,6 +226,13 @@ export default function Home() {
             </AnimatePresence>
           </div>
         ))}
+        <AnimatePresence>
+          {selectedNode != -1 && (
+            <Modal title={nodeList[selectedNode].id}>
+              {nodeList[selectedNode].modalContent}
+            </Modal>
+          )}
+        </AnimatePresence>
       </main>
     </>
   );
