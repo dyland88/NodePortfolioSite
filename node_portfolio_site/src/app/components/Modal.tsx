@@ -26,7 +26,7 @@ export default function Modal({ title, children }: Props) {
         ref={modalRef}
         className="bg-transparent flex justify-center align-middle self-center justify-self-center"
       >
-        <motion.div className="mx-auto h-auto w-auto p-5 shadow-lg rounded-xl bg-slate-800">
+        <motion.div className="mx-auto h-auto w-1/2 p-5 shadow-lg rounded-xl bg-slate-800">
           <motion.div className="flex justify-between items-center pb-3">
             <motion.h1 className="text-2xl font-bold text-white">
               {title}

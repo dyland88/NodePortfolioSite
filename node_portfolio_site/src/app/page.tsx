@@ -4,6 +4,8 @@ import useNodePhysics from "./useNodePhysics";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Modal from "./components/Modal";
+import ContentNode from "./components/ContentNode";
+import { GitBranch } from "react-feather";
 
 export default function Home() {
   const DEBUG = false;
@@ -102,7 +104,7 @@ export default function Home() {
     },
     {
       id: "3.1",
-      content: <ComponentTwo />,
+      content: <ContentNode icon={<GitBranch />} color="#1DAA9A" />,
       hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth * (3 / 4),
