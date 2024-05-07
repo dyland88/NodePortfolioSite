@@ -6,6 +6,8 @@ import { throttle } from "throttle-debounce";
 type Node = {
   id: string;
   content: JSX.Element;
+  hasModal?: boolean;
+  modalContent?: JSX.Element;
   x: number;
   y: number;
   visible: boolean;
