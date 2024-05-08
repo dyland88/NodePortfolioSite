@@ -4,8 +4,8 @@ import useNodePhysics from "./useNodePhysics";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Modal from "./components/Modal";
-import ContentNode from "./components/ContentNode";
-import { GitBranch } from "react-feather";
+import { CenterNode, ContentNode, LinkNode } from "./components/Nodes";
+import { GitBranch, Link } from "react-feather";
 
 export default function Home() {
   const DEBUG = false;
@@ -14,6 +14,9 @@ export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const modalPage = searchParams.get("page");
+  const green = "#1DAA9A";
+  const red = "#d05252";
+  const blue = "#3e75cd";
 
   useEffect(() => {
     for (let i = 0; i < nodeList.length; i++) {
@@ -26,40 +29,6 @@ export default function Home() {
     if (modalPage !== null && modalPage !== "") router.push("/");
   }, [modalPage]);
 
-  const ComponentOne = () => (
-    <div
-      style={{
-        minWidth: 80,
-        minHeight: 80,
-        backgroundColor: "red",
-        borderRadius: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        display: "flex",
-        borderWidth: 2,
-        borderColor: "white",
-      }}
-    >
-      <p>Hello</p>
-    </div>
-  );
-  const ComponentTwo = () => (
-    <div
-      style={{
-        width: 80,
-        height: 80,
-        backgroundColor: "blue",
-        borderRadius: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        display: "flex",
-        borderWidth: 2,
-        borderColor: "white",
-      }}
-    >
-      <p>World</p>
-    </div>
-  );
   const LoremIpsum = () => (
     <p className="text-white">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, magni eos
@@ -78,7 +47,7 @@ export default function Home() {
   const initialNodes = [
     {
       id: "main",
-      content: <ComponentOne />,
+      content: <CenterNode />,
       modalContent: <LoremIpsum />,
       hasModal: true,
       x: windowWidth / 2,
@@ -88,7 +57,7 @@ export default function Home() {
     },
     {
       id: "two",
-      content: <ComponentTwo />,
+      content: <LinkNode icon={<GitBranch size={40} />} color={green} />,
       x: windowWidth / 4,
       y: windowHeight / 2,
       visible: true,
@@ -96,7 +65,7 @@ export default function Home() {
     },
     {
       id: "three",
-      content: <ComponentTwo />,
+      content: <LinkNode icon={<GitBranch size={40} />} color={blue} />,
       x: windowWidth * (3 / 4),
       y: windowHeight / 2,
       visible: true,
@@ -104,7 +73,7 @@ export default function Home() {
     },
     {
       id: "3.1",
-      content: <ContentNode icon={<GitBranch />} color="#1DAA9A" />,
+      content: <ContentNode icon={<GitBranch size={40} />} color={blue} />,
       hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth * (3 / 4),
@@ -114,7 +83,7 @@ export default function Home() {
     },
     {
       id: "3.2",
-      content: <ComponentTwo />,
+      content: <ContentNode icon={<GitBranch size={40} />} color={blue} />,
       hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth * (3 / 4),
@@ -124,7 +93,7 @@ export default function Home() {
     },
     {
       id: "2.1",
-      content: <ComponentTwo />,
+      content: <ContentNode icon={<GitBranch size={40} />} color={green} />,
       hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth / 4,
@@ -134,7 +103,7 @@ export default function Home() {
     },
     {
       id: "2.2",
-      content: <ComponentTwo />,
+      content: <ContentNode icon={<GitBranch size={40} />} color={green} />,
       hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth / 4,
@@ -162,7 +131,7 @@ export default function Home() {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-start justify-start overflow-clip p-24 bg-slate-950">
+      <main className="flex min-h-screen flex-col items-start justify-start overflow-clip p-24 bg-gray">
         {DEBUG && (
           <div
             ref={scene}
@@ -218,8 +187,10 @@ export default function Home() {
                   }}
                   style={{
                     position: "absolute",
-                    left: nodeList[index].x - 40,
-                    top: nodeList[index].y - 40,
+                    left: nodeList[index].x,
+                    top: nodeList[index].y,
+                    translateX: "-50%",
+                    translateY: "-50%",
                   }}
                 >
                   {component.content}
