@@ -131,7 +131,14 @@ export default function Home() {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-start justify-start overflow-clip p-24 bg-gray">
+      <main
+        className="flex min-h-screen flex-col items-start justify-start overflow-clip p-24 bg-gray"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 3px 3px, #353535 2px, transparent 0)",
+          backgroundSize: "40px 40px",
+        }}
+      >
         {DEBUG && (
           <div
             ref={scene}
