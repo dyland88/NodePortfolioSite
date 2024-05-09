@@ -176,7 +176,7 @@ export default function Home() {
                   animate={{ scale: 1 }}
                   exit={{ scale: 0 }}
                   drag={true}
-                  whileDrag={{ scale: 1.1 }}
+                  whileDrag={{ scale: 1.0 }}
                   whileHover={{ scale: 1.2 }}
                   onDrag={(
                     event: any,

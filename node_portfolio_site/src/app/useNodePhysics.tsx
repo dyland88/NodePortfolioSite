@@ -83,11 +83,19 @@ function useNodePhysics(
       const body = Bodies.circle(node.x, node.y, node.radius, {
         restitution: 0.2,
         frictionAir: 0.04,
+        density: 0.001,
+        collisionFilter: {
+          group: 0,
+          category: 1,
+        },
         render: {
           visible: true,
         },
       });
       World.add(engine.current.world, body);
+      if (!node.visible) {
+        setVisible(nodeList.indexOf(node), false);
+      }
     });
 
     // Create links between nodes
@@ -107,18 +115,34 @@ function useNodePhysics(
       Bodies.rectangle(clientWidth / 2, 0, clientWidth, 20, {
         isStatic: true,
         restitution: 1,
+        collisionFilter: {
+          group: 0,
+          category: 2,
+        },
       }),
       Bodies.rectangle(0, clientHeight / 2, 10, clientHeight, {
         isStatic: true,
         restitution: 1,
+        collisionFilter: {
+          group: 0,
+          category: 2,
+        },
       }),
       Bodies.rectangle(clientWidth / 2, clientHeight, clientWidth, 20, {
         isStatic: true,
         restitution: 1,
+        collisionFilter: {
+          group: 0,
+          category: 2,
+        },
       }),
       Bodies.rectangle(clientWidth, clientHeight / 2, 20, clientHeight, {
         isStatic: true,
         restitution: 1,
+        collisionFilter: {
+          group: 0,
+          category: 2,
+        },
       }),
     ]);
 
@@ -254,13 +278,7 @@ function useNodePhysics(
     // Set visibility of children, doing so recursively if setting to hidden
     for (let i = 0; i < linkList.length; i++) {
       if (linkList[i].source == index) {
-        nodeList[linkList[i].target].visible = newState;
-
-        // Set the mass of the child to 0 if hidden
-        Matter.Body.setDensity(
-          engine.current.world.bodies[linkList[i].target],
-          newState ? 0.001 : 0.00001
-        );
+        setVisible(linkList[i].target, newState);
         // Recursively hide children if newState == false
         if (
           newState == false &&
@@ -270,6 +288,16 @@ function useNodePhysics(
         }
       }
     }
+  }
+
+  function setVisible(index: number, visible: boolean) {
+    nodeList[index].visible = visible;
+    Matter.Body.setDensity(
+      engine.current.world.bodies[index],
+      visible ? 0.001 : 0.00001
+    );
+    // Make the body not collide with other bodies when hidden
+    engine.current.world.bodies[index].collisionFilter.mask = visible ? -1 : 2;
   }
 
   // Apply a repellent force between all nodes
@@ -292,8 +320,11 @@ function useNodePhysics(
         let distance = Vector.magnitude(force);
         force = Vector.normalise(force);
         force = Vector.mult(force, (multiplier * 6) / (distance * distance));
-        applyForce(i, force);
-        applyForce(j, Vector.neg(force));
+
+        // Only apply force from visible nodes or between two hidden nodes
+        if (nodeList[j].visible || !nodeList[i].visible) applyForce(i, force);
+        if (nodeList[i].visible || !nodeList[j].visible)
+          applyForce(j, Vector.neg(force));
       }
     }
   }
