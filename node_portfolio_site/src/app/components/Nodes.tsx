@@ -1,17 +1,17 @@
 import React from "react";
 
-interface Props {
+interface NodeProps {
   icon: any;
   color: string;
 }
 
-export const ContentNode: React.FC<Props> = ({ icon, color }) => {
+export const ContentNode: React.FC<NodeProps> = ({ icon, color }) => {
   return (
     <div>
       <div
         style={{
-          width: 90,
-          height: 90,
+          width: 100,
+          height: 100,
           backgroundColor: color,
           borderRadius: "100%",
           justifyContent: "center",
@@ -28,7 +28,7 @@ export const ContentNode: React.FC<Props> = ({ icon, color }) => {
   );
 };
 
-export const LinkNode: React.FC<Props> = ({ icon, color }) => {
+export const LinkNode: React.FC<NodeProps> = ({ icon, color }) => {
   return (
     <div>
       <div
@@ -57,8 +57,8 @@ export const CenterNode: React.FC = () => {
     <div>
       <div
         style={{
-          width: 120,
-          height: 120,
+          width: 140,
+          height: 140,
           justifyContent: "center",
           alignItems: "center",
           display: "flex",

@@ -153,7 +153,7 @@ export default function Home() {
               y1={nodeList[linkList[index].source].y}
               x2={nodeList[linkList[index].target].x}
               y2={nodeList[linkList[index].target].y}
-              stroke="gray"
+              stroke="#b5b5b5"
               strokeWidth={2.5}
               opacity={nodeList[link.target].visible ? 1 : 0}
             />
