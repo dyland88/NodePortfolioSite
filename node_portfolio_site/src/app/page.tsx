@@ -5,17 +5,16 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Modal from "./components/Modal";
 import { CenterNode, ContentNode, LinkNode } from "./components/Nodes";
-import { GitBranch, Link } from "react-feather";
+import { GitBranch } from "react-feather";
 
 export default function Home() {
   const DEBUG = false;
   const [isDragging, setIsDragging] = useState(false);
   const [selectedNode, setSelectedNode] = useState<number>(-1);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const modalPage = searchParams.get("page");
+  const modalPage = useSearchParams().get("page");
   const green = "#1DAA9A";
-  const red = "#d05252";
+  // const red = "#d05252";
   const blue = "#3e75cd";
 
   useEffect(() => {

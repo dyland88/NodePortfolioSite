@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface NodeProps {
   icon: any;
@@ -65,7 +66,12 @@ export const CenterNode: React.FC = () => {
           pointerEvents: "none", // Add this line to make the image not clickable
         }}
       >
-        <img src="/assets/Center_node.png" alt="image" />
+        <Image
+          src="/assets/Center_node.png"
+          alt="image"
+          width={140}
+          height={140}
+        />
       </div>
     </div>
   );
