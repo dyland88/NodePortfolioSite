@@ -10,6 +10,7 @@ type Node = {
   modalContent?: JSX.Element;
   x: number;
   y: number;
+  radius: number;
   visible: boolean;
   childrenVisible: boolean;
 };
@@ -28,7 +29,6 @@ function useNodePhysics(
   initialLinkList: nameLink[],
   debug: boolean
 ) {
-  const NODERADIUS = 40;
   const scene = useRef(null);
   const engine = useRef(Engine.create());
   const lastTimeUpdated = useRef(Date.now());
@@ -80,12 +80,11 @@ function useNodePhysics(
 
     // Create simulation bodies
     nodeList.forEach((node) => {
-      const body = Bodies.circle(node.x, node.y, NODERADIUS, {
-        //TODO: make size dynamic
+      const body = Bodies.circle(node.x, node.y, node.radius, {
         restitution: 0.2,
         frictionAir: 0.04,
         render: {
-          visible: false,
+          visible: true,
         },
       });
       World.add(engine.current.world, body);
@@ -159,12 +158,12 @@ function useNodePhysics(
   // Sets the position of a specific node
   function setNodePosition(index: number, newX: number, newY: number) {
     newX = Math.max(
-      NODERADIUS + 5,
-      Math.min(newX, window.innerWidth - NODERADIUS - 5)
+      nodeList[index].radius + 5,
+      Math.min(newX, window.innerWidth - nodeList[index].radius - 5)
     );
     newY = Math.max(
-      NODERADIUS + 5,
-      Math.min(newY, window.innerHeight - NODERADIUS - 5)
+      nodeList[index].radius + 5,
+      Math.min(newY, window.innerHeight - nodeList[index].radius - 5)
     );
     Matter.Body.setPosition(engine.current.world.bodies[index], {
       x: newX,
@@ -220,7 +219,7 @@ function useNodePhysics(
         window.innerWidth + 20
       ) {
         Matter.Body.setPosition(engine.current.world.bodies[index], {
-          x: window.innerWidth - NODERADIUS,
+          x: window.innerWidth - nodeList[index].radius,
           y: engine.current.world.bodies[index].position.y,
         });
       }
@@ -230,7 +229,7 @@ function useNodePhysics(
       ) {
         Matter.Body.setPosition(engine.current.world.bodies[index], {
           x: engine.current.world.bodies[index].position.x,
-          y: window.innerHeight - NODERADIUS,
+          y: window.innerHeight - nodeList[index].radius,
         });
       }
     });
