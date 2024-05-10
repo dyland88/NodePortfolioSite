@@ -71,6 +71,7 @@ export const CenterNode: React.FC = () => {
           alt="image"
           width={140}
           height={140}
+          priority={true}
         />
       </div>
     </div>

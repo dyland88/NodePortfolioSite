@@ -210,15 +210,11 @@ export default function Home() {
                 </motion.div>
               )}
             </AnimatePresence>
+            <Modal title={component.id} isOpen={selectedNode === index}>
+              {nodeList[index]?.modalContent}
+            </Modal>
           </div>
         ))}
-        <AnimatePresence>
-          {selectedNode != -1 && (
-            <Modal title={nodeList[selectedNode].id}>
-              {nodeList[selectedNode].modalContent}
-            </Modal>
-          )}
-        </AnimatePresence>
       </main>
     </>
   );
