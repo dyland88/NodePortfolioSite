@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Modal from "./components/Modal";
 import { CenterNode, ContentNode, LinkNode } from "./components/Nodes";
 import { GitBranch } from "react-feather";
+import { Dylan, Welcome } from "./components/ModalPages";
 
 export default function Home() {
   const DEBUG = false;
@@ -25,7 +26,8 @@ export default function Home() {
       }
     }
     setSelectedNode(-1);
-    if (modalPage !== null && modalPage !== "") router.push("/");
+    if (modalPage !== null && modalPage !== "nodes")
+      router.push("/?page=nodes");
   }, [modalPage]);
 
   const LoremIpsum = () => (
@@ -45,13 +47,13 @@ export default function Home() {
 
   const initialNodes = [
     {
-      id: "main",
+      id: "Dylan Coben",
       content: <CenterNode />,
-      modalContent: <LoremIpsum />,
+      modalContent: <Dylan />,
       hasModal: true,
       x: windowWidth / 2,
       y: windowHeight / 2,
-      radius: 70,
+      radius: 65,
       visible: true,
       childrenVisible: true,
     },
@@ -119,8 +121,8 @@ export default function Home() {
     },
   ];
   const initialLinkList = [
-    { source: "main", target: "two" },
-    { source: "main", target: "three" },
+    { source: "Dylan Coben", target: "two" },
+    { source: "Dylan Coben", target: "three" },
     { source: "three", target: "3.1" },
     { source: "three", target: "3.2" },
     { source: "two", target: "2.1" },
@@ -138,13 +140,14 @@ export default function Home() {
   return (
     <>
       <main
-        className="flex min-h-screen flex-col items-start justify-start overflow-clip p-24 bg-gray"
+        className="flex min-h-screen flex-col items-start justify-start overflow-hidden p-24 bg-gray"
         style={{
           backgroundImage:
             "radial-gradient(circle at 3px 3px, #353535 2px, transparent 0)",
           backgroundSize: "40px 40px",
         }}
       >
+        {modalPage === null && <Welcome />}
         {DEBUG && (
           <div
             ref={scene}
@@ -210,7 +213,12 @@ export default function Home() {
                 </motion.div>
               )}
             </AnimatePresence>
-            <Modal title={component.id} isOpen={selectedNode === index}>
+            <Modal
+              title={component.id}
+              isOpen={selectedNode === index}
+              tags={nodeList[index]?.modalTags ?? []}
+              tagColor="#ff0000"
+            >
               {nodeList[index]?.modalContent}
             </Modal>
           </div>

@@ -8,6 +8,7 @@ type Node = {
   content: JSX.Element;
   hasModal?: boolean;
   modalContent?: JSX.Element;
+  modalTags?: string[];
   x: number;
   y: number;
   radius: number;

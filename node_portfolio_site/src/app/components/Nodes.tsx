@@ -58,8 +58,8 @@ export const CenterNode: React.FC = () => {
     <div>
       <div
         style={{
-          width: 140,
-          height: 140,
+          width: 130,
+          height: 130,
           justifyContent: "center",
           alignItems: "center",
           display: "flex",
