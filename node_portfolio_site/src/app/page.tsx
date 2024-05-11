@@ -147,7 +147,9 @@ export default function Home() {
           backgroundSize: "40px 40px",
         }}
       >
-        {modalPage === null && <Welcome />}
+        <AnimatePresence>
+          {modalPage === null && <Welcome isOpen={modalPage === null} />}
+        </AnimatePresence>
         {DEBUG && (
           <div
             ref={scene}
