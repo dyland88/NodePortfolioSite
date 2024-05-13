@@ -184,12 +184,11 @@ export default function Home() {
         }}
       >
         <AnimatePresence>
-          {modalPage === null ||
-            (modalPage === "Dylan Coben" && (
-              <Welcome
-                isOpen={modalPage === null || modalPage === "Dylan Coben"}
-              />
-            ))}
+          {(modalPage === null || modalPage === "Dylan Coben") && (
+            <Welcome
+              isOpen={modalPage === null || modalPage === "Dylan Coben"}
+            />
+          )}
         </AnimatePresence>
         {DEBUG && (
           <div

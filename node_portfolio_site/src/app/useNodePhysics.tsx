@@ -52,7 +52,13 @@ function useNodePhysics(
       if (sourceIndex !== -1 && targetIndex !== -1) {
         newLinkList.push({ source: sourceIndex, target: targetIndex });
       } else {
-        console.log("Error: Node not found in nodeList for link");
+        console.log(
+          `Error: Node ${
+            sourceIndex == -1
+              ? initialLinkList[i].source
+              : initialLinkList[i].target
+          } not found in nodeList for link`
+        );
       }
     }
     return newLinkList;

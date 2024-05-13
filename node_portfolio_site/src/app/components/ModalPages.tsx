@@ -20,21 +20,19 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
       onClose={closeDialog}
       open={isOpen}
       className="relative z-50"
+      as={motion.div}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
     >
-      <div className="fixed inset-0 flex w-screen items-center justify-center p-4 backdrop-blur-sm">
-        <DialogPanel
-          as={motion.div}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className=" max-w-3xl p-1.5 bg-gradient-to-br from-customblue to-customred rounded-3xl"
-        >
-          <div className="bg-[#232323] rounded-2xl flex md:flex-row flex-col-reverse justify-center align-middle overflow-hidden py-16 md:pt-16 pt-8 px-8 md:px-16 gap-4 md:gap-8">
+      <div className="fixed inset-0 flex w-screen items-center justify-center p-4 bg-black bg-opacity-30">
+        <DialogPanel className=" max-w-[52rem] p-1.5 bg-gradient-to-br from-customblue to-customred rounded-3xl">
+          <div className="bg-[#232323] rounded-2xl flex md:flex-row flex-col-reverse justify-center align-middle overflow-hidden py-16 md:pt-16 pt-8 px-8 md:px-16 gap-6 md:gap-10">
             <div className="inline-block md:w-3/5 w-full">
-              <DialogTitle className="font-bold text-4xl flex align-middle mb-2">
+              <DialogTitle className="font-bold text-4xl flex align-middle mb-2 text-nowrap">
                 Hey, I'm Dylan
               </DialogTitle>
-              <DialogTitle className="font-bold text-4xl inline-block bg-gradient-to-r from-customblue to-customred text-transparent bg-clip-text">
+              <DialogTitle className="font-bold text-4xl inline-block bg-gradient-to-r from-customblue to-customred text-transparent bg-clip-text text-nowrap">
                 Software Developer
               </DialogTitle>
               <div className="flex flex-row items-center gap-3 my-7">
@@ -43,7 +41,7 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
                   whileTap={{ scale: 0.95 }}
                   href="https://github.com/your-github-profile"
                   rel="noopener noreferrer"
-                  className="bg-[#5a5a5a] text-white text-sm px-4 py-2 rounded-full flex flex-row gap-1.5"
+                  className="bg-[#5a5a5a] text-white max-sm:text-xs text-sm px-4 py-2 rounded-full flex flex-row items-center justify-center gap-1.5"
                 >
                   <Image
                     src="/assets/github.svg"
@@ -59,7 +57,7 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
                   whileTap={{ scale: 0.95 }}
                   href="https://www.linkedin.com/in/your-linkedin-profile"
                   rel="noopener noreferrer"
-                  className="bg-[#5a5a5a] text-white text-sm px-4 py-2 rounded-full flex flex-row gap-1.5"
+                  className="bg-[#5a5a5a] text-white max-sm:text-xs text-sm px-4 py-2 rounded-full flex flex-row items-center justify-center gap-1.5"
                 >
                   <Image
                     src="/assets/github.svg"
@@ -75,7 +73,7 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
                   whileTap={{ scale: 0.95 }}
                   href="https://www.gmail.com"
                   rel="noopener noreferrer"
-                  className="bg-[#5a5a5a] text-white text-sm px-4 py-2 rounded-full flex flex-row gap-1.5"
+                  className="bg-[#5a5a5a] text-white max-sm:text-xs text-sm px-4 py-2 rounded-full flex flex-row items-center justify-center gap-1.5"
                 >
                   <Image
                     src="/assets/github.svg"
@@ -87,7 +85,7 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
                   Mail
                 </motion.a>
               </div>
-              <p className=" text-stone-400 text-md mb-8">
+              <p className=" text-stone-400 text-md mb-8 max-w-sm">
                 Hi, I am Dylan, a software developer attending the Honors
                 College at the University of Florida. I have experience in
                 React, Next, C++, Python, and Java.

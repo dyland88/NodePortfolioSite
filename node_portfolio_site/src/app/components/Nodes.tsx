@@ -14,7 +14,7 @@ export const ContentNode: React.FC<NodeProps> = ({
   description,
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center w-40">
       <div
         style={{
           width: 100,
