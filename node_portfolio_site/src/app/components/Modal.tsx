@@ -46,7 +46,7 @@ export default function Modal({
         leaveTo="opacity-0"
       >
         <Dialog onClose={closeDialog} className="relative z-50">
-          <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+          <div className="fixed inset-0 flex w-screen items-center justify-center p-4 backdrop-blur-sm bg-black bg-opacity-15">
             <DialogPanel className="max-w-3xl space-y-4 border-4 border-customred bg-[#232323] rounded-3xl flex-row flex-start overflow-hidden">
               <div className="bg-[#393939] w-full pr-3 pl-12 py-3 flex flex-row justify-between items-center">
                 <DialogTitle className="font-bold text-2xl">
