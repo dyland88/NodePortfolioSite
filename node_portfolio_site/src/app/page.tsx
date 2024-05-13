@@ -184,7 +184,12 @@ export default function Home() {
         }}
       >
         <AnimatePresence>
-          {modalPage === null && <Welcome isOpen={modalPage === null} />}
+          {modalPage === null ||
+            (modalPage === "Dylan Coben" && (
+              <Welcome
+                isOpen={modalPage === null || modalPage === "Dylan Coben"}
+              />
+            ))}
         </AnimatePresence>
         {DEBUG && (
           <div
@@ -244,21 +249,25 @@ export default function Home() {
                     left: nodeList[index].x,
                     top: nodeList[index].y,
                     translateX: "-50%",
-                    translateY: "-50%",
+                    translateY: -1 * nodeList[index].radius,
                   }}
                 >
                   {component.content}
                 </motion.div>
               )}
             </AnimatePresence>
-            <Modal
-              title={component.id}
-              isOpen={selectedNode === index}
-              tags={nodeList[index]?.modalTags ?? []}
-              tagColor="#ff0000"
-            >
-              {nodeList[index]?.modalContent}
-            </Modal>
+            <AnimatePresence>
+              {selectedNode === index && index > 0 && (
+                <Modal
+                  title={component.id}
+                  isOpen={selectedNode === index}
+                  tags={nodeList[index]?.modalTags ?? []}
+                  tagColor="#ff0000"
+                >
+                  {nodeList[index]?.modalContent}
+                </Modal>
+              )}
+            </AnimatePresence>
           </div>
         ))}
       </main>

@@ -14,7 +14,7 @@ export const ContentNode: React.FC<NodeProps> = ({
   description,
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center min-w-32">
+    <div className="flex flex-col items-center justify-center">
       <div
         style={{
           width: 100,
@@ -38,7 +38,7 @@ export const ContentNode: React.FC<NodeProps> = ({
 
 export const LinkNode: React.FC<NodeProps> = ({ icon, color, description }) => {
   return (
-    <div className="flex flex-col items-center justify-center min-w-32">
+    <div className="flex flex-col items-center justify-center">
       <div
         style={{
           width: 90,
@@ -64,7 +64,7 @@ export const LinkNode: React.FC<NodeProps> = ({ icon, color, description }) => {
 export const CenterNode: React.FC = () => {
   return (
     <div>
-      <div className="justify-center items-center flex flex-col pointer-events-none min-w-40">
+      <div className="justify-center items-center flex flex-col pointer-events-none">
         <Image
           src="/assets/Center_node.png"
           alt="image"
