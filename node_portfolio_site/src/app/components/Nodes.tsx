@@ -1,14 +1,20 @@
 import React from "react";
 import Image from "next/image";
+import NodeDescription from "./NodeDescription";
 
 interface NodeProps {
   icon: any;
   color: string;
+  description: string;
 }
 
-export const ContentNode: React.FC<NodeProps> = ({ icon, color }) => {
+export const ContentNode: React.FC<NodeProps> = ({
+  icon,
+  color,
+  description,
+}) => {
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center min-w-32">
       <div
         style={{
           width: 100,
@@ -25,13 +31,14 @@ export const ContentNode: React.FC<NodeProps> = ({ icon, color }) => {
       >
         {icon}
       </div>
+      <NodeDescription text={description} />
     </div>
   );
 };
 
-export const LinkNode: React.FC<NodeProps> = ({ icon, color }) => {
+export const LinkNode: React.FC<NodeProps> = ({ icon, color, description }) => {
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center min-w-32">
       <div
         style={{
           width: 90,
@@ -49,6 +56,7 @@ export const LinkNode: React.FC<NodeProps> = ({ icon, color }) => {
       >
         {icon}
       </div>
+      <NodeDescription text={description} />
     </div>
   );
 };
@@ -56,16 +64,7 @@ export const LinkNode: React.FC<NodeProps> = ({ icon, color }) => {
 export const CenterNode: React.FC = () => {
   return (
     <div>
-      <div
-        style={{
-          width: 130,
-          height: 130,
-          justifyContent: "center",
-          alignItems: "center",
-          display: "flex",
-          pointerEvents: "none", // Add this line to make the image not clickable
-        }}
-      >
+      <div className="justify-center items-center flex flex-col pointer-events-none min-w-40">
         <Image
           src="/assets/Center_node.png"
           alt="image"
@@ -73,6 +72,7 @@ export const CenterNode: React.FC = () => {
           height={140}
           priority={true}
         />
+        <NodeDescription text="Dylan Coben" />
       </div>
     </div>
   );

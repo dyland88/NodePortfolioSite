@@ -104,7 +104,7 @@ function useNodePhysics(
       const constraint = Constraint.create({
         bodyA: engine.current.world.bodies[link.source],
         bodyB: engine.current.world.bodies[link.target],
-        length: (clientWidth + clientHeight) / 10,
+        length: (clientWidth + clientHeight) / 9,
         stiffness: 0.004,
         damping: 0.04,
       });

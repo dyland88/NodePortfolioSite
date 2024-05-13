@@ -58,8 +58,14 @@ export default function Home() {
       childrenVisible: true,
     },
     {
-      id: "two",
-      content: <LinkNode icon={<GitBranch size={40} />} color={green} />,
+      id: "Projects",
+      content: (
+        <LinkNode
+          icon={<GitBranch size={40} />}
+          color={green}
+          description={"Projects"}
+        />
+      ),
       x: windowWidth / 4,
       y: windowHeight / 2,
       radius: 45,
@@ -67,8 +73,14 @@ export default function Home() {
       childrenVisible: false,
     },
     {
-      id: "three",
-      content: <LinkNode icon={<GitBranch size={40} />} color={blue} />,
+      id: "Work",
+      content: (
+        <LinkNode
+          icon={<GitBranch size={40} />}
+          color={blue}
+          description={"Work Experience"}
+        />
+      ),
       x: windowWidth * (3 / 4),
       y: windowHeight / 2,
       radius: 45,
@@ -77,7 +89,13 @@ export default function Home() {
     },
     {
       id: "3.1",
-      content: <ContentNode icon={<GitBranch size={40} />} color={blue} />,
+      content: (
+        <ContentNode
+          icon={<GitBranch size={40} />}
+          color={blue}
+          description={"Dylan Coben"}
+        />
+      ),
       hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth * (3 / 4),
@@ -88,7 +106,13 @@ export default function Home() {
     },
     {
       id: "3.2",
-      content: <ContentNode icon={<GitBranch size={40} />} color={blue} />,
+      content: (
+        <ContentNode
+          icon={<GitBranch size={40} />}
+          color={blue}
+          description={"Dylan Coben"}
+        />
+      ),
       hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth * (3 / 4),
@@ -99,7 +123,13 @@ export default function Home() {
     },
     {
       id: "2.1",
-      content: <ContentNode icon={<GitBranch size={40} />} color={green} />,
+      content: (
+        <ContentNode
+          icon={<GitBranch size={40} />}
+          color={green}
+          description={"Dylan Coben"}
+        />
+      ),
       hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth / 4,
@@ -110,7 +140,13 @@ export default function Home() {
     },
     {
       id: "2.2",
-      content: <ContentNode icon={<GitBranch size={40} />} color={green} />,
+      content: (
+        <ContentNode
+          icon={<GitBranch size={40} />}
+          color={green}
+          description={"Dylan Coben"}
+        />
+      ),
       hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth / 4,
@@ -121,12 +157,12 @@ export default function Home() {
     },
   ];
   const initialLinkList = [
-    { source: "Dylan Coben", target: "two" },
-    { source: "Dylan Coben", target: "three" },
-    { source: "three", target: "3.1" },
-    { source: "three", target: "3.2" },
-    { source: "two", target: "2.1" },
-    { source: "two", target: "2.2" },
+    { source: "Dylan Coben", target: "Projects" },
+    { source: "Dylan Coben", target: "Work" },
+    { source: "Work", target: "3.1" },
+    { source: "Work", target: "3.2" },
+    { source: "Projects", target: "2.1" },
+    { source: "Projects", target: "2.2" },
   ];
 
   const {
@@ -181,7 +217,7 @@ export default function Home() {
                   exit={{ scale: 0 }}
                   drag={true}
                   whileDrag={{ scale: 1.0 }}
-                  whileHover={{ scale: 1.2 }}
+                  whileHover={{ scale: 1.1 }}
                   onDrag={(
                     event: any,
                     info: { point: { x: number; y: number } }
