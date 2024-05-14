@@ -8,7 +8,8 @@
     {
       "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
       "rules": {
-        "no-undef": "off"
+        "no-undef": "off",
+        "react/no-unescaped-entities": "off"
       }
     }
   ]

@@ -22,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <SpeedInsights />
       <Analytics />
+      <SpeedInsights />
       <Suspense>
         <body className={inter.className}>{children}</body>
       </Suspense>

@@ -8,8 +8,10 @@ type Node = {
   content: JSX.Element;
   hasModal?: boolean;
   modalContent?: JSX.Element;
+  modalTags?: string[];
   x: number;
   y: number;
+  radius: number;
   visible: boolean;
   childrenVisible: boolean;
 };
@@ -28,7 +30,6 @@ function useNodePhysics(
   initialLinkList: nameLink[],
   debug: boolean
 ) {
-  const NODERADIUS = 40;
   const scene = useRef(null);
   const engine = useRef(Engine.create());
   const lastTimeUpdated = useRef(Date.now());
@@ -51,7 +52,13 @@ function useNodePhysics(
       if (sourceIndex !== -1 && targetIndex !== -1) {
         newLinkList.push({ source: sourceIndex, target: targetIndex });
       } else {
-        console.log("Error: Node not found in nodeList for link");
+        console.log(
+          `Error: Node ${
+            sourceIndex == -1
+              ? initialLinkList[i].source
+              : initialLinkList[i].target
+          } not found in nodeList for link`
+        );
       }
     }
     return newLinkList;
@@ -80,15 +87,22 @@ function useNodePhysics(
 
     // Create simulation bodies
     nodeList.forEach((node) => {
-      const body = Bodies.circle(node.x, node.y, NODERADIUS, {
-        //TODO: make size dynamic
+      const body = Bodies.circle(node.x, node.y, node.radius, {
         restitution: 0.2,
         frictionAir: 0.04,
+        density: 0.001,
+        collisionFilter: {
+          group: 0,
+          category: 1,
+        },
         render: {
-          visible: false,
+          visible: true,
         },
       });
       World.add(engine.current.world, body);
+      if (!node.visible) {
+        setVisible(nodeList.indexOf(node), false);
+      }
     });
 
     // Create links between nodes
@@ -96,7 +110,11 @@ function useNodePhysics(
       const constraint = Constraint.create({
         bodyA: engine.current.world.bodies[link.source],
         bodyB: engine.current.world.bodies[link.target],
-        length: (clientWidth + clientHeight) / 10,
+        length: Math.min(
+          Math.sqrt(clientWidth * clientWidth + clientHeight * clientHeight) /
+            6,
+          280
+        ),
         stiffness: 0.004,
         damping: 0.04,
       });
@@ -108,18 +126,34 @@ function useNodePhysics(
       Bodies.rectangle(clientWidth / 2, 0, clientWidth, 20, {
         isStatic: true,
         restitution: 1,
+        collisionFilter: {
+          group: 0,
+          category: 2,
+        },
       }),
       Bodies.rectangle(0, clientHeight / 2, 10, clientHeight, {
         isStatic: true,
         restitution: 1,
+        collisionFilter: {
+          group: 0,
+          category: 2,
+        },
       }),
       Bodies.rectangle(clientWidth / 2, clientHeight, clientWidth, 20, {
         isStatic: true,
         restitution: 1,
+        collisionFilter: {
+          group: 0,
+          category: 2,
+        },
       }),
       Bodies.rectangle(clientWidth, clientHeight / 2, 20, clientHeight, {
         isStatic: true,
         restitution: 1,
+        collisionFilter: {
+          group: 0,
+          category: 2,
+        },
       }),
     ]);
 
@@ -159,12 +193,12 @@ function useNodePhysics(
   // Sets the position of a specific node
   function setNodePosition(index: number, newX: number, newY: number) {
     newX = Math.max(
-      NODERADIUS + 5,
-      Math.min(newX, window.innerWidth - NODERADIUS - 5)
+      nodeList[index].radius + 5,
+      Math.min(newX, window.innerWidth - nodeList[index].radius - 5)
     );
     newY = Math.max(
-      NODERADIUS + 5,
-      Math.min(newY, window.innerHeight - NODERADIUS - 5)
+      nodeList[index].radius + 5,
+      Math.min(newY, window.innerHeight - nodeList[index].radius - 5)
     );
     Matter.Body.setPosition(engine.current.world.bodies[index], {
       x: newX,
@@ -220,7 +254,7 @@ function useNodePhysics(
         window.innerWidth + 20
       ) {
         Matter.Body.setPosition(engine.current.world.bodies[index], {
-          x: window.innerWidth - NODERADIUS,
+          x: window.innerWidth - nodeList[index].radius,
           y: engine.current.world.bodies[index].position.y,
         });
       }
@@ -230,7 +264,7 @@ function useNodePhysics(
       ) {
         Matter.Body.setPosition(engine.current.world.bodies[index], {
           x: engine.current.world.bodies[index].position.x,
-          y: window.innerHeight - NODERADIUS,
+          y: window.innerHeight - nodeList[index].radius,
         });
       }
     });
@@ -255,13 +289,7 @@ function useNodePhysics(
     // Set visibility of children, doing so recursively if setting to hidden
     for (let i = 0; i < linkList.length; i++) {
       if (linkList[i].source == index) {
-        nodeList[linkList[i].target].visible = newState;
-
-        // Set the mass of the child to 0 if hidden
-        Matter.Body.setDensity(
-          engine.current.world.bodies[linkList[i].target],
-          newState ? 0.001 : 0.00001
-        );
+        setVisible(linkList[i].target, newState);
         // Recursively hide children if newState == false
         if (
           newState == false &&
@@ -271,6 +299,16 @@ function useNodePhysics(
         }
       }
     }
+  }
+
+  function setVisible(index: number, visible: boolean) {
+    nodeList[index].visible = visible;
+    Matter.Body.setDensity(
+      engine.current.world.bodies[index],
+      visible ? 0.001 : 0.00001
+    );
+    // Make the body not collide with other bodies when hidden
+    engine.current.world.bodies[index].collisionFilter.mask = visible ? -1 : 2;
   }
 
   // Apply a repellent force between all nodes
@@ -293,8 +331,11 @@ function useNodePhysics(
         let distance = Vector.magnitude(force);
         force = Vector.normalise(force);
         force = Vector.mult(force, (multiplier * 6) / (distance * distance));
-        applyForce(i, force);
-        applyForce(j, Vector.neg(force));
+
+        // Only apply force from visible nodes or between two hidden nodes
+        if (nodeList[j].visible || !nodeList[i].visible) applyForce(i, force);
+        if (nodeList[i].visible || !nodeList[j].visible)
+          applyForce(j, Vector.neg(force));
       }
     }
   }

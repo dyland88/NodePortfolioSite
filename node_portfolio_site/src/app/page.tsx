@@ -4,14 +4,19 @@ import useNodePhysics from "./useNodePhysics";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Modal from "./components/Modal";
+import { CenterNode, ContentNode, LinkNode } from "./components/Nodes";
+import { GitBranch } from "react-feather";
+import { Dylan, Welcome } from "./components/ModalPages";
 
 export default function Home() {
   const DEBUG = false;
   const [isDragging, setIsDragging] = useState(false);
   const [selectedNode, setSelectedNode] = useState<number>(-1);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const modalPage = searchParams.get("page");
+  const modalPage = useSearchParams().get("page");
+  const green = "#1DAA9A";
+  // const red = "#d05252";
+  const blue = "#3e75cd";
 
   useEffect(() => {
     for (let i = 0; i < nodeList.length; i++) {
@@ -21,43 +26,10 @@ export default function Home() {
       }
     }
     setSelectedNode(-1);
-    if (modalPage !== null && modalPage !== "") router.push("/");
+    if (modalPage !== null && modalPage !== "nodes")
+      router.push("/?page=nodes");
   }, [modalPage]);
 
-  const ComponentOne = () => (
-    <div
-      style={{
-        minWidth: 80,
-        minHeight: 80,
-        backgroundColor: "red",
-        borderRadius: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        display: "flex",
-        borderWidth: 2,
-        borderColor: "white",
-      }}
-    >
-      <p>Hello</p>
-    </div>
-  );
-  const ComponentTwo = () => (
-    <div
-      style={{
-        width: 80,
-        height: 80,
-        backgroundColor: "blue",
-        borderRadius: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-        display: "flex",
-        borderWidth: 2,
-        borderColor: "white",
-      }}
-    >
-      <p>World</p>
-    </div>
-  );
   const LoremIpsum = () => (
     <p className="text-white">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, magni eos
@@ -75,79 +47,122 @@ export default function Home() {
 
   const initialNodes = [
     {
-      id: "main",
-      content: <ComponentOne />,
-      modalContent: <LoremIpsum />,
+      id: "Dylan Coben",
+      content: <CenterNode />,
+      modalContent: <Dylan />,
       hasModal: true,
       x: windowWidth / 2,
       y: windowHeight / 2,
+      radius: 65,
       visible: true,
       childrenVisible: true,
     },
     {
-      id: "two",
-      content: <ComponentTwo />,
+      id: "Projects",
+      content: (
+        <LinkNode
+          icon={<GitBranch size={40} />}
+          color={green}
+          description={"Projects"}
+        />
+      ),
       x: windowWidth / 4,
       y: windowHeight / 2,
+      radius: 45,
       visible: true,
       childrenVisible: false,
     },
     {
-      id: "three",
-      content: <ComponentTwo />,
+      id: "Work",
+      content: (
+        <LinkNode
+          icon={<GitBranch size={40} />}
+          color={blue}
+          description={"Work Experience"}
+        />
+      ),
       x: windowWidth * (3 / 4),
       y: windowHeight / 2,
+      radius: 45,
       visible: true,
       childrenVisible: false,
     },
     {
-      id: "3.1",
-      content: <ComponentTwo />,
+      id: "Rocky Mountain Chocolate Factory",
+      content: (
+        <ContentNode
+          icon={<GitBranch size={40} />}
+          color={blue}
+          description={"Rocky Mountain\nChocolate Factory"}
+        />
+      ),
       hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth * (3 / 4),
       y: windowHeight * (3 / 4),
+      radius: 50,
       visible: false,
       childrenVisible: false,
     },
     {
-      id: "3.2",
-      content: <ComponentTwo />,
-      hasModal: true,
-      modalContent: <LoremIpsum />,
-      x: windowWidth * (3 / 4),
-      y: windowHeight * (1 / 4),
-      visible: false,
-      childrenVisible: false,
-    },
-    {
-      id: "2.1",
-      content: <ComponentTwo />,
+      id: "Reddit Bot",
+      content: (
+        <ContentNode
+          icon={<GitBranch size={40} />}
+          color={green}
+          description={"Reddit Bot"}
+        />
+      ),
       hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth / 4,
       y: windowHeight * (3 / 4),
+      radius: 50,
       visible: false,
       childrenVisible: false,
     },
     {
-      id: "2.2",
-      content: <ComponentTwo />,
+      id: "This Website",
+      content: (
+        <ContentNode
+          icon={<GitBranch size={40} />}
+          color={green}
+          description={"This Website"}
+        />
+      ),
       hasModal: true,
       modalContent: <LoremIpsum />,
       x: windowWidth / 4,
       y: windowHeight * (1 / 4),
+      radius: 50,
+      visible: false,
+      childrenVisible: false,
+    },
+    {
+      id: "Robotic Whiteboard",
+      content: (
+        <ContentNode
+          icon={<GitBranch size={40} />}
+          color={green}
+          description={"Robotic Whiteboard"}
+        />
+      ),
+      hasModal: true,
+      modalContent: <LoremIpsum />,
+      x: windowWidth / 3,
+      y: windowHeight * (1 / 4),
+      radius: 50,
       visible: false,
       childrenVisible: false,
     },
   ];
   const initialLinkList = [
-    { source: "main", target: "two" },
-    { source: "main", target: "three" },
-    { source: "three", target: "3.1" },
-    { source: "three", target: "3.2" },
-    { source: "two", target: "2.1" },
-    { source: "two", target: "2.2" },
+    { source: "Dylan Coben", target: "Projects" },
+    { source: "Dylan Coben", target: "Work" },
+    { source: "Work", target: "Rocky Mountain Chocolate Factory" },
+    { source: "Projects", target: "Reddit Bot" },
+    { source: "Projects", target: "This Website" },
+    { source: "Projects", target: "Robotic Whiteboard" },
   ];
 
   const {
@@ -160,7 +175,21 @@ export default function Home() {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-start justify-start overflow-clip p-24 bg-slate-950">
+      <main
+        className="w-screen relative h-screen flex-col items-start justify-start overflow-hidden bg-gray"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 3px 3px, #353535 2px, transparent 0)",
+          backgroundSize: "40px 40px",
+        }}
+      >
+        <AnimatePresence>
+          {(modalPage === null || modalPage === "Dylan Coben") && (
+            <Welcome
+              isOpen={modalPage === null || modalPage === "Dylan Coben"}
+            />
+          )}
+        </AnimatePresence>
         {DEBUG && (
           <div
             ref={scene}
@@ -175,7 +204,7 @@ export default function Home() {
               y1={nodeList[linkList[index].source].y}
               x2={nodeList[linkList[index].target].x}
               y2={nodeList[linkList[index].target].y}
-              stroke="gray"
+              stroke="#b5b5b5"
               strokeWidth={2.5}
               opacity={nodeList[link.target].visible ? 1 : 0}
             />
@@ -191,8 +220,8 @@ export default function Home() {
                   animate={{ scale: 1 }}
                   exit={{ scale: 0 }}
                   drag={true}
-                  whileDrag={{ scale: 1.1 }}
-                  whileHover={{ scale: 1.2 }}
+                  whileDrag={{ scale: 1.0 }}
+                  whileHover={{ scale: 1.1 }}
                   onDrag={(
                     event: any,
                     info: { point: { x: number; y: number } }
@@ -216,23 +245,30 @@ export default function Home() {
                   }}
                   style={{
                     position: "absolute",
-                    left: nodeList[index].x - 40,
-                    top: nodeList[index].y - 40,
+                    left: nodeList[index].x,
+                    top: nodeList[index].y,
+                    translateX: "-50%",
+                    translateY: -1 * nodeList[index].radius,
                   }}
                 >
                   {component.content}
                 </motion.div>
               )}
             </AnimatePresence>
+            <AnimatePresence>
+              {selectedNode === index && index > 0 && (
+                <Modal
+                  title={component.id}
+                  isOpen={selectedNode === index}
+                  tags={nodeList[index]?.modalTags ?? []}
+                  tagColor="#ff0000"
+                >
+                  {nodeList[index]?.modalContent}
+                </Modal>
+              )}
+            </AnimatePresence>
           </div>
         ))}
-        <AnimatePresence>
-          {selectedNode != -1 && (
-            <Modal title={nodeList[selectedNode].id}>
-              {nodeList[selectedNode].modalContent}
-            </Modal>
-          )}
-        </AnimatePresence>
       </main>
     </>
   );
