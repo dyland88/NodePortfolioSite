@@ -8,7 +8,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Dylan Coben | Frontend Developer",
+  title: "Dylan Coben | Software Developer",
   description:
     "Hi, I am Dylan, an honors software developer attending the University of Florida. I have experience in React, Next, C++, Python, and Java",
 };
