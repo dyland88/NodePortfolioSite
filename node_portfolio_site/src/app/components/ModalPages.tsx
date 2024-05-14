@@ -1,11 +1,9 @@
 "use client";
-import React, { useRef } from "react";
+import React from "react";
 import Image from "next/image";
-import Modal from "./Modal";
-import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { GitHub } from "react-feather";
 
 export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
   const router = useRouter();

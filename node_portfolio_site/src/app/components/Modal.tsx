@@ -1,16 +1,9 @@
 "use client";
-import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import React from "react";
 import { XButton } from "./Buttons";
-import {
-  Description,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  Transition,
-} from "@headlessui/react";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
 type Props = {
   title: string;
@@ -27,7 +20,6 @@ export default function Modal({
   tags,
   tagColor,
 }: Props) {
-  const modalRef = useRef<null | HTMLDialogElement>(null);
   const router = useRouter();
 
   const closeDialog = () => {
