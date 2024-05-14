@@ -88,12 +88,12 @@ export default function Home() {
       childrenVisible: false,
     },
     {
-      id: "3.1",
+      id: "Rocky Mountain Chocolate Factory",
       content: (
         <ContentNode
           icon={<GitBranch size={40} />}
           color={blue}
-          description={"Dylan Coben"}
+          description={"Rocky Mountain\nChocolate Factory"}
         />
       ),
       hasModal: true,
@@ -105,51 +105,51 @@ export default function Home() {
       childrenVisible: false,
     },
     {
-      id: "3.2",
+      id: "Reddit Bot",
       content: (
         <ContentNode
           icon={<GitBranch size={40} />}
-          color={blue}
-          description={"Dylan Coben"}
+          color={green}
+          description={"Reddit Bot"}
         />
       ),
       hasModal: true,
       modalContent: <LoremIpsum />,
-      x: windowWidth * (3 / 4),
+      x: windowWidth / 4,
+      y: windowHeight * (3 / 4),
+      radius: 50,
+      visible: false,
+      childrenVisible: false,
+    },
+    {
+      id: "This Website",
+      content: (
+        <ContentNode
+          icon={<GitBranch size={40} />}
+          color={green}
+          description={"This Website"}
+        />
+      ),
+      hasModal: true,
+      modalContent: <LoremIpsum />,
+      x: windowWidth / 4,
       y: windowHeight * (1 / 4),
       radius: 50,
       visible: false,
       childrenVisible: false,
     },
     {
-      id: "2.1",
+      id: "Robotic Whiteboard",
       content: (
         <ContentNode
           icon={<GitBranch size={40} />}
           color={green}
-          description={"Dylan Coben"}
+          description={"Robotic Whiteboard"}
         />
       ),
       hasModal: true,
       modalContent: <LoremIpsum />,
-      x: windowWidth / 4,
-      y: windowHeight * (3 / 4),
-      radius: 50,
-      visible: false,
-      childrenVisible: false,
-    },
-    {
-      id: "2.2",
-      content: (
-        <ContentNode
-          icon={<GitBranch size={40} />}
-          color={green}
-          description={"Dylan Coben"}
-        />
-      ),
-      hasModal: true,
-      modalContent: <LoremIpsum />,
-      x: windowWidth / 4,
+      x: windowWidth / 3,
       y: windowHeight * (1 / 4),
       radius: 50,
       visible: false,
@@ -159,10 +159,10 @@ export default function Home() {
   const initialLinkList = [
     { source: "Dylan Coben", target: "Projects" },
     { source: "Dylan Coben", target: "Work" },
-    { source: "Work", target: "3.1" },
-    { source: "Work", target: "3.2" },
-    { source: "Projects", target: "2.1" },
-    { source: "Projects", target: "2.2" },
+    { source: "Work", target: "Rocky Mountain Chocolate Factory" },
+    { source: "Projects", target: "Reddit Bot" },
+    { source: "Projects", target: "This Website" },
+    { source: "Projects", target: "Robotic Whiteboard" },
   ];
 
   const {
@@ -176,7 +176,7 @@ export default function Home() {
   return (
     <>
       <main
-        className="flex min-h-screen flex-col items-start justify-start overflow-hidden p-24 bg-gray"
+        className="w-screen relative h-screen flex-col items-start justify-start overflow-hidden bg-gray"
         style={{
           backgroundImage:
             "radial-gradient(circle at 3px 3px, #353535 2px, transparent 0)",
