@@ -163,7 +163,7 @@ function useNodePhysics(
     }
 
     // run the engine loop
-    window.requestAnimationFrame(update);
+    // window.requestAnimationFrame(update);
     function update(): void {
       // Prevent deltaTime from being to large if tab is inactive
       const deltaTime = Math.min(

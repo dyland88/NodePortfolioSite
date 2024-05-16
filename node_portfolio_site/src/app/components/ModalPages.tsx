@@ -23,7 +23,7 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="fixed inset-0 flex w-screen items-center justify-center p-4 bg-black bg-opacity-30">
+      <div className="fixed inset-0 flex w-screen items-center justify-center p-4 bg-black bg-opacity-30 text-white">
         <DialogPanel className=" max-w-[52rem] p-1.5 bg-gradient-to-br from-customblue to-customred rounded-3xl">
           <div className="bg-[#232323] rounded-2xl flex md:flex-row flex-col-reverse justify-center align-middle overflow-hidden py-16 md:pt-16 pt-8 px-8 md:px-16 gap-6 md:gap-10">
             <div className="inline-block md:w-3/5 w-full">
@@ -114,21 +114,27 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
   );
 };
 
-export const Dylan: React.FC = () => {
+export const Whiteboard: React.FC = () => {
   return (
-    <div className="flex flex-col items-center">
-      <Image
-        src="/assets/Center_node.png"
-        alt="Dylan"
-        width={200}
-        height={200}
-        className="rounded-full"
-      />
-      <p className="text-white text-lg mt-4">
-        Hi! I'm Dylan, a software developer from the United States. I love
-        creating things and learning new technologies. I'm currently working on
-        a few projects, including this portfolio site.
+    <div className="text-bodyTextColor py-8 px-12">
+      <p className="text-md text-pretty">
+        In 2023, I wrote custom software to control a whiteboard drawing robot.
+        This included creating a gcode parser in Python, which translates gcode
+        into machine instructions to be transferred to the arduino over serial.
       </p>
+      <p className="my-3">
+        In addition, I rewrote the software on the control board to drive the
+        stepper motors using C++. The original whiteboard, created by JJrobots,
+        was no longer supported due to server shutdowns, so I had to write my
+        own control software to continue using it.
+      </p>
+      <Image
+        src="/assets/robot_whiteboard.png"
+        alt="Robotic Whiteboard"
+        width={240}
+        height={240}
+        className="w-80 border-4 border-customred rounded-lg"
+      />
     </div>
   );
 };

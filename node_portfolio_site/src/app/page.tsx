@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Modal from "./components/Modal";
 import { CenterNode, ContentNode, LinkNode } from "./components/Nodes";
 import { GitBranch } from "react-feather";
-import { Dylan, Welcome } from "./components/ModalPages";
+import { Whiteboard, Welcome } from "./components/ModalPages";
 
 export default function Home() {
   const DEBUG = false;
@@ -49,7 +49,6 @@ export default function Home() {
     {
       id: "Dylan Coben",
       content: <CenterNode />,
-      modalContent: <Dylan />,
       hasModal: true,
       x: windowWidth / 2,
       y: windowHeight / 2,
@@ -148,8 +147,9 @@ export default function Home() {
         />
       ),
       hasModal: true,
-      modalContent: <LoremIpsum />,
-      x: windowWidth / 3,
+      modalContent: <Whiteboard />,
+      modalTags: ["Python", "C++"],
+      x: windowWidth / 5,
       y: windowHeight * (1 / 4),
       radius: 50,
       visible: false,
@@ -261,7 +261,7 @@ export default function Home() {
                   title={component.id}
                   isOpen={selectedNode === index}
                   tags={nodeList[index]?.modalTags ?? []}
-                  tagColor="#ff0000"
+                  tagColor="#e49518"
                 >
                   {nodeList[index]?.modalContent}
                 </Modal>
