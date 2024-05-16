@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Modal from "./components/Modal";
 import { CenterNode, ContentNode, LinkNode } from "./components/Nodes";
 import { GitBranch } from "react-feather";
-import { Whiteboard, Welcome } from "./components/ModalPages";
+import { Whiteboard, Welcome, Website } from "./components/ModalPages";
 
 export default function Home() {
   const DEBUG = false;
@@ -130,7 +130,7 @@ export default function Home() {
         />
       ),
       hasModal: true,
-      modalContent: <LoremIpsum />,
+      modalContent: <Website />,
       x: windowWidth / 4,
       y: windowHeight * (1 / 4),
       radius: 50,

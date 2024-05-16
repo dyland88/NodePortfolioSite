@@ -45,7 +45,7 @@ export default function Modal({
               {tags.map((tag, index) => (
                 <div
                   key={index}
-                  className={`text-md font-bold px-5 py-1 rounded-full text-white`}
+                  className={`text-md font-bold px-5 py-1 rounded-full text-white shadow-md`}
                   style={{ backgroundColor: tagColor }}
                 >
                   {tag}

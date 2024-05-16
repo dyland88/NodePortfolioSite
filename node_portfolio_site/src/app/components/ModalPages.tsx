@@ -37,7 +37,7 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
                 <motion.a
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
-                  href="https://github.com/your-github-profile"
+                  href="https://github.com/dyland88"
                   rel="noopener noreferrer"
                   className="bg-[#5a5a5a] text-white max-sm:text-xs text-sm px-4 py-2 rounded-full flex flex-row items-center justify-center gap-1.5"
                 >
@@ -53,7 +53,7 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
                 <motion.a
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
-                  href="https://www.linkedin.com/in/your-linkedin-profile"
+                  href="https://www.linkedin.com/in/dylancoben/"
                   rel="noopener noreferrer"
                   className="bg-[#5a5a5a] text-white max-sm:text-xs text-sm px-4 py-2 rounded-full flex flex-row items-center justify-center gap-1.5"
                 >
@@ -65,22 +65,6 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
                     className=" fill-white"
                   />
                   LinkedIn
-                </motion.a>
-                <motion.a
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  href="https://www.gmail.com"
-                  rel="noopener noreferrer"
-                  className="bg-[#5a5a5a] text-white max-sm:text-xs text-sm px-4 py-2 rounded-full flex flex-row items-center justify-center gap-1.5"
-                >
-                  <Image
-                    src="/assets/github.svg"
-                    alt="Linkedin"
-                    width={16}
-                    height={16}
-                    className=" fill-white"
-                  />
-                  Mail
                 </motion.a>
               </div>
               <p className=" text-stone-400 text-md mb-8 max-w-sm">
@@ -116,25 +100,60 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
 
 export const Whiteboard: React.FC = () => {
   return (
-    <div className="text-bodyTextColor py-8 px-12">
+    <div className="text-bodyTextColor pb-12 pt-6 px-12">
       <p className="text-md text-pretty">
         In 2023, I wrote custom software to control a whiteboard drawing robot.
         This included creating a gcode parser in Python, which translates gcode
         into machine instructions to be transferred to the arduino over serial.
       </p>
-      <p className="my-3">
+      <p className="my-6">
         In addition, I rewrote the software on the control board to drive the
         stepper motors using C++. The original whiteboard, created by JJrobots,
         was no longer supported due to server shutdowns, so I had to write my
         own control software to continue using it.
       </p>
-      <Image
-        src="/assets/robot_whiteboard.png"
-        alt="Robotic Whiteboard"
-        width={240}
-        height={240}
-        className="w-80 border-4 border-customred rounded-lg"
-      />
+      <div className="flex justify-center">
+        <Image
+          src="/assets/robot_whiteboard.png"
+          alt="Robotic Whiteboard"
+          width={240}
+          height={240}
+          className="w-96 border-2 border-customred rounded-lg"
+        />
+      </div>
     </div>
+  );
+};
+
+export const Website: React.FC = () => {
+  return (
+    <>
+      <div className="text-bodyTextColor pb-12 pt-6 px-12">
+        <p className="text-md text-pretty">
+          This website was created to try out an experimental navigation method
+          for websites. It uses React and NextJS for page navigation, Matter.js
+          for the physics simulations, and Framer Motion for animations.
+        </p>
+      </div>
+      <div className="bg-gray py-3 w-full flex justify-center items-center gap-5">
+        <p className="font-bold text-lg">Check it out on Github:</p>
+        <motion.a
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          href="https://github.com/dyland88/NodePortfolioSite"
+          rel="noopener noreferrer"
+          className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
+        >
+          <Image
+            src="/assets/github.svg"
+            alt="GitHub"
+            width={18}
+            height={18}
+            className="fill-white"
+          />
+          Github
+        </motion.a>
+      </div>
+    </>
   );
 };
