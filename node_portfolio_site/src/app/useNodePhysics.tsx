@@ -110,9 +110,10 @@ function useNodePhysics(
       const constraint = Constraint.create({
         bodyA: engine.current.world.bodies[link.source],
         bodyB: engine.current.world.bodies[link.target],
+        // Set length of links based on diagonal screen size
         length: Math.min(
           Math.sqrt(clientWidth * clientWidth + clientHeight * clientHeight) /
-            6,
+            6.5,
           280
         ),
         stiffness: 0.004,
@@ -171,12 +172,13 @@ function useNodePhysics(
         1000 / 15
       );
 
-      repelNodes(1.0);
+      repelNodes(1.3);
       centerNodes(1.0);
       Matter.Engine.update(engine.current, deltaTime);
       updateNodePositions();
       lastTimeUpdated.current = Date.now();
       window.requestAnimationFrame(update);
+      throttledFixNodeBounds();
     }
 
     // Clean up
@@ -247,7 +249,12 @@ function useNodePhysics(
       }
     );
 
-    // reset out-of-bounds nodes
+    fixNodeBounds();
+  });
+
+  const throttledFixNodeBounds = throttle(200, fixNodeBounds);
+  // reset out-of-bounds nodes
+  function fixNodeBounds() {
     nodeList.forEach((node, index) => {
       if (
         engine.current.world.bodies[index].position.x >
@@ -256,6 +263,18 @@ function useNodePhysics(
         Matter.Body.setPosition(engine.current.world.bodies[index], {
           x: window.innerWidth - nodeList[index].radius,
           y: engine.current.world.bodies[index].position.y,
+        });
+      }
+      if (engine.current.world.bodies[index].position.x < 0) {
+        Matter.Body.setPosition(engine.current.world.bodies[index], {
+          x: nodeList[index].radius,
+          y: engine.current.world.bodies[index].position.y,
+        });
+      }
+      if (engine.current.world.bodies[index].position.y < 0) {
+        Matter.Body.setPosition(engine.current.world.bodies[index], {
+          x: engine.current.world.bodies[index].position.x,
+          y: nodeList[index].radius,
         });
       }
       if (
@@ -268,7 +287,7 @@ function useNodePhysics(
         });
       }
     });
-  });
+  }
 
   // Update all node positions
   function updateNodePositions() {

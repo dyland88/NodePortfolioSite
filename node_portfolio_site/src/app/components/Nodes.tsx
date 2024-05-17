@@ -6,19 +6,21 @@ interface NodeProps {
   icon: any;
   color: string;
   description: string;
+  radius: number;
 }
 
 export const ContentNode: React.FC<NodeProps> = ({
   icon,
   color,
   description,
+  radius,
 }) => {
   return (
     <div className="flex flex-col items-center justify-center w-44">
       <div
         style={{
-          width: 100,
-          height: 100,
+          width: radius * 2,
+          height: radius * 2,
           backgroundColor: color,
           borderRadius: "100%",
           justifyContent: "center",
@@ -36,13 +38,18 @@ export const ContentNode: React.FC<NodeProps> = ({
   );
 };
 
-export const LinkNode: React.FC<NodeProps> = ({ icon, color, description }) => {
+export const LinkNode: React.FC<NodeProps> = ({
+  icon,
+  color,
+  description,
+  radius,
+}) => {
   return (
     <div className="flex flex-col items-center justify-center w-40">
       <div
         style={{
-          width: 90,
-          height: 90,
+          width: radius * 2,
+          height: radius * 2,
           backgroundColor: color,
           borderRadius: "100%",
           justifyContent: "center",
@@ -68,8 +75,8 @@ export const CenterNode: React.FC = () => {
         <Image
           src="/assets/Center_node.png"
           alt="image"
-          width={140}
-          height={140}
+          width={120}
+          height={120}
           priority={true}
         />
         <NodeDescription text="Dylan Coben" />

@@ -12,6 +12,7 @@ import {
   Edit2,
   Monitor,
   Terminal,
+  Zap,
 } from "react-feather";
 import {
   Whiteboard,
@@ -29,8 +30,10 @@ export default function Home() {
   const router = useRouter();
   const modalPage = useSearchParams().get("page");
   const green = "#1DAA9A";
-  // const red = "#d05252";
+  const red = "#d05252";
   const blue = "#3e75cd";
+  const linkNodeRadius = 40;
+  const contentNodeRadius = 40;
 
   useEffect(() => {
     for (let i = 0; i < nodeList.length; i++) {
@@ -58,7 +61,7 @@ export default function Home() {
       hasModal: true,
       x: windowWidth / 2,
       y: windowHeight / 2,
-      radius: 65,
+      radius: 55,
       visible: true,
       childrenVisible: true,
     },
@@ -69,11 +72,12 @@ export default function Home() {
           icon={<Code size={40} />}
           color={green}
           description={"Projects"}
+          radius={linkNodeRadius}
         />
       ),
       x: windowWidth / 4,
       y: windowHeight / 2,
-      radius: 45,
+      radius: linkNodeRadius,
       visible: true,
       childrenVisible: false,
     },
@@ -84,11 +88,12 @@ export default function Home() {
           icon={<Briefcase size={40} />}
           color={blue}
           description={"Work Experience"}
+          radius={linkNodeRadius}
         />
       ),
       x: windowWidth * (3 / 4),
       y: windowHeight / 2,
-      radius: 45,
+      radius: linkNodeRadius,
       visible: true,
       childrenVisible: false,
     },
@@ -99,6 +104,7 @@ export default function Home() {
           icon={<Coffee size={40} />}
           color={blue}
           description={"Rocky Mountain\nChocolate Factory"}
+          radius={contentNodeRadius}
         />
       ),
       hasModal: true,
@@ -106,7 +112,7 @@ export default function Home() {
       modalTags: ["Customer Service"],
       x: windowWidth * (3 / 4),
       y: windowHeight * (3 / 4),
-      radius: 50,
+      radius: contentNodeRadius,
       visible: false,
       childrenVisible: false,
     },
@@ -119,6 +125,7 @@ export default function Home() {
           }
           color={green}
           description={"Reddit Bot"}
+          radius={contentNodeRadius}
         />
       ),
       hasModal: true,
@@ -126,7 +133,7 @@ export default function Home() {
       modalTags: ["Python", "Regex"],
       x: windowWidth / 4,
       y: windowHeight * (3 / 4),
-      radius: 50,
+      radius: contentNodeRadius,
       visible: false,
       childrenVisible: false,
     },
@@ -137,6 +144,7 @@ export default function Home() {
           icon={<Monitor size={40} />}
           color={green}
           description={"This Website"}
+          radius={contentNodeRadius}
         />
       ),
       hasModal: true,
@@ -144,7 +152,7 @@ export default function Home() {
       modalTags: ["React", "NextJS", "Matter.js"],
       x: windowWidth / 4,
       y: windowHeight * (1 / 4),
-      radius: 50,
+      radius: contentNodeRadius,
       visible: false,
       childrenVisible: false,
     },
@@ -155,6 +163,7 @@ export default function Home() {
           icon={<Edit2 size={40} />}
           color={green}
           description={"Robotic Whiteboard"}
+          radius={contentNodeRadius}
         />
       ),
       hasModal: true,
@@ -162,7 +171,7 @@ export default function Home() {
       modalTags: ["Python", "C++"],
       x: windowWidth / 5,
       y: windowHeight * (1 / 4),
-      radius: 50,
+      radius: contentNodeRadius,
       visible: false,
       childrenVisible: false,
     },
@@ -173,6 +182,7 @@ export default function Home() {
           icon={<Terminal size={40} />}
           color={green}
           description={"2024 Hackathon"}
+          radius={contentNodeRadius}
         />
       ),
       hasModal: true,
@@ -180,7 +190,41 @@ export default function Home() {
       modalTags: ["React", "Three.js", "Framer Motion"],
       x: windowWidth / 5,
       y: windowHeight * (2 / 4),
-      radius: 50,
+      radius: contentNodeRadius,
+      visible: false,
+      childrenVisible: false,
+    },
+    {
+      id: "Extracurriculars",
+      content: (
+        <LinkNode
+          icon={<Zap size={40} />}
+          color={red}
+          description={"Extracurriculars"}
+          radius={linkNodeRadius}
+        />
+      ),
+      x: windowWidth * (1 / 2),
+      y: windowHeight * (1 / 4),
+      radius: linkNodeRadius,
+      visible: true,
+      childrenVisible: false,
+    },
+    {
+      id: "Honors Ensemble",
+      content: (
+        <ContentNode
+          icon={<Terminal size={40} />}
+          color={red}
+          description={"Honors Ensemble"}
+          radius={contentNodeRadius}
+        />
+      ),
+      hasModal: true,
+      modalContent: <Hackathon />,
+      x: windowWidth * (1 / 2.5),
+      y: windowHeight * (1 / 4),
+      radius: contentNodeRadius,
       visible: false,
       childrenVisible: false,
     },
@@ -188,11 +232,13 @@ export default function Home() {
   const initialLinkList = [
     { source: "Dylan Coben", target: "Projects" },
     { source: "Dylan Coben", target: "Work" },
+    { source: "Dylan Coben", target: "Extracurriculars" },
     { source: "Work", target: "Rocky Mountain Chocolate Factory" },
     { source: "Projects", target: "Reddit Bot" },
     { source: "Projects", target: "This Website" },
     { source: "Projects", target: "Robotic Whiteboard" },
     { source: "Projects", target: "2024 Hackathon" },
+    { source: "Extracurriculars", target: "Honors Ensemble" },
   ];
 
   const {
