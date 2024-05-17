@@ -6,7 +6,14 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Modal from "./components/Modal";
 import { CenterNode, ContentNode, LinkNode } from "./components/Nodes";
 import { GitBranch } from "react-feather";
-import { Whiteboard, Welcome, Website } from "./components/ModalPages";
+import {
+  Whiteboard,
+  Welcome,
+  Website,
+  RedditBot,
+  RMCF,
+  Hackathon,
+} from "./components/ModalPages";
 
 export default function Home() {
   const DEBUG = false;
@@ -96,7 +103,8 @@ export default function Home() {
         />
       ),
       hasModal: true,
-      modalContent: <LoremIpsum />,
+      modalContent: <RMCF />,
+      modalTags: ["Customer Service"],
       x: windowWidth * (3 / 4),
       y: windowHeight * (3 / 4),
       radius: 50,
@@ -113,7 +121,8 @@ export default function Home() {
         />
       ),
       hasModal: true,
-      modalContent: <LoremIpsum />,
+      modalContent: <RedditBot />,
+      modalTags: ["Python", "Regex"],
       x: windowWidth / 4,
       y: windowHeight * (3 / 4),
       radius: 50,
@@ -131,6 +140,7 @@ export default function Home() {
       ),
       hasModal: true,
       modalContent: <Website />,
+      modalTags: ["React", "NextJS", "Matter.js"],
       x: windowWidth / 4,
       y: windowHeight * (1 / 4),
       radius: 50,
@@ -155,6 +165,24 @@ export default function Home() {
       visible: false,
       childrenVisible: false,
     },
+    {
+      id: "2024 Hackathon",
+      content: (
+        <ContentNode
+          icon={<GitBranch size={40} />}
+          color={green}
+          description={"2024 Hackathon"}
+        />
+      ),
+      hasModal: true,
+      modalContent: <Hackathon />,
+      modalTags: ["React", "Three.js", "Framer Motion"],
+      x: windowWidth / 5,
+      y: windowHeight * (2 / 4),
+      radius: 50,
+      visible: false,
+      childrenVisible: false,
+    },
   ];
   const initialLinkList = [
     { source: "Dylan Coben", target: "Projects" },
@@ -163,6 +191,7 @@ export default function Home() {
     { source: "Projects", target: "Reddit Bot" },
     { source: "Projects", target: "This Website" },
     { source: "Projects", target: "Robotic Whiteboard" },
+    { source: "Projects", target: "2024 Hackathon" },
   ];
 
   const {

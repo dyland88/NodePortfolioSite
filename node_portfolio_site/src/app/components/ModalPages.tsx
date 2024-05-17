@@ -101,7 +101,7 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
 export const Whiteboard: React.FC = () => {
   return (
     <div className="text-bodyTextColor pb-12 pt-6 px-12">
-      <p className="text-md text-pretty">
+      <p className="text-md">
         In 2023, I wrote custom software to control a whiteboard drawing robot.
         This included creating a gcode parser in Python, which translates gcode
         into machine instructions to be transferred to the arduino over serial.
@@ -155,5 +155,88 @@ export const Website: React.FC = () => {
         </motion.a>
       </div>
     </>
+  );
+};
+
+export const RedditBot: React.FC = () => {
+  return (
+    <>
+      <div className="text-bodyTextColor pb-12 pt-6 px-12">
+        <p className="text-md">
+          In 2020, I noticed that many comments on Reddit had broken links to
+          subreddits that were incorrectly formatted, often without the
+          commenter noticing.
+        </p>
+        <p className="mt-6">
+          To fix this, I created a python bot that interfaced with the Reddit
+          API wrapper to find new comments and used regular expressions to
+          detect broken links. When it found a broken link, it would leave a
+          comment to notify the user that their link was broken and provide a
+          link with correct formatting.
+        </p>
+      </div>
+    </>
+  );
+};
+
+export const RMCF: React.FC = () => {
+  return (
+    <div className="text-bodyTextColor pb-8 pt-8 px-12">
+      <p className="text-md">
+        From October 2022 to July 2023, I worked at Rocky Mountain Chocolate
+        Factory. I ensured customer satisfaction by providing personalized
+        product recommendations based on customer preferences and resolved
+        customer concerns through problem-solving.
+      </p>
+    </div>
+  );
+};
+
+export const Hackathon: React.FC = () => {
+  return (
+    <div className="text-bodyTextColor pb-12 pt-6 px-12 flex flex-col justify-center items-center gap-6 overflow-y-auto">
+      <p className="text-md">
+        For the 2024 OSCHack 24-hour hackathon I, along with two of my friends,
+        tackled the challenge to redesign the the website of Dino Luzzi, one of
+        the hackathon's sponsors with new functionality, UI/UX design, and style
+        to make it more engaging and easier for people to purchase the product.
+      </p>
+      <Image
+        src="/assets/robot_whiteboard.png"
+        alt="Robotic Whiteboard"
+        width={240}
+        height={240}
+        className="w-96 border-2 border-customred rounded-lg"
+      />
+      <p>
+        We decided to give the website interactive 3d elements, including a 3d
+        can that follows the user's mouse and a racecar that drives down the
+        webpage, revealing the features of Dino Luzzi's product.
+      </p>
+      <Image
+        src="/assets/robot_whiteboard.png"
+        alt="Robotic Whiteboard"
+        width={240}
+        height={240}
+        className="w-96 border-2 border-customred rounded-lg"
+      />
+      <p>
+        I was in charge of creating the 3d models for the elements on the
+        webpage and all of the 2d styles and animations. I also worked on
+        getting the physics simulation working correctly for the the racecar.
+      </p>
+      <Image
+        src="/assets/robot_whiteboard.png"
+        alt="Robotic Whiteboard"
+        width={240}
+        height={240}
+        className="w-96 border-2 border-customred rounded-lg"
+      />
+      <p>
+        We built the website using React and used Three.js and react-three-fiber
+        for the 3d animations. On top of this, we used Framer Motion for
+        animations of regular webpage elements.
+      </p>
+    </div>
   );
 };
