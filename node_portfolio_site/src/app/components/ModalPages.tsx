@@ -136,7 +136,7 @@ export const Website: React.FC = () => {
           for the physics simulations, and Framer Motion for animations.
         </p>
       </div>
-      <div className="bg-gray py-3 w-full flex justify-center items-center gap-5">
+      <div className="bg-gray py-3 px-3 w-full flex flex-wrap justify-center items-center gap-5">
         <p className="font-bold text-lg">Check it out:</p>
         <motion.a
           whileHover={{ scale: 1.1 }}
@@ -249,7 +249,7 @@ export const Hackathon: React.FC = () => {
           className="w-96 border-2 border-customred rounded-lg"
         />
       </div>
-      <div className="bg-gray py-3 w-full flex flex-row flex-wrap justify-center items-center gap-5">
+      <div className="bg-gray py-3 px-2 w-full flex flex-row flex-wrap justify-center items-center gap-5">
         <p className="font-bold text-lg text-nowrap">Check it out:</p>
 
         <div className="flex flex-row justify-center flex-wrap gap-3">

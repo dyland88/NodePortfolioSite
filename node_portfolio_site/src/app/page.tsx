@@ -27,7 +27,7 @@ import {
 } from "./components/ModalPages";
 
 export default function Home() {
-  const DEBUG = true;
+  const DEBUG = false;
   const [isDragging, setIsDragging] = useState(false);
   const [selectedNode, setSelectedNode] = useState<number>(-1);
   const router = useRouter();
@@ -35,8 +35,16 @@ export default function Home() {
   const green = "#1DAA9A";
   const red = "#d05252";
   const blue = "#3e75cd";
-  const linkNodeRadius = 40;
-  const contentNodeRadius = 40;
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+  const linkNodeRadius = Math.min(
+    40,
+    Math.max(30, Math.min(windowWidth, windowHeight) / 13)
+  );
+  const contentNodeRadius = Math.min(
+    40,
+    Math.max(30, Math.min(windowWidth, windowHeight) / 13)
+  );
 
   useEffect(() => {
     for (let i = 0; i < nodeList.length; i++) {
@@ -50,17 +58,10 @@ export default function Home() {
       router.push("/?page=nodes");
   }, [modalPage]);
 
-  let windowWidth = 0;
-  let windowHeight = 0;
-  if (typeof window !== "undefined") {
-    windowWidth = window.innerWidth;
-    windowHeight = window.innerHeight;
-  }
-
   const initialNodes = [
     {
       id: "Dylan Coben",
-      content: <CenterNode />,
+      content: <CenterNode radius={contentNodeRadius * 1.5} />,
       hasModal: true,
       x: windowWidth / 2,
       y: windowHeight / 2,
@@ -72,7 +73,7 @@ export default function Home() {
       id: "Projects",
       content: (
         <LinkNode
-          icon={<Code size={40} color={"#ffffff"} />}
+          icon={<Code size={linkNodeRadius} color={"#ffffff"} />}
           color={green}
           description={"Projects"}
           radius={linkNodeRadius}
@@ -88,7 +89,7 @@ export default function Home() {
       id: "Work",
       content: (
         <LinkNode
-          icon={<Briefcase size={40} color={"#ffffff"} />}
+          icon={<Briefcase size={linkNodeRadius} color={"#ffffff"} />}
           color={blue}
           description={"Work Experience"}
           radius={linkNodeRadius}
@@ -104,7 +105,7 @@ export default function Home() {
       id: "Rocky Mountain Chocolate Factory",
       content: (
         <ContentNode
-          icon={<Coffee size={40} color={"#ffffff"} />}
+          icon={<Coffee size={contentNodeRadius} color={"#ffffff"} />}
           color={blue}
           description={"Rocky Mountain\nChocolate Factory"}
           radius={contentNodeRadius}
@@ -124,7 +125,12 @@ export default function Home() {
       content: (
         <ContentNode
           icon={
-            <img src="/assets/reddit.png" alt="Reddit" width={40} height={40} />
+            <img
+              src="/assets/reddit.png"
+              alt="Reddit"
+              width={contentNodeRadius}
+              height={contentNodeRadius}
+            />
           }
           color={green}
           description={"Reddit Bot"}
@@ -144,7 +150,7 @@ export default function Home() {
       id: "This Website",
       content: (
         <ContentNode
-          icon={<Monitor size={40} color={"#ffffff"} />}
+          icon={<Monitor size={contentNodeRadius} color={"#ffffff"} />}
           color={green}
           description={"This Website"}
           radius={contentNodeRadius}
@@ -163,7 +169,7 @@ export default function Home() {
       id: "Robotic Whiteboard",
       content: (
         <ContentNode
-          icon={<Edit2 size={40} color={"#ffffff"} />}
+          icon={<Edit2 size={contentNodeRadius} color={"#ffffff"} />}
           color={green}
           description={"Robotic Whiteboard"}
           radius={contentNodeRadius}
@@ -182,7 +188,7 @@ export default function Home() {
       id: "2024 Hackathon",
       content: (
         <ContentNode
-          icon={<Terminal size={40} color={"#ffffff"} />}
+          icon={<Terminal size={contentNodeRadius} color={"#ffffff"} />}
           color={green}
           description={"2024 Hackathon"}
           radius={contentNodeRadius}
@@ -201,7 +207,7 @@ export default function Home() {
       id: "Extracurriculars",
       content: (
         <LinkNode
-          icon={<Zap size={40} color={"#ffffff"} />}
+          icon={<Zap size={contentNodeRadius} color={"#ffffff"} />}
           color={red}
           description={"Extracurriculars"}
           radius={linkNodeRadius}
@@ -217,7 +223,7 @@ export default function Home() {
       id: "Honors Ensemble",
       content: (
         <ContentNode
-          icon={<Music size={40} color={"#ffffff"} />}
+          icon={<Music size={contentNodeRadius} color={"#ffffff"} />}
           color={red}
           description={"Honors Ensemble"}
           radius={contentNodeRadius}
@@ -235,7 +241,7 @@ export default function Home() {
       id: "Open Source Club",
       content: (
         <ContentNode
-          icon={<Terminal size={40} color={"#ffffff"} />}
+          icon={<Terminal size={contentNodeRadius} color={"#ffffff"} />}
           color={red}
           description={"Open Source Club"}
           radius={contentNodeRadius}

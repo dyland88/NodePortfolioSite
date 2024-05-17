@@ -4,6 +4,7 @@ import React, { Suspense } from "react";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { NoSsr } from "@mui/base/NoSsr";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,12 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <SpeedInsights />
       <Analytics />
-      <SpeedInsights />
       <Suspense>
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <NoSsr>{children}</NoSsr>
+        </body>
       </Suspense>
     </html>
   );

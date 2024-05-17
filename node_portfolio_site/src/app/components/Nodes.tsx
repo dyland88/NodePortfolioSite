@@ -9,6 +9,10 @@ interface NodeProps {
   radius: number;
 }
 
+interface CenterNodeProps {
+  radius: number;
+}
+
 export const ContentNode: React.FC<NodeProps> = ({
   icon,
   color,
@@ -68,15 +72,17 @@ export const LinkNode: React.FC<NodeProps> = ({
   );
 };
 
-export const CenterNode: React.FC = () => {
+export const CenterNode: React.FC<CenterNodeProps> = ({
+  radius,
+}: CenterNodeProps) => {
   return (
     <div>
       <div className="justify-center items-center flex flex-col pointer-events-none w-40">
         <Image
           src="/assets/Center_node.png"
           alt="image"
-          width={120}
-          height={120}
+          width={radius * 2}
+          height={radius * 2}
           priority={true}
         />
         <NodeDescription text="Dylan Coben" />
