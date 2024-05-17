@@ -117,8 +117,8 @@ export const Whiteboard: React.FC = () => {
         <Image
           src="/assets/robot_whiteboard.png"
           alt="Robotic Whiteboard"
-          width={240}
-          height={240}
+          width={500}
+          height={300}
           className="w-96 border-2 border-customred rounded-lg"
         />
       </div>
@@ -207,8 +207,8 @@ export const Hackathon: React.FC = () => {
         <Image
           src="/assets/Dino Page 1.png"
           alt="Dino Page 1"
-          width={240}
-          height={240}
+          width={500}
+          height={300}
           className="w-96 border-2 border-customred rounded-lg"
         />
         <p>
@@ -224,8 +224,8 @@ export const Hackathon: React.FC = () => {
         <Image
           src="/assets/Dino Page 2.png"
           alt="Dino Page 2"
-          width={240}
-          height={240}
+          width={500}
+          height={300}
           className="w-96 border-2 border-customred rounded-lg"
         />
         <p>
@@ -236,16 +236,16 @@ export const Hackathon: React.FC = () => {
         <Image
           src="/assets/Dino Page 3.png"
           alt="Dino Page 3"
-          width={240}
-          height={240}
+          width={500}
+          height={300}
           className="w-96 border-2 border-customred rounded-lg"
         />
         <p>We ended up winning the hackathon for making this website!🎉</p>
         <Image
           src="/assets/hackathoncheck.PNG"
           alt="Winning Photo"
-          width={240}
-          height={240}
+          width={500}
+          height={300}
           className="w-96 border-2 border-customred rounded-lg"
         />
       </div>
@@ -318,8 +318,8 @@ export const Ensemble: React.FC = () => {
       <Image
         src="/assets/ensemble.JPEG"
         alt="Honors Ensemble"
-        width={600}
-        height={600}
+        width={1256}
+        height={533}
         className="border-2 border-customred rounded-lg"
       />
     </div>
@@ -343,8 +343,8 @@ export const OSC: React.FC = () => {
         <Image
           src="/assets/echo_chat.png"
           alt="Echo Chat"
-          width={100}
-          height={100}
+          width={500}
+          height={500}
           className="w-40 border-2 border-customred rounded-3xl"
         />
       </div>
