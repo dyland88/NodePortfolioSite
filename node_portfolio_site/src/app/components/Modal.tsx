@@ -39,22 +39,24 @@ export default function Modal({
     >
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4 bg-black bg-opacity-30">
         <DialogPanel className="max-w-3xl border-4 border-customred bg-[#232323] rounded-3xl flex-row flex-start overflow-hidden max-h-full">
-          <div className="bg-[#393939] w-full pr-3 pl-12 py-3 flex flex-row justify-between items-center flex-wrap">
-            <DialogTitle className="font-bold text-2xl mr-2">
-              {title}
-            </DialogTitle>
-            <div className="flex flex-row space-x-2 ml-auto mr-4">
-              {tags.map((tag, index) => (
-                <div
-                  key={index}
-                  className={`text-md font-bold px-5 py-1 rounded-full text-white shadow-md text-nowrap`}
-                  style={{ backgroundColor: tagColor }}
-                >
-                  {tag}
-                </div>
-              ))}
+          <div className="bg-[#393939] w-full pr-3 pl-12 py-3 flex flex-row justify-between items-center">
+            <div className="flex flex-row items-start flex-wrap justify-between grow mr-4">
+              <DialogTitle className="font-bold text-2xl mr-2">
+                {title}
+              </DialogTitle>
+              <div className="flex flex-row flex-wrap gap-2">
+                {tags.map((tag, index) => (
+                  <div
+                    key={index}
+                    className={`text-md font-bold px-5 py-1 rounded-full text-white shadow-md text-nowrap`}
+                    style={{ backgroundColor: tagColor }}
+                  >
+                    {tag}
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="align-end">
+            <div className="">
               <XButton onClick={closeDialog} />
             </div>
           </div>
