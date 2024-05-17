@@ -11,6 +11,7 @@ import {
   Coffee,
   Edit2,
   Monitor,
+  Music,
   Terminal,
   Zap,
 } from "react-feather";
@@ -71,7 +72,7 @@ export default function Home() {
       id: "Projects",
       content: (
         <LinkNode
-          icon={<Code size={40} />}
+          icon={<Code size={40} color={"#ffffff"} />}
           color={green}
           description={"Projects"}
           radius={linkNodeRadius}
@@ -87,7 +88,7 @@ export default function Home() {
       id: "Work",
       content: (
         <LinkNode
-          icon={<Briefcase size={40} />}
+          icon={<Briefcase size={40} color={"#ffffff"} />}
           color={blue}
           description={"Work Experience"}
           radius={linkNodeRadius}
@@ -103,7 +104,7 @@ export default function Home() {
       id: "Rocky Mountain Chocolate Factory",
       content: (
         <ContentNode
-          icon={<Coffee size={40} />}
+          icon={<Coffee size={40} color={"#ffffff"} />}
           color={blue}
           description={"Rocky Mountain\nChocolate Factory"}
           radius={contentNodeRadius}
@@ -143,7 +144,7 @@ export default function Home() {
       id: "This Website",
       content: (
         <ContentNode
-          icon={<Monitor size={40} />}
+          icon={<Monitor size={40} color={"#ffffff"} />}
           color={green}
           description={"This Website"}
           radius={contentNodeRadius}
@@ -162,7 +163,7 @@ export default function Home() {
       id: "Robotic Whiteboard",
       content: (
         <ContentNode
-          icon={<Edit2 size={40} />}
+          icon={<Edit2 size={40} color={"#ffffff"} />}
           color={green}
           description={"Robotic Whiteboard"}
           radius={contentNodeRadius}
@@ -181,7 +182,7 @@ export default function Home() {
       id: "2024 Hackathon",
       content: (
         <ContentNode
-          icon={<Terminal size={40} />}
+          icon={<Terminal size={40} color={"#ffffff"} />}
           color={green}
           description={"2024 Hackathon"}
           radius={contentNodeRadius}
@@ -200,7 +201,7 @@ export default function Home() {
       id: "Extracurriculars",
       content: (
         <LinkNode
-          icon={<Zap size={40} />}
+          icon={<Zap size={40} color={"#ffffff"} />}
           color={red}
           description={"Extracurriculars"}
           radius={linkNodeRadius}
@@ -216,7 +217,7 @@ export default function Home() {
       id: "Honors Ensemble",
       content: (
         <ContentNode
-          icon={<Terminal size={40} />}
+          icon={<Music size={40} color={"#ffffff"} />}
           color={red}
           description={"Honors Ensemble"}
           radius={contentNodeRadius}
@@ -234,7 +235,7 @@ export default function Home() {
       id: "Open Source Club",
       content: (
         <ContentNode
-          icon={<Terminal size={40} />}
+          icon={<Terminal size={40} color={"#ffffff"} />}
           color={red}
           description={"Open Source Club"}
           radius={contentNodeRadius}

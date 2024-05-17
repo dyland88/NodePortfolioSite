@@ -89,6 +89,7 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
                 width={260}
                 height={260}
                 className="w-52 md:w-64"
+                priority
               />
             </div>
           </div>
