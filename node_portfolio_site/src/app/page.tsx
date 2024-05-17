@@ -27,7 +27,7 @@ import {
 } from "./components/ModalPages";
 
 export default function Home() {
-  const DEBUG = false;
+  const DEBUG = true;
   const [isDragging, setIsDragging] = useState(false);
   const [selectedNode, setSelectedNode] = useState<number>(-1);
   const router = useRouter();

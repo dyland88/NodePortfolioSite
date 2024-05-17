@@ -101,7 +101,7 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
 
 export const Whiteboard: React.FC = () => {
   return (
-    <div className="text-bodyTextColor pb-12 pt-6 px-12">
+    <div className="text-bodyTextColor pb-12 pt-6 px-12 max-sm:px-6">
       <p className="text-md">
         In 2023, I wrote custom software to control a whiteboard drawing robot.
         This included creating a gcode parser in Python, which translates gcode
@@ -129,7 +129,7 @@ export const Whiteboard: React.FC = () => {
 export const Website: React.FC = () => {
   return (
     <>
-      <div className="text-bodyTextColor pb-12 pt-6 px-12">
+      <div className="text-bodyTextColor pb-12 pt-6 px-12 max-sm:px-6">
         <p className="text-md text-pretty">
           This website was created to try out an experimental navigation method
           for websites. It uses React and NextJS for page navigation, Matter.js
@@ -162,7 +162,7 @@ export const Website: React.FC = () => {
 export const RedditBot: React.FC = () => {
   return (
     <>
-      <div className="text-bodyTextColor pb-12 pt-6 px-12">
+      <div className="text-bodyTextColor pb-12 pt-6 px-12 max-sm:px-6">
         <p className="text-md">
           In 2020, I noticed that many comments on Reddit had broken links to
           subreddits that were incorrectly formatted, often without the
@@ -182,7 +182,7 @@ export const RedditBot: React.FC = () => {
 
 export const RMCF: React.FC = () => {
   return (
-    <div className="text-bodyTextColor pb-8 pt-8 px-12">
+    <div className="text-bodyTextColor pb-8 pt-8 px-12 max-sm:px-6">
       <p className="text-md">
         From October 2022 to July 2023, I worked at Rocky Mountain Chocolate
         Factory. I ensured customer satisfaction by providing personalized
@@ -196,7 +196,7 @@ export const RMCF: React.FC = () => {
 export const Hackathon: React.FC = () => {
   return (
     <>
-      <div className="text-bodyTextColor pb-12 pt-12 px-12 flex flex-col justify-center items-center gap-10">
+      <div className="text-bodyTextColor pb-12 pt-12 px-12 max-sm:px-6 flex flex-col justify-center items-center gap-10">
         <p className="text-md">
           For the 2024 OSCHack 24-hour hackathon, two of my friends and I
           tackled the challenge to redesign the the website of Dino Luzzi, one
@@ -249,56 +249,59 @@ export const Hackathon: React.FC = () => {
           className="w-96 border-2 border-customred rounded-lg"
         />
       </div>
-      <div className="bg-gray py-3 w-full flex justify-center items-center gap-5">
-        <p className="font-bold text-lg">Check it out:</p>
-        <motion.a
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          href="https://github.com/rdg922/hackathon"
-          rel="noopener noreferrer"
-          className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
-        >
-          <Image
-            src="/assets/github.svg"
-            alt="GitHub"
-            width={18}
-            height={18}
-            className="fill-white"
-          />
-          Github
-        </motion.a>
-        <motion.a
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          href="https://hackathon-s3ma.vercel.app/"
-          rel="noopener noreferrer"
-          className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
-        >
-          <Image
-            src="/assets/vercel.svg"
-            alt="GitHub"
-            width={18}
-            height={18}
-            className="fill-white"
-          />
-          Vercel
-        </motion.a>
-        <motion.a
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          href="https://devpost.com/software/dino-luzzi-website"
-          rel="noopener noreferrer"
-          className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
-        >
-          <Image
-            src="/assets/devpost.svg"
-            alt="Devpost"
-            width={18}
-            height={18}
-            className="fill-white"
-          />
-          Devpost
-        </motion.a>
+      <div className="bg-gray py-3 w-full flex flex-row flex-wrap justify-center items-center gap-5">
+        <p className="font-bold text-lg text-nowrap">Check it out:</p>
+
+        <div className="flex flex-row justify-center flex-wrap gap-3">
+          <motion.a
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            href="https://github.com/rdg922/hackathon"
+            rel="noopener noreferrer"
+            className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
+          >
+            <Image
+              src="/assets/github.svg"
+              alt="GitHub"
+              width={18}
+              height={18}
+              className="fill-white"
+            />
+            Github
+          </motion.a>
+          <motion.a
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            href="https://hackathon-s3ma.vercel.app/"
+            rel="noopener noreferrer"
+            className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
+          >
+            <Image
+              src="/assets/vercel.svg"
+              alt="GitHub"
+              width={18}
+              height={18}
+              className="fill-white"
+            />
+            Vercel
+          </motion.a>
+          <motion.a
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            href="https://devpost.com/software/dino-luzzi-website"
+            rel="noopener noreferrer"
+            className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
+          >
+            <Image
+              src="/assets/devpost.svg"
+              alt="Devpost"
+              width={18}
+              height={18}
+              className="fill-white"
+            />
+            Devpost
+          </motion.a>
+        </div>
       </div>
     </>
   );
@@ -306,7 +309,7 @@ export const Hackathon: React.FC = () => {
 
 export const Ensemble: React.FC = () => {
   return (
-    <div className="text-bodyTextColor pb-8 pt-8 px-12 items-center flex flex-col gap-8">
+    <div className="text-bodyTextColor pb-8 pt-8 px-12 max-sm:px-6 items-center flex flex-col gap-8">
       <p className="text-md">
         I play the Cello in the University of Florida Honors Ensemble, the an
         honors orchestra organization that performs at various events throughout
@@ -326,7 +329,7 @@ export const Ensemble: React.FC = () => {
 export const OSC: React.FC = () => {
   return (
     <>
-      <div className="text-bodyTextColor pb-12 pt-12 px-12 flex flex-col justify-center items-center gap-10">
+      <div className="text-bodyTextColor pb-12 pt-12 px-12 max-sm:px-6 flex flex-col justify-center items-center gap-10">
         <p className="text-md">
           The Open Source Club at the University of Florida is an organization
           that is split into different teams that work on various open source

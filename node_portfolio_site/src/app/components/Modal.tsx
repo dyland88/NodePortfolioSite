@@ -40,8 +40,8 @@ export default function Modal({
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4 bg-black bg-opacity-30">
         <DialogPanel className="max-w-3xl border-4 border-customred bg-[#232323] rounded-3xl flex flex-col overflow-hidden max-h-full">
           <div className="sticky top-0 bg-[#393939] w-full pr-3 pl-12 py-3 flex flex-row justify-between items-center z-10">
-            <div className="flex flex-row items-start flex-wrap justify-between grow mr-4">
-              <DialogTitle className="font-bold text-2xl mr-2">
+            <div className="flex flex-row items-start flex-wrap justify-between grow mr-4 gap-2">
+              <DialogTitle className="font-bold text-2xl mr-2 text-white">
                 {title}
               </DialogTitle>
               <div className="flex flex-row flex-wrap gap-2">
@@ -58,7 +58,7 @@ export default function Modal({
             </div>
             <XButton onClick={closeDialog} />
           </div>
-          <div className="overflow-auto flex-grow">{children}</div>
+          <div className="overflow-y-auto flex-grow text-white">{children}</div>
         </DialogPanel>
       </div>
     </Dialog>

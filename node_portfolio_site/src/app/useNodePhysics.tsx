@@ -111,10 +111,13 @@ function useNodePhysics(
         bodyA: engine.current.world.bodies[link.source],
         bodyB: engine.current.world.bodies[link.target],
         // Set length of links based on diagonal screen size
-        length: Math.min(
-          Math.sqrt(clientWidth * clientWidth + clientHeight * clientHeight) /
-            6.5,
-          280
+        length: Math.max(
+          Math.min(
+            Math.sqrt(clientWidth * clientWidth + clientHeight * clientHeight) /
+              6.5,
+            280
+          ),
+          150
         ),
         stiffness: 0.004,
         damping: 0.04,
