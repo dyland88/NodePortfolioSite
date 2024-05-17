@@ -21,6 +21,8 @@ import {
   RedditBot,
   RMCF,
   Hackathon,
+  Ensemble,
+  OSC,
 } from "./components/ModalPages";
 
 export default function Home() {
@@ -76,7 +78,7 @@ export default function Home() {
         />
       ),
       x: windowWidth / 4,
-      y: windowHeight / 2,
+      y: windowHeight * (3 / 4),
       radius: linkNodeRadius,
       visible: true,
       childrenVisible: false,
@@ -92,7 +94,7 @@ export default function Home() {
         />
       ),
       x: windowWidth * (3 / 4),
-      y: windowHeight / 2,
+      y: windowHeight * (3 / 4),
       radius: linkNodeRadius,
       visible: true,
       childrenVisible: false,
@@ -221,8 +223,27 @@ export default function Home() {
         />
       ),
       hasModal: true,
-      modalContent: <Hackathon />,
+      modalContent: <Ensemble />,
       x: windowWidth * (1 / 2.5),
+      y: windowHeight * (1 / 4),
+      radius: contentNodeRadius,
+      visible: false,
+      childrenVisible: false,
+    },
+    {
+      id: "Open Source Club",
+      content: (
+        <ContentNode
+          icon={<Terminal size={40} />}
+          color={red}
+          description={"Open Source Club"}
+          radius={contentNodeRadius}
+        />
+      ),
+      hasModal: true,
+      modalContent: <OSC />,
+      modalTags: ["React Native"],
+      x: windowWidth * (1 / 1.5),
       y: windowHeight * (1 / 4),
       radius: contentNodeRadius,
       visible: false,
@@ -239,6 +260,7 @@ export default function Home() {
     { source: "Projects", target: "Robotic Whiteboard" },
     { source: "Projects", target: "2024 Hackathon" },
     { source: "Extracurriculars", target: "Honors Ensemble" },
+    { source: "Extracurriculars", target: "Open Source Club" },
   ];
 
   const {
@@ -319,6 +341,7 @@ export default function Home() {
                       else toggleChildNodeVisibility(index);
                     }
                   }}
+                  whileTap={{ scale: 0.9 }}
                   style={{
                     position: "absolute",
                     left: nodeList[index].x,

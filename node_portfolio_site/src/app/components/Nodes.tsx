@@ -16,7 +16,7 @@ export const ContentNode: React.FC<NodeProps> = ({
   radius,
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center w-44">
+    <div className="flex flex-col items-center justify-center w-44 pointer-events-none">
       <div
         style={{
           width: radius * 2,
@@ -45,7 +45,7 @@ export const LinkNode: React.FC<NodeProps> = ({
   radius,
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center w-40">
+    <div className="flex flex-col items-center justify-center w-40 pointer-events-none">
       <div
         style={{
           width: radius * 2,

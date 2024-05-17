@@ -136,7 +136,7 @@ export const Website: React.FC = () => {
         </p>
       </div>
       <div className="bg-gray py-3 w-full flex justify-center items-center gap-5">
-        <p className="font-bold text-lg">Check it out on Github:</p>
+        <p className="font-bold text-lg">Check it out:</p>
         <motion.a
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
@@ -215,6 +215,11 @@ export const Hackathon: React.FC = () => {
           can that follows the user's mouse and a racecar that drives down the
           webpage, revealing the features of Dino Luzzi's product.
         </p>
+        <p>
+          We built the website using React and used Three.js and
+          react-three-fiber for the 3d animations. On top of this, we used
+          Framer Motion for animations of regular webpage elements.
+        </p>
         <Image
           src="/assets/Dino Page 2.png"
           alt="Robotic Whiteboard"
@@ -234,11 +239,14 @@ export const Hackathon: React.FC = () => {
           height={240}
           className="w-96 border-2 border-customred rounded-lg"
         />
-        <p>
-          We built the website using React and used Three.js and
-          react-three-fiber for the 3d animations. On top of this, we used
-          Framer Motion for animations of regular webpage elements.
-        </p>
+        <p>We ended up winning the hackathon for making this website!🎉</p>
+        <Image
+          src="/assets/hackathoncheck.png"
+          alt="Robotic Whiteboard"
+          width={240}
+          height={240}
+          className="w-96 border-2 border-customred rounded-lg"
+        />
       </div>
       <div className="bg-gray py-3 w-full flex justify-center items-center gap-5">
         <p className="font-bold text-lg">Check it out:</p>
@@ -273,6 +281,86 @@ export const Hackathon: React.FC = () => {
             className="fill-white"
           />
           Vercel
+        </motion.a>
+        <motion.a
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          href="https://devpost.com/software/dino-luzzi-website"
+          rel="noopener noreferrer"
+          className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
+        >
+          <Image
+            src="/assets/devpost.svg"
+            alt="Devpost"
+            width={18}
+            height={18}
+            className="fill-white"
+          />
+          Devpost
+        </motion.a>
+      </div>
+    </>
+  );
+};
+
+export const Ensemble: React.FC = () => {
+  return (
+    <div className="text-bodyTextColor pb-8 pt-8 px-12 items-center flex flex-col gap-8">
+      <p className="text-md">
+        I play the Cello in the University of Florida Honors Ensemble, the an
+        honors orchestra organization that performs at various events throughout
+        the year.
+      </p>
+      <Image
+        src="/assets/ensemble.jpeg"
+        alt="Honors Ensemble"
+        width={600}
+        height={600}
+        className="border-2 border-customred rounded-lg"
+      />
+    </div>
+  );
+};
+
+export const OSC: React.FC = () => {
+  return (
+    <>
+      <div className="text-bodyTextColor pb-12 pt-12 px-12 flex flex-col justify-center items-center gap-10">
+        <p className="text-md">
+          The Open Source Club at the University of Florida is an organization
+          that is split into different teams that work on various open source
+          coding projects projects.
+        </p>
+        <p>
+          I am the lead frontend developer for Echo Chat, a React Native app
+          that is a proximity based chat app designed to allow users to connect
+          with strangers nearby.
+        </p>
+        <Image
+          src="/assets/echo_chat.png"
+          alt="Echo Chat"
+          width={100}
+          height={100}
+          className="w-40 border-2 border-customred rounded-3xl"
+        />
+      </div>
+      <div className="bg-gray py-3 w-full flex justify-center items-center gap-5">
+        <p className="font-bold text-lg">Check it out:</p>
+        <motion.a
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          href="https://github.com/ufosc/OSC-Proximity-Chat-App"
+          rel="noopener noreferrer"
+          className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
+        >
+          <Image
+            src="/assets/github.svg"
+            alt="GitHub"
+            width={18}
+            height={18}
+            className="fill-white"
+          />
+          Github
         </motion.a>
       </div>
     </>
