@@ -206,7 +206,7 @@ export const Hackathon: React.FC = () => {
         </p>
         <Image
           src="/assets/Dino Page 1.png"
-          alt="Robotic Whiteboard"
+          alt="Dino Page 1"
           width={240}
           height={240}
           className="w-96 border-2 border-customred rounded-lg"
@@ -223,7 +223,7 @@ export const Hackathon: React.FC = () => {
         </p>
         <Image
           src="/assets/Dino Page 2.png"
-          alt="Robotic Whiteboard"
+          alt="Dino Page 2"
           width={240}
           height={240}
           className="w-96 border-2 border-customred rounded-lg"
@@ -235,7 +235,7 @@ export const Hackathon: React.FC = () => {
         </p>
         <Image
           src="/assets/Dino Page 3.png"
-          alt="Robotic Whiteboard"
+          alt="Dino Page 3"
           width={240}
           height={240}
           className="w-96 border-2 border-customred rounded-lg"
@@ -243,7 +243,7 @@ export const Hackathon: React.FC = () => {
         <p>We ended up winning the hackathon for making this website!🎉</p>
         <Image
           src="/assets/hackathoncheck.png"
-          alt="Robotic Whiteboard"
+          alt="Winning Photo"
           width={240}
           height={240}
           className="w-96 border-2 border-customred rounded-lg"
@@ -316,7 +316,7 @@ export const Ensemble: React.FC = () => {
         the year.
       </p>
       <Image
-        src="/assets/ensemble.jpeg"
+        src="/assets/ensemble.JPEG"
         alt="Honors Ensemble"
         width={600}
         height={600}
@@ -341,7 +341,7 @@ export const OSC: React.FC = () => {
           with strangers nearby.
         </p>
         <Image
-          src="/assets/echo_chat.png"
+          src="/assets/echo_chat.PNG"
           alt="Echo Chat"
           width={100}
           height={100}
