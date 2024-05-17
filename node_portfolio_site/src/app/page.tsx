@@ -10,7 +10,6 @@ import {
   Code,
   Coffee,
   Edit2,
-  GitBranch,
   Monitor,
   Terminal,
 } from "react-feather";
@@ -44,14 +43,6 @@ export default function Home() {
     if (modalPage !== null && modalPage !== "nodes")
       router.push("/?page=nodes");
   }, [modalPage]);
-
-  const LoremIpsum = () => (
-    <p className="text-white">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, magni eos
-      beatae officia corporis voluptatum accusamus nihil ab ullam nisi quisquam
-      perspiciatis, eum ad molestiae. Molestias sint at voluptate aut?
-    </p>
-  );
 
   let windowWidth = 0;
   let windowHeight = 0;
