@@ -25,9 +25,9 @@ export default function RootLayout({
       <Analytics />
 
       <body className={inter.className}>
-        <Suspense>
-          <NoSsr>{children}</NoSsr>
-        </Suspense>
+        <NoSsr>
+          <Suspense>{children}</Suspense>
+        </NoSsr>
       </body>
     </html>
   );
