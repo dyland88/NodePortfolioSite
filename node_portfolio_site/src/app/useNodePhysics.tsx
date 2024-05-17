@@ -143,7 +143,7 @@ function useNodePhysics(
           category: 2,
         },
       }),
-      Bodies.rectangle(clientWidth / 2, clientHeight, clientWidth, 20, {
+      Bodies.rectangle(clientWidth / 2, clientHeight - 35, clientWidth, 20, {
         isStatic: true,
         restitution: 1,
         collisionFilter: {
@@ -204,7 +204,7 @@ function useNodePhysics(
     );
     newY = Math.max(
       nodeList[index].radius + 5,
-      Math.min(newY, window.innerHeight - nodeList[index].radius - 5)
+      Math.min(newY, window.innerHeight - nodeList[index].radius - 35)
     );
     Matter.Body.setPosition(engine.current.world.bodies[index], {
       x: newX,
@@ -242,7 +242,7 @@ function useNodePhysics(
       engine.current.world.bodies[engine.current.world.bodies.length - 2],
       {
         x: window.innerWidth / 2,
-        y: window.innerHeight,
+        y: window.innerHeight - 35,
       }
     );
     Matter.Body.setPosition(
