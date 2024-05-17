@@ -242,7 +242,7 @@ export const Hackathon: React.FC = () => {
         />
         <p>We ended up winning the hackathon for making this website!🎉</p>
         <Image
-          src="/assets/hackathoncheck.png"
+          src="/assets/hackathoncheck.PNG"
           alt="Winning Photo"
           width={240}
           height={240}
@@ -341,7 +341,7 @@ export const OSC: React.FC = () => {
           with strangers nearby.
         </p>
         <Image
-          src="/assets/echo_chat.PNG"
+          src="/assets/echo_chat.png"
           alt="Echo Chat"
           width={100}
           height={100}
