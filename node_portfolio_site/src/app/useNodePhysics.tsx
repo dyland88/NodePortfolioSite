@@ -178,7 +178,7 @@ function useNodePhysics(
       repelNodes(1.3);
       centerNodes(1.0);
       Matter.Engine.update(engine.current, deltaTime);
-      throttledFixNodeBounds();
+      fixNodeBounds();
       updateNodePositions();
       lastTimeUpdated.current = Date.now();
 
@@ -256,7 +256,6 @@ function useNodePhysics(
     fixNodeBounds();
   });
 
-  const throttledFixNodeBounds = throttle(200, fixNodeBounds);
   // reset out-of-bounds nodes
   function fixNodeBounds() {
     nodeList.forEach((node, index) => {
