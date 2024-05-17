@@ -23,11 +23,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <SpeedInsights />
       <Analytics />
-      <Suspense>
-        <body className={inter.className}>
+
+      <body className={inter.className}>
+        <Suspense>
           <NoSsr>{children}</NoSsr>
-        </body>
-      </Suspense>
+        </Suspense>
+      </body>
     </html>
   );
 }
