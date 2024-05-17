@@ -175,10 +175,11 @@ function useNodePhysics(
       repelNodes(1.3);
       centerNodes(1.0);
       Matter.Engine.update(engine.current, deltaTime);
+      throttledFixNodeBounds();
       updateNodePositions();
       lastTimeUpdated.current = Date.now();
+
       window.requestAnimationFrame(update);
-      throttledFixNodeBounds();
     }
 
     // Clean up
@@ -348,13 +349,15 @@ function useNodePhysics(
           engine.current.world.bodies[j].position
         );
         let distance = Vector.magnitude(force);
-        force = Vector.normalise(force);
-        force = Vector.mult(force, (multiplier * 6) / (distance * distance));
+        if (distance > 0) {
+          force = Vector.normalise(force);
+          force = Vector.mult(force, (multiplier * 6) / (distance * distance));
 
-        // Only apply force from visible nodes or between two hidden nodes
-        if (nodeList[j].visible || !nodeList[i].visible) applyForce(i, force);
-        if (nodeList[i].visible || !nodeList[j].visible)
-          applyForce(j, Vector.neg(force));
+          // Only apply force from visible nodes or between two hidden nodes
+          if (nodeList[j].visible || !nodeList[i].visible) applyForce(i, force);
+          if (nodeList[i].visible || !nodeList[j].visible)
+            applyForce(j, Vector.neg(force));
+        }
       }
     }
   }
