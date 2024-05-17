@@ -5,7 +5,15 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Modal from "./components/Modal";
 import { CenterNode, ContentNode, LinkNode } from "./components/Nodes";
-import { GitBranch } from "react-feather";
+import {
+  Briefcase,
+  Code,
+  Coffee,
+  Edit2,
+  GitBranch,
+  Monitor,
+  Terminal,
+} from "react-feather";
 import {
   Whiteboard,
   Welcome,
@@ -67,7 +75,7 @@ export default function Home() {
       id: "Projects",
       content: (
         <LinkNode
-          icon={<GitBranch size={40} />}
+          icon={<Code size={40} />}
           color={green}
           description={"Projects"}
         />
@@ -82,7 +90,7 @@ export default function Home() {
       id: "Work",
       content: (
         <LinkNode
-          icon={<GitBranch size={40} />}
+          icon={<Briefcase size={40} />}
           color={blue}
           description={"Work Experience"}
         />
@@ -97,7 +105,7 @@ export default function Home() {
       id: "Rocky Mountain Chocolate Factory",
       content: (
         <ContentNode
-          icon={<GitBranch size={40} />}
+          icon={<Coffee size={40} />}
           color={blue}
           description={"Rocky Mountain\nChocolate Factory"}
         />
@@ -115,7 +123,9 @@ export default function Home() {
       id: "Reddit Bot",
       content: (
         <ContentNode
-          icon={<GitBranch size={40} />}
+          icon={
+            <img src="/assets/reddit.png" alt="Reddit" width={40} height={40} />
+          }
           color={green}
           description={"Reddit Bot"}
         />
@@ -133,7 +143,7 @@ export default function Home() {
       id: "This Website",
       content: (
         <ContentNode
-          icon={<GitBranch size={40} />}
+          icon={<Monitor size={40} />}
           color={green}
           description={"This Website"}
         />
@@ -151,7 +161,7 @@ export default function Home() {
       id: "Robotic Whiteboard",
       content: (
         <ContentNode
-          icon={<GitBranch size={40} />}
+          icon={<Edit2 size={40} />}
           color={green}
           description={"Robotic Whiteboard"}
         />
@@ -169,7 +179,7 @@ export default function Home() {
       id: "2024 Hackathon",
       content: (
         <ContentNode
-          icon={<GitBranch size={40} />}
+          icon={<Terminal size={40} />}
           color={green}
           description={"2024 Hackathon"}
         />

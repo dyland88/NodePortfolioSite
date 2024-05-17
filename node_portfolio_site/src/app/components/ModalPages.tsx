@@ -86,8 +86,8 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
               <Image
                 src="/assets/Center_node.png"
                 alt="Dylan"
-                width={240}
-                height={240}
+                width={260}
+                height={260}
                 className="w-52 md:w-64"
               />
             </div>
@@ -194,49 +194,87 @@ export const RMCF: React.FC = () => {
 
 export const Hackathon: React.FC = () => {
   return (
-    <div className="text-bodyTextColor pb-12 pt-6 px-12 flex flex-col justify-center items-center gap-6 overflow-y-auto">
-      <p className="text-md">
-        For the 2024 OSCHack 24-hour hackathon I, along with two of my friends,
-        tackled the challenge to redesign the the website of Dino Luzzi, one of
-        the hackathon's sponsors with new functionality, UI/UX design, and style
-        to make it more engaging and easier for people to purchase the product.
-      </p>
-      <Image
-        src="/assets/robot_whiteboard.png"
-        alt="Robotic Whiteboard"
-        width={240}
-        height={240}
-        className="w-96 border-2 border-customred rounded-lg"
-      />
-      <p>
-        We decided to give the website interactive 3d elements, including a 3d
-        can that follows the user's mouse and a racecar that drives down the
-        webpage, revealing the features of Dino Luzzi's product.
-      </p>
-      <Image
-        src="/assets/robot_whiteboard.png"
-        alt="Robotic Whiteboard"
-        width={240}
-        height={240}
-        className="w-96 border-2 border-customred rounded-lg"
-      />
-      <p>
-        I was in charge of creating the 3d models for the elements on the
-        webpage and all of the 2d styles and animations. I also worked on
-        getting the physics simulation working correctly for the the racecar.
-      </p>
-      <Image
-        src="/assets/robot_whiteboard.png"
-        alt="Robotic Whiteboard"
-        width={240}
-        height={240}
-        className="w-96 border-2 border-customred rounded-lg"
-      />
-      <p>
-        We built the website using React and used Three.js and react-three-fiber
-        for the 3d animations. On top of this, we used Framer Motion for
-        animations of regular webpage elements.
-      </p>
-    </div>
+    <>
+      <div className="text-bodyTextColor pb-12 pt-12 px-12 flex flex-col justify-center items-center gap-10">
+        <p className="text-md">
+          For the 2024 OSCHack 24-hour hackathon, two of my friends and I
+          tackled the challenge to redesign the the website of Dino Luzzi, one
+          of the hackathon's sponsors with new functionality, UI/UX design, and
+          style to make it more engaging and easier for people to purchase the
+          product.
+        </p>
+        <Image
+          src="/assets/Dino Page 1.png"
+          alt="Robotic Whiteboard"
+          width={240}
+          height={240}
+          className="w-96 border-2 border-customred rounded-lg"
+        />
+        <p>
+          We decided to give the website interactive 3d elements, including a 3d
+          can that follows the user's mouse and a racecar that drives down the
+          webpage, revealing the features of Dino Luzzi's product.
+        </p>
+        <Image
+          src="/assets/Dino Page 2.png"
+          alt="Robotic Whiteboard"
+          width={240}
+          height={240}
+          className="w-96 border-2 border-customred rounded-lg"
+        />
+        <p>
+          I was in charge of creating the 3d models for the elements on the
+          webpage and all of the 2d styles and animations. I also worked on
+          getting the physics simulation working correctly for the the racecar.
+        </p>
+        <Image
+          src="/assets/Dino Page 3.png"
+          alt="Robotic Whiteboard"
+          width={240}
+          height={240}
+          className="w-96 border-2 border-customred rounded-lg"
+        />
+        <p>
+          We built the website using React and used Three.js and
+          react-three-fiber for the 3d animations. On top of this, we used
+          Framer Motion for animations of regular webpage elements.
+        </p>
+      </div>
+      <div className="bg-gray py-3 w-full flex justify-center items-center gap-5">
+        <p className="font-bold text-lg">Check it out:</p>
+        <motion.a
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          href="https://github.com/rdg922/hackathon"
+          rel="noopener noreferrer"
+          className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
+        >
+          <Image
+            src="/assets/github.svg"
+            alt="GitHub"
+            width={18}
+            height={18}
+            className="fill-white"
+          />
+          Github
+        </motion.a>
+        <motion.a
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          href="https://hackathon-s3ma.vercel.app/"
+          rel="noopener noreferrer"
+          className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
+        >
+          <Image
+            src="/assets/vercel.svg"
+            alt="GitHub"
+            width={18}
+            height={18}
+            className="fill-white"
+          />
+          Vercel
+        </motion.a>
+      </div>
+    </>
   );
 };
