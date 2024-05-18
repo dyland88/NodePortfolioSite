@@ -311,9 +311,9 @@ export const Ensemble: React.FC = () => {
   return (
     <div className="text-bodyTextColor pb-8 pt-8 px-12 max-sm:px-6 items-center flex flex-col gap-8">
       <p className="text-md">
-        I play the Cello in the University of Florida Honors Ensemble, the an
-        honors orchestra organization that performs at various events throughout
-        the year.
+        I play the Cello in the University of Florida Honors Ensemble, an honors
+        orchestra organization that performs at various events throughout the
+        year.
       </p>
       <Image
         src="/assets/ensemble.JPEG"

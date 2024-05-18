@@ -127,7 +127,7 @@ function useNodePhysics(
 
     // Add rectangle bounding boxes
     World.add(engine.current.world, [
-      Bodies.rectangle(clientWidth / 2, 0, clientWidth, 20, {
+      Bodies.rectangle(clientWidth / 2, 0, clientWidth * 3, 20, {
         isStatic: true,
         restitution: 1,
         collisionFilter: {
@@ -135,7 +135,7 @@ function useNodePhysics(
           category: 2,
         },
       }),
-      Bodies.rectangle(0, clientHeight / 2, 10, clientHeight, {
+      Bodies.rectangle(0, clientHeight / 2, 10, clientHeight * 3, {
         isStatic: true,
         restitution: 1,
         collisionFilter: {
@@ -143,7 +143,7 @@ function useNodePhysics(
           category: 2,
         },
       }),
-      Bodies.rectangle(clientWidth / 2, clientHeight - 35, clientWidth, 20, {
+      Bodies.rectangle(clientWidth / 2, clientHeight, clientWidth * 3, 70, {
         isStatic: true,
         restitution: 1,
         collisionFilter: {
@@ -151,7 +151,7 @@ function useNodePhysics(
           category: 2,
         },
       }),
-      Bodies.rectangle(clientWidth, clientHeight / 2, 20, clientHeight, {
+      Bodies.rectangle(clientWidth, clientHeight / 2, 20, clientHeight * 3, {
         isStatic: true,
         restitution: 1,
         collisionFilter: {
@@ -242,7 +242,7 @@ function useNodePhysics(
       engine.current.world.bodies[engine.current.world.bodies.length - 2],
       {
         x: window.innerWidth / 2,
-        y: window.innerHeight - 35,
+        y: window.innerHeight,
       }
     );
     Matter.Body.setPosition(
@@ -286,7 +286,7 @@ function useNodePhysics(
       ) {
         Matter.Body.setPosition(engine.current.world.bodies[index], {
           x: engine.current.world.bodies[index].position.x,
-          y: window.innerHeight - nodeList[index].radius,
+          y: window.innerHeight - nodeList[index].radius - 40,
         });
       }
     });
