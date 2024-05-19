@@ -39,7 +39,7 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
                   whileTap={{ scale: 0.95 }}
                   href="https://github.com/dyland88"
                   rel="noopener noreferrer"
-                  className="bg-[#5a5a5a] text-white max-sm:text-xs text-sm px-4 py-2 rounded-full flex flex-row items-center justify-center gap-1.5"
+                  className="bg-[#5a5a5a] text-white text-sm px-4 py-2 rounded-full flex flex-row items-center justify-center gap-1.5"
                 >
                   <Image
                     src="/assets/github.svg"
@@ -55,10 +55,10 @@ export const Welcome: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
                   whileTap={{ scale: 0.95 }}
                   href="https://www.linkedin.com/in/dylancoben/"
                   rel="noopener noreferrer"
-                  className="bg-[#5a5a5a] text-white max-sm:text-xs text-sm px-4 py-2 rounded-full flex flex-row items-center justify-center gap-1.5"
+                  className="bg-[#5a5a5a] text-white text-sm px-4 py-2 rounded-full flex flex-row items-center justify-center gap-1.5"
                 >
                   <Image
-                    src="/assets/github.svg"
+                    src="/assets/linkedin.svg"
                     alt="Linkedin"
                     width={16}
                     height={16}
