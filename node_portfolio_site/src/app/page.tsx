@@ -24,6 +24,7 @@ import {
   Hackathon,
   Ensemble,
   OSC,
+  MFYM,
 } from "./components/ModalPages";
 
 export default function Home() {
@@ -256,6 +257,25 @@ export default function Home() {
       visible: false,
       childrenVisible: false,
     },
+    {
+      id: "Music For Your Mood",
+      content: (
+        <ContentNode
+          icon={<Music size={contentNodeRadius} color={"#ffffff"} />}
+          color={green}
+          description={"Music For Your Mood"}
+          radius={contentNodeRadius}
+        />
+      ),
+      hasModal: true,
+      modalContent: <MFYM />,
+      modalTags: ["React"],
+      x: windowWidth * (1 / 1.5),
+      y: windowHeight * (1 / 4),
+      radius: contentNodeRadius,
+      visible: false,
+      childrenVisible: false,
+    },
   ];
   const initialLinkList = [
     { source: "Dylan Coben", target: "Projects" },
@@ -266,6 +286,7 @@ export default function Home() {
     { source: "Projects", target: "This Website" },
     { source: "Projects", target: "Robotic Whiteboard" },
     { source: "Projects", target: "2024 Hackathon" },
+    { source: "Projects", target: "Music For Your Mood" },
     { source: "Extracurriculars", target: "Honors Ensemble" },
     { source: "Extracurriculars", target: "Open Source Club" },
   ];

@@ -283,7 +283,7 @@ export const Hackathon: React.FC = () => {
               height={18}
               className="fill-white"
             />
-            Vercel
+            Website
           </motion.a>
           <motion.a
             whileHover={{ scale: 1.1 }}
@@ -300,6 +300,67 @@ export const Hackathon: React.FC = () => {
               className="fill-white"
             />
             Devpost
+          </motion.a>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export const MFYM: React.FC = () => {
+  return (
+    <>
+      <div className="text-bodyTextColor pb-12 pt-12 px-12 max-sm:px-6 flex flex-col justify-center items-center gap-10">
+        <p className="text-md">
+          Have you ever wanted to listen to music that matches your current
+          mood? Well now you can! Music for Your Mood allows you to input your
+          current happiness, energy, and level of focus and get a curated
+          playlist of songs to match your mood. The frontend was designed using
+          React and shadcn.
+        </p>
+        <Image
+          src="/assets/mfym.png"
+          alt="Dino Page 1"
+          width={500}
+          height={300}
+          className="w-[96] border-2 border-customred rounded-lg"
+        />
+      </div>
+      <div className="bg-gray py-3 px-2 w-full flex flex-row flex-wrap justify-center items-center gap-5">
+        <p className="font-bold text-lg text-nowrap">Check it out:</p>
+
+        <div className="flex flex-row justify-center flex-wrap gap-3">
+          <motion.a
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            href="https://github.com/dyland88/music-for-your-mood"
+            rel="noopener noreferrer"
+            className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
+          >
+            <Image
+              src="/assets/github.svg"
+              alt="GitHub"
+              width={18}
+              height={18}
+              className="fill-white"
+            />
+            Github
+          </motion.a>
+          <motion.a
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            href="https://music-for-your-mood.vercel.app/"
+            rel="noopener noreferrer"
+            className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
+          >
+            <Image
+              src="/assets/vercel.svg"
+              alt="GitHub"
+              width={18}
+              height={18}
+              className="fill-white"
+            />
+            Website
           </motion.a>
         </div>
       </div>
