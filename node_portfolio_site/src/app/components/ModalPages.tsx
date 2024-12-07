@@ -315,8 +315,12 @@ export const MFYM: React.FC = () => {
           Have you ever wanted to listen to music that matches your current
           mood? Well now you can! Music for Your Mood allows you to input your
           current happiness, energy, and level of focus and get a curated
-          playlist of songs to match your mood. The frontend was designed using
-          React and shadcn.
+          playlist of songs to match your mood. I designed the frontend and UI
+          using React and shadcn.
+        </p>
+        <p>
+          This project was created December 2024 with the help of Chris Oeltjen
+          and Austin VanLoon.
         </p>
         <Image
           src="/assets/mfym.png"
