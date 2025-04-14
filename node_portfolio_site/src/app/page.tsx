@@ -25,6 +25,7 @@ import {
   Ensemble,
   OSC,
   MFYM,
+  Hackathon25,
 } from "./components/ModalPages";
 
 export default function Home() {
@@ -186,12 +187,12 @@ export default function Home() {
       childrenVisible: false,
     },
     {
-      id: "2024 Hackathon",
+      id: "Minihack 2024",
       content: (
         <ContentNode
           icon={<Terminal size={contentNodeRadius} color={"#ffffff"} />}
           color={green}
-          description={"2024 Hackathon"}
+          description={"Minihack 2024"}
           radius={contentNodeRadius}
         />
       ),
@@ -276,6 +277,25 @@ export default function Home() {
       visible: false,
       childrenVisible: false,
     },
+    {
+      id: "Swamphacks 2025",
+      content: (
+        <ContentNode
+          icon={<Terminal size={contentNodeRadius} color={"#ffffff"} />}
+          color={green}
+          description={"Swamphacks 2025"}
+          radius={contentNodeRadius}
+        />
+      ),
+      hasModal: true,
+      modalContent: <Hackathon25 />,
+      modalTags: ["React Native", "Tailwind", "OpenAI"],
+      x: windowWidth * (1 / 1.6),
+      y: windowHeight * (1 / 4),
+      radius: contentNodeRadius,
+      visible: false,
+      childrenVisible: false,
+    },
   ];
   const initialLinkList = [
     { source: "Dylan Coben", target: "Projects" },
@@ -285,8 +305,9 @@ export default function Home() {
     { source: "Projects", target: "Reddit Bot" },
     { source: "Projects", target: "This Website" },
     { source: "Projects", target: "Robotic Whiteboard" },
-    { source: "Projects", target: "2024 Hackathon" },
+    { source: "Projects", target: "Minihack 2024" },
     { source: "Projects", target: "Music For Your Mood" },
+    { source: "Projects", target: "Swamphacks 2025" },
     { source: "Extracurriculars", target: "Honors Ensemble" },
     { source: "Extracurriculars", target: "Open Source Club" },
   ];

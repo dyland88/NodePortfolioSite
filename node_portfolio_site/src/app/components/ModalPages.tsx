@@ -307,6 +307,84 @@ export const Hackathon: React.FC = () => {
   );
 };
 
+export const Hackathon25: React.FC = () => {
+  return (
+    <>
+      <div className="text-bodyTextColor pb-12 pt-12 px-12 max-sm:px-6 flex flex-col justify-center items-center gap-10">
+        <p className="text-md">
+          For the 2025 SwampHacks 24-hour hackathon, two of my friends and I
+          were tasked with creating an app to promote sustainability. We decided
+          to tackle the problem of food waste by creating an app that allows
+          users to scan barcodes at the store and get information about how
+          sustainably produced the product is. After scanning the barcode, the
+          app would pull information about the food using the OpenFoodFacts API.
+        </p>
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/6tzbO22YZks?si=f1P5NLNqYhT5jyTR"
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        ></iframe>
+        <p>
+          However, we also wanted to prevent food waste after it has been
+          purchased, so the app keeps track of the expiration date of products
+          and notifies the user when their food is about to expire. The user can
+          then select the items that they want to use and the app will generate
+          a recipe using the selected items, preventing any food from going to
+          waste.
+        </p>
+        <p>
+          We created the app using React Native and Tailwind for the user
+          interface and used the OpenFoodFacts and OpenAI APIs for food data and
+          recipe generation.
+        </p>
+      </div>
+      <div className="bg-gray py-3 px-2 w-full flex flex-row flex-wrap justify-center items-center gap-5">
+        <p className="font-bold text-lg text-nowrap">Check it out:</p>
+
+        <div className="flex flex-row justify-center flex-wrap gap-3">
+          <motion.a
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            href="https://github.com/rdg922/swamphacks"
+            rel="noopener noreferrer"
+            className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
+          >
+            <Image
+              src="/assets/github.svg"
+              alt="GitHub"
+              width={18}
+              height={18}
+              className="fill-white"
+            />
+            Github
+          </motion.a>
+
+          <motion.a
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            href="https://devpost.com/software/ecoscan-ef6jpg?_gl=1*13ld3f*_gcl_au*MTgxNzU4MDI1OS4xNzQ0NjY1MTA2*_ga*MTgwNjAzMzE4Ni4xNzQ0NjY1MTA3*_ga_0YHJK3Y10M*MTc0NDY2NTEwNi4xLjEuMTc0NDY2NTU3Ni4wLjAuMA.."
+            rel="noopener noreferrer"
+            className="text-white font-medium text-md flex bg-[#7c7c7c] px-4 py-2 rounded-full gap-2"
+          >
+            <Image
+              src="/assets/devpost.svg"
+              alt="Devpost"
+              width={18}
+              height={18}
+              className="fill-white"
+            />
+            Devpost
+          </motion.a>
+        </div>
+      </div>
+    </>
+  );
+};
+
 export const MFYM: React.FC = () => {
   return (
     <>
