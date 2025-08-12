@@ -60,6 +60,25 @@ export default function Home() {
       router.push("/?page=nodes");
   }, [modalPage]);
 
+  // Fix iOS Safari viewport height by setting CSS custom property to match physics engine
+  useEffect(() => {
+    function setViewportHeight() {
+      document.documentElement.style.setProperty(
+        "--viewport-height",
+        `${window.innerHeight}px`
+      );
+    }
+
+    setViewportHeight();
+    window.addEventListener("resize", setViewportHeight);
+    window.addEventListener("orientationchange", setViewportHeight);
+
+    return () => {
+      window.removeEventListener("resize", setViewportHeight);
+      window.removeEventListener("orientationchange", setViewportHeight);
+    };
+  }, []);
+
   const initialNodes = [
     {
       id: "Dylan Coben",
@@ -323,8 +342,9 @@ export default function Home() {
   return (
     <>
       <main
-        className="w-screen relative h-screen flex-col items-start justify-start overflow-hidden bg-gray"
+        className="w-screen relative flex-col items-start justify-start overflow-hidden bg-gray"
         style={{
+          height: "var(--viewport-height, 100vh)",
           backgroundImage:
             "radial-gradient(circle at 3px 3px, #353535 2px, transparent 0)",
           backgroundSize: "40px 40px",
@@ -340,10 +360,14 @@ export default function Home() {
         {DEBUG && (
           <div
             ref={scene}
-            className="h-screen w-screen absolute top-0 left-0"
+            className="w-screen absolute top-0 left-0"
+            style={{ height: "var(--viewport-height, 100vh)" }}
           />
         )}
-        <svg className="h-screen w-screen absolute top-0 left-0">
+        <svg
+          className="w-screen absolute top-0 left-0"
+          style={{ height: "var(--viewport-height, 100vh)" }}
+        >
           {linkList.map((link, index) => (
             <line
               key={index}
