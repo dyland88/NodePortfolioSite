@@ -198,18 +198,22 @@ function useNodePhysics(
 
   // Sets the position of a specific node
   function setNodePosition(index: number, newX: number, newY: number) {
+    const margin = 10;
+    const radius = nodeList[index].radius;
+
     newX = Math.max(
-      nodeList[index].radius + 5,
-      Math.min(newX, window.innerWidth - nodeList[index].radius - 5)
+      radius + margin,
+      Math.min(newX, window.innerWidth - radius - margin)
     );
     newY = Math.max(
-      nodeList[index].radius + 5,
-      Math.min(newY, window.innerHeight - nodeList[index].radius - 35)
+      radius + margin,
+      Math.min(newY, window.innerHeight - radius - 40)
     );
-    Matter.Body.setPosition(engine.current.world.bodies[index], {
-      x: newX,
-      y: newY,
-    });
+
+    const body = engine.current.world.bodies[index];
+    Matter.Body.setPosition(body, { x: newX, y: newY });
+    // Reset velocity to prevent unwanted movement after manual positioning
+    Matter.Body.setVelocity(body, { x: 0, y: 0 });
   }
 
   // Applies force to node at index
@@ -253,41 +257,47 @@ function useNodePhysics(
       }
     );
 
+    // Reset velocities of all nodes to prevent erratic behavior during resize
+    nodeList.forEach((node, index) => {
+      Matter.Body.setVelocity(engine.current.world.bodies[index], {
+        x: 0,
+        y: 0,
+      });
+    });
+
     fixNodeBounds();
   });
 
   // reset out-of-bounds nodes
   function fixNodeBounds() {
     nodeList.forEach((node, index) => {
-      if (
-        engine.current.world.bodies[index].position.x >
-        window.innerWidth + 20
-      ) {
-        Matter.Body.setPosition(engine.current.world.bodies[index], {
-          x: window.innerWidth - nodeList[index].radius,
-          y: engine.current.world.bodies[index].position.y,
-        });
+      const body = engine.current.world.bodies[index];
+      const position = body.position;
+      const radius = nodeList[index].radius;
+      let needsRepositioning = false;
+      let newX = position.x;
+      let newY = position.y;
+
+      const margin = 10;
+      if (position.x > window.innerWidth + margin) {
+        newX = window.innerWidth - radius - margin;
+        needsRepositioning = true;
+      } else if (position.x < -margin) {
+        newX = radius + margin;
+        needsRepositioning = true;
       }
-      if (engine.current.world.bodies[index].position.x < 0) {
-        Matter.Body.setPosition(engine.current.world.bodies[index], {
-          x: nodeList[index].radius,
-          y: engine.current.world.bodies[index].position.y,
-        });
+
+      if (position.y < -margin) {
+        newY = radius + margin;
+        needsRepositioning = true;
+      } else if (position.y > window.innerHeight + margin) {
+        newY = window.innerHeight - radius - 40;
+        needsRepositioning = true;
       }
-      if (engine.current.world.bodies[index].position.y < 0) {
-        Matter.Body.setPosition(engine.current.world.bodies[index], {
-          x: engine.current.world.bodies[index].position.x,
-          y: nodeList[index].radius,
-        });
-      }
-      if (
-        engine.current.world.bodies[index].position.y >
-        window.innerHeight + 20
-      ) {
-        Matter.Body.setPosition(engine.current.world.bodies[index], {
-          x: engine.current.world.bodies[index].position.x,
-          y: window.innerHeight - nodeList[index].radius - 40,
-        });
+
+      if (needsRepositioning) {
+        Matter.Body.setPosition(body, { x: newX, y: newY });
+        Matter.Body.setVelocity(body, { x: 0, y: 0 });
       }
     });
   }
