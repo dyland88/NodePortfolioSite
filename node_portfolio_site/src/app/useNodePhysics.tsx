@@ -273,10 +273,18 @@ function useNodePhysics(
     nodeList.forEach((node, index) => {
       const body = engine.current.world.bodies[index];
       const position = body.position;
+      const velocity = body.velocity;
       const radius = nodeList[index].radius;
       let needsRepositioning = false;
+      let needsVelocityReset = false;
       let newX = position.x;
       let newY = position.y;
+
+      // Check for excessive velocity and reset if too high
+      const maxVelocity = 100;
+      if (velocity.x > maxVelocity || velocity.y > maxVelocity) {
+        needsVelocityReset = true;
+      }
 
       const margin = 10;
       if (position.x > window.innerWidth + margin) {
@@ -295,8 +303,12 @@ function useNodePhysics(
         needsRepositioning = true;
       }
 
+      // Apply corrections if needed
       if (needsRepositioning) {
         Matter.Body.setPosition(body, { x: newX, y: newY });
+        Matter.Body.setVelocity(body, { x: 0, y: 0 });
+      } else if (needsVelocityReset) {
+        // Reset velocity if it's too high but position is fine
         Matter.Body.setVelocity(body, { x: 0, y: 0 });
       }
     });
